@@ -1,3 +1,130 @@
+
+export const industrialTermsDict = [
+  // 1. Cụm từ dài
+  { vi: 'máy nén khí piston', en: 'Piston Air Compressor', zh: '活塞式空压机' },
+  { vi: 'máy nén khí trục vít', en: 'Screw Air Compressor', zh: '螺杆式空压机' },
+  { vi: 'máy nén khí không dầu', en: 'Oil-Free Air Compressor', zh: '无油空压机' },
+  { vi: 'máy nén khí cao áp', en: 'High-Pressure Air Compressor', zh: '高压空压机' },
+  { vi: 'máy sấy khí nén tác nhân lạnh', en: 'Refrigerated Compressed Air Dryer', zh: '冷冻式压缩空气干燥机' },
+  { vi: 'máy sấy khí hấp thụ', en: 'Desiccant Air Dryer', zh: '吸附式干燥机' },
+  { vi: 'máy sấy khí', en: 'Compressed Air Dryer', zh: '冷干机/干燥机' },
+  { vi: 'máy nén khí', en: 'Air Compressor', zh: '空压机' },
+  
+  // 2. Phụ tùng van
+  { vi: 'van an toàn xả áp', en: 'Safety Relief Valve', zh: '安全泄放阀' },
+  { vi: 'van an toàn', en: 'Safety Valve', zh: '安全阀' },
+  { vi: 'van xả nước tự động', en: 'Auto Drain Valve', zh: '自动排水阀' },
+  { vi: 'van điện từ', en: 'Solenoid Valve', zh: '电磁阀' },
+  { vi: 'van hằng nhiệt', en: 'Thermostatic Valve', zh: '温控阀' },
+  { vi: 'van một chiều', en: 'Check Valve', zh: '单向阀/止回阀' },
+  { vi: 'van hút khí', en: 'Intake Valve', zh: '进气阀' },
+  { vi: 'van áp suất tối thiểu', en: 'Minimum Pressure Valve (MPV)', zh: '最小压力阀' },
+  { vi: 'van điều áp', en: 'Pressure Regulating Valve', zh: '调压阀/减压阀' },
+  { vi: 'van tiết lưu', en: 'Throttle Valve', zh: '节流阀' },
+  { vi: 'van xả tải', en: 'Blowdown Valve', zh: '放空阀' },
+  { vi: 'van cơ khí', en: 'Mechanical Valve', zh: '机械控制阀' },
+  { vi: 'van', en: 'Valve', zh: '阀门' },
+
+  // 3. Phụ tùng cơ khí & đầu nén
+  { vi: 'bạc đạn đầu nén', en: 'Air-End Heavy Duty Bearings', zh: '主机转子重载轴承' },
+  { vi: 'bạc đạn', en: 'Bearings', zh: '轴承' },
+  { vi: 'vòng bi', en: 'Bearings', zh: '轴承' },
+  { vi: 'đầu nén trục vít', en: 'Screw Air-End', zh: '螺杆主机头' },
+  { vi: 'đầu nén', en: 'Air-End Block', zh: '压缩机头' },
+  { vi: 'xi lanh máy nén khí', en: 'Air Compressor Cylinder', zh: '空压机气缸' },
+  { vi: 'xi lanh', en: 'Cylinder', zh: '气缸' },
+  { vi: 'piston', en: 'Piston Assembly', zh: '活塞组件' },
+  { vi: 'xéc măng', en: 'Piston Rings', zh: '活塞环' },
+  { vi: 'trục khuỷu', en: 'Crankshaft', zh: '曲轴' },
+  { vi: 'tay biên', en: 'Connecting Rod', zh: '连杆' },
+  { vi: 'bánh răng chủ động', en: 'Driving Gear', zh: '主动传动齿轮' },
+  { vi: 'bánh răng bị động', en: 'Driven Gear', zh: '从动齿轮' },
+  { vi: 'bánh răng', en: 'Transmission Gear', zh: '传动齿轮' },
+  { vi: 'dây đai răng cưa', en: 'Cogged Drive Belt', zh: '齿形切边传动皮带' },
+  { vi: 'dây đai truyền động', en: 'Drive Belt', zh: '传动皮带' },
+  { vi: 'dây đai', en: 'Drive Belt', zh: '皮带' },
+  { vi: 'dây curoa', en: 'V-Belt', zh: '三角皮带' },
+  { vi: 'phớt chặn dầu', en: 'Oil Seal', zh: '轴端骨架油封' },
+  { vi: 'phớt chắn dầu', en: 'Oil Seal', zh: '油封' },
+  { vi: 'phớt môi kép', en: 'Double Lip PTFE Seal', zh: '双唇特氟龙油封' },
+  { vi: 'phớt', en: 'Seal', zh: '密封件' },
+  { vi: 'khớp nối mềm', en: 'Flexible Coupling', zh: '弹性联轴器' },
+  { vi: 'khớp nối', en: 'Coupling', zh: '联轴器' },
+  { vi: 'gioăng amiang', en: 'Gasket', zh: '石棉垫片' },
+  { vi: 'gioăng phớt', en: 'Gaskets & Seals', zh: '密封圈/垫片' },
+  { vi: 'gioăng', en: 'Gasket / O-Ring', zh: '密封圈' },
+
+  // 4. Lọc & Dầu
+  { vi: 'lọc tách dầu', en: 'Air-Oil Separator', zh: '油气分离芯 (油分芯)' },
+  { vi: 'bộ lọc tách dầu', en: 'Air-Oil Separator Assembly', zh: '油气分离器总成' },
+  { vi: 'lọc dầu', en: 'Oil Filter', zh: '机油滤清器 (油滤)' },
+  { vi: 'lọc nhớt', en: 'Oil Filter', zh: '机油滤芯' },
+  { vi: 'lọc gió', en: 'Air Intake Filter', zh: '空气滤清器 (空滤)' },
+  { vi: 'lọc khí', en: 'Air Filter', zh: '空气过滤器' },
+  { vi: 'lọc đường ống', en: 'Inline Compressed Air Filter', zh: '精密管道过滤器' },
+  { vi: 'lõi lọc đường ống', en: 'Inline Filter Element', zh: '管道精密滤芯' },
+  { vi: 'lõi lọc', en: 'Filter Element', zh: '滤芯' },
+  { vi: 'bộ lọc khí', en: 'Air Filter Set', zh: '空气过滤组合' },
+  { vi: 'bộ lọc', en: 'Filter Assembly', zh: '过滤器' },
+  { vi: 'dầu máy nén khí trục vít', en: 'Screw Compressor Synthetic Oil', zh: '螺杆空压机专用合成油' },
+  { vi: 'dầu máy nén khí', en: 'Air Compressor Lubricant Oil', zh: '空压机专用润滑油' },
+  { vi: 'dầu làm mát', en: 'Cooling Lubricant', zh: '冷却润滑油' },
+  { vi: 'dầu', en: 'Oil / Lubricant', zh: '机油/润滑油' },
+
+  // 5. Giải nhiệt & Cảm biến & Thiết bị phụ trợ
+  { vi: 'két giải nhiệt dầu', en: 'Oil Cooler Heat Exchanger', zh: '机油散热冷却器' },
+  { vi: 'két giải nhiệt', en: 'Cooler Heat Exchanger', zh: '散热器/冷却器' },
+  { vi: 'két làm mát', en: 'Air/Oil Cooler', zh: '风冷散热器' },
+  { vi: 'cảm biến áp suất', en: 'Pressure Sensor / Transmitter', zh: '压力传感器 (变送器)' },
+  { vi: 'cảm biến nhiệt độ', en: 'Temperature Sensor (PT100)', zh: '温度传感器 (热电阻)' },
+  { vi: 'cảm biến', en: 'Sensor', zh: '传感器' },
+  { vi: 'đồng hồ đo áp suất', en: 'Pressure Gauge', zh: '高精度压力表' },
+  { vi: 'đồng hồ áp suất', en: 'Pressure Gauge', zh: '压力表' },
+  { vi: 'thước đo mức dầu', en: 'Oil Level Sight Glass Gauge', zh: '玻璃管油位计/观油镜' },
+  { vi: 'thước thăm dầu', en: 'Oil Level Indicator Gauge', zh: '油标尺/油位计' },
+  { vi: 'mắt thăm dầu', en: 'Oil Sight Glass', zh: '观油镜' },
+  { vi: 'bình chứa khí nén', en: 'Air Receiver Tank', zh: '压缩空气储气罐' },
+  { vi: 'bình tích khí', en: 'Air Receiver Tank', zh: '储气罐' },
+  { vi: 'bình tách dầu', en: 'Oil Separator Vessel', zh: '油气分离桶' },
+  { vi: 'ống dẫn dầu', en: 'High Pressure Oil Hose', zh: '高压耐油软管' },
+  { vi: 'ống dẫn khí', en: 'Pneumatic Air Hose', zh: '气动耐压软管' },
+  { vi: 'khớp nối nhanh', en: 'Quick Coupler', zh: '快速接头' },
+  { vi: 'động cơ điện', en: 'Electric Drive Motor', zh: '高效驱动电机' },
+  { vi: 'mô tơ', en: 'Electric Motor', zh: '电机' },
+  { vi: 'biến tần', en: 'VFD Inverter Drive', zh: '变频器' },
+  { vi: 'bo mạch điều khiển', en: 'PLC Controller Board', zh: '微电脑控制主板' },
+  { vi: 'màn hình điều khiển', en: 'Control Display Panel', zh: '控制器显示屏' },
+
+  // 6. Tính từ & thương hiệu & xuất xứ
+  { vi: 'chính hãng', en: 'Genuine', zh: '正品原装' },
+  { vi: 'cao cấp', en: 'Premium', zh: '高品质' },
+  { vi: 'giá rẻ', en: 'Cost-Effective', zh: '高性价比' },
+  { vi: 'nhập khẩu', en: 'Imported', zh: '进口' },
+  { vi: 'chịu nhiệt', en: 'Heat-Resistant', zh: '耐高温' },
+  { vi: 'áp lực cao', en: 'High Pressure', zh: '高压' },
+  { vi: 'công nghiệp', en: 'Industrial', zh: '工业级' },
+];
+
+export function autoTranslateTitle(title: string, locale: string): string {
+  if (!title || locale === 'vi') return title;
+
+  let result = title;
+  const isEn = locale === 'en';
+  const isZh = locale === 'zh';
+
+  const sortedTerms = [...industrialTermsDict].sort((a, b) => b.vi.length - a.vi.length);
+
+  for (const term of sortedTerms) {
+    const regex = new RegExp(term.vi, 'gi');
+    if (regex.test(result)) {
+      result = result.replace(regex, isEn ? term.en : term.zh);
+    }
+  }
+
+  return result.trim();
+}
+
+
 import type { Product, NewsItem } from '@/types';
 
 // Từ điển ánh xạ danh mục sản phẩm
@@ -416,35 +543,41 @@ export function translateProduct(product: Product, locale: string = 'vi'): Produ
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
 
-  // 1. Kiểm tra bản dịch chính xác theo slug
+  const catTrans = categoryTranslationMap[product.category];
+  const translatedCategory = catTrans ? (isEn ? catTrans.en : catTrans.zh) : product.categoryName;
+  const translatedPrice = isEn ? (product.price.includes('Liên hệ') ? 'Contact for Quote' : product.price) : (product.price.includes('Liên hệ') ? '请联系获取报价' : product.price);
+
+  // 1. Kiểm tra bản dịch chính xác theo slug trong productTranslations
   const customTrans = productTranslations[product.slug];
   if (customTrans) {
     const trans = isEn ? customTrans.en : customTrans.zh;
-    const catTrans = categoryTranslationMap[product.category];
 
     return {
       ...product,
-      title: trans.title || product.title,
-      description: trans.description || product.description,
-      categoryName: trans.categoryName || (catTrans ? (isEn ? catTrans.en : catTrans.zh) : product.categoryName),
-      price: isEn ? (product.price.includes('Liên hệ') ? 'Contact for Quote' : product.price) : (product.price.includes('Liên hệ') ? '请联系获取报价' : product.price),
+      title: trans.title || autoTranslateTitle(product.title, locale),
+      description: trans.description || (isEn ? `Genuine ${autoTranslateTitle(product.title, locale)} OEM spare parts distributed by Khai Nguyen.` : `凯源机械正品直销 ${autoTranslateTitle(product.title, locale)} 原装配件，提供 2 小时极速送达与专业安装支持。`),
+      categoryName: trans.categoryName || translatedCategory,
+      price: translatedPrice,
       specs: trans.specs || translateSpecs(product.specs, locale),
     };
   }
 
-  // 2. Fallback tự động cho sản phẩm từ WordPress
-  const catTrans = categoryTranslationMap[product.category];
+  // 2. Fallback tự động dịch tên sản phẩm và mô tả từ WordPress
+  const autoTitle = autoTranslateTitle(product.title, locale);
+  const autoDesc = isEn 
+    ? `Genuine ${autoTitle} OEM spare parts distributed by Khai Nguyen across industrial parks in Dong Nai and Southern Vietnam.`
+    : `凯源机械正品直销 ${autoTitle} 原装配件，为同奈及南部各工业区提供 2 小时现货送达与专业技术支持。`;
+
   return {
     ...product,
-    categoryName: catTrans ? (isEn ? catTrans.en : catTrans.zh) : product.categoryName,
-    price: isEn ? (product.price.includes('Liên hệ') ? 'Contact for Quote' : product.price) : (product.price.includes('Liên hệ') ? '请联系获取报价' : product.price),
+    title: autoTitle,
+    description: autoDesc,
+    categoryName: translatedCategory,
+    price: translatedPrice,
     specs: translateSpecs(product.specs, locale),
   };
 }
 
-/**
- * Dịch các thông số kỹ thuật (Specs)
- */
 export function translateSpecs(specs?: { [key: string]: string }, locale: string = 'vi'): { [key: string]: string } | undefined {
   if (!specs || locale === 'vi') return specs;
 
