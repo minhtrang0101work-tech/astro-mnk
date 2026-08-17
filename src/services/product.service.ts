@@ -66,7 +66,11 @@ export class ProductService {
   static async getBestSellers(limit: number = 12, locale: string = 'vi'): Promise<Product[]> {
     const allProducts = await ProductRepository.getAllProducts(locale);
     const bestSellers = allProducts.filter(p => p.isBestSeller || p.isHot || p.isNew);
-    return bestSellers.length > 0 ? bestSellers.slice(0, limit) : allProducts.slice(0, limit);
+    if (bestSellers.length >= limit) {
+      return bestSellers.slice(0, limit);
+    }
+    const otherProducts = allProducts.filter(p => !bestSellers.some(b => b.id === p.id));
+    return [...bestSellers, ...otherProducts].slice(0, limit);
   }
 
   static async getRelatedProducts(currentSlug: string, category: string, limit: number = 4, locale: string = 'vi'): Promise<Product[]> {
