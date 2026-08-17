@@ -14,34 +14,54 @@ function normalizeWpCategory(wpTerm: any): Category {
   };
 }
 
+import { ProductRepository } from './product.repository';
+
 export class CategoryRepository {
   static async getAllCategories(): Promise<Category[]> {
+    let categories: Category[] = [];
+
     if (CMS_PROVIDER === 'MOCK') {
-      return mockCategories;
-    }
-
-    try {
-      // Gọi API lấy danh mục phân loại Custom Taxonomy của sản phẩm
-      // Mặc định Custom Taxonomy của CPT UI thường đặt tên là 'product_cat'
-      // Thêm hide_empty=false để luôn hiển thị các danh mục kể cả khi chưa có sản phẩm nào
-      const data = await fetchWordPressREST('wp/v2/product_cat?per_page=100&hide_empty=false');
-      if (Array.isArray(data)) {
-        return data.map(normalizeWpCategory);
-      }
-    } catch (error) {
-      console.error('Error fetching categories from WordPress REST API (falling back to product categories):', error);
-      
-      // Fallback thử gọi mặc định 'categories' (dành cho bài viết) nếu product_cat bị lỗi/chưa tạo
+      categories = [...mockCategories];
+    } else {
       try {
-        const defaultData = await fetchWordPressREST('wp/v2/categories?per_page=100&hide_empty=false');
-        if (Array.isArray(defaultData)) {
-          return defaultData.map(normalizeWpCategory);
+        const data = await fetchWordPressREST('wp/v2/product_cat?per_page=100&hide_empty=false');
+        if (Array.isArray(data) && data.length > 0) {
+          categories = data.map(normalizeWpCategory);
+        } else {
+          const defaultData = await fetchWordPressREST('wp/v2/categories?per_page=100&hide_empty=false');
+          if (Array.isArray(defaultData) && defaultData.length > 0) {
+            categories = defaultData.map(normalizeWpCategory);
+          } else {
+            categories = [...mockCategories];
+          }
         }
-      } catch {
-        console.error('Error fetching default categories');
+      } catch (error) {
+        console.error('Error fetching categories from WordPress REST API:', error);
+        categories = [...mockCategories];
       }
     }
 
-    return [];
+    // Luôn tính toán số lượng sản phẩm thực tế theo từng danh mục
+    try {
+      const allProducts = await ProductRepository.getAllProducts('vi');
+      const countMap = new Map<string, number>();
+
+      for (const p of allProducts) {
+        if (p.category) {
+          countMap.set(p.category, (countMap.get(p.category) || 0) + 1);
+        }
+      }
+
+      categories = categories
+        .map(cat => ({
+          ...cat,
+          count: countMap.get(cat.slug) !== undefined ? countMap.get(cat.slug)! : (cat.count || 0)
+        }))
+        .filter(cat => cat.slug !== 'uncategorized' || cat.count > 0);
+    } catch (e) {
+      console.error('Error calculating category product counts:', e);
+    }
+
+    return categories;
   }
 }

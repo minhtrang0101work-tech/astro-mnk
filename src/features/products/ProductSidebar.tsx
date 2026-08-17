@@ -40,7 +40,8 @@ export default function ProductSidebar({ categories, locale, selectedCategories 
         params.delete('category');
       }
       params.delete('page');
-      window.location.href = `/san-pham?${params.toString()}`;
+      const basePath = locale === 'en' ? '/en/san-pham' : locale === 'zh' ? '/zh/san-pham' : '/san-pham';
+      window.location.href = `${basePath}?${params.toString()}`;
     }
   };
 
