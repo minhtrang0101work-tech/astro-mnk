@@ -1,4 +1,4 @@
-import { Category } from '@/types';
+import type { Category } from '@/types';
 import { mockCategories } from '@/data/mock/categories';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
 

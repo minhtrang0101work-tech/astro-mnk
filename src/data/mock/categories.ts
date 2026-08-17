@@ -1,4 +1,4 @@
-import { Category } from '@/types';
+import type { Category } from '@/types';
 
 export const mockCategories: Category[] = [
   { id: '85', name: 'Bình Chứa Và Đầu Máy Nén Khí', slug: 'binh-chua-va-dau-may-nen-khi', count: 3 },

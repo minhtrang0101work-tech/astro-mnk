@@ -1,11 +1,16 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
+
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
-import Layout from '@/layouts/Layout.astro';
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
-const locale = 'vi';
 
+
+
+
+
+const { zone } = Astro.params;
+const locale = 'vi';
 
   const title = 'Cửa Hàng Máy Nén Khí Tại Đồng Nai - Bán, Cho Thuê & Sửa Chữa';
   const breadcrumbItems = [{ label: title }];
@@ -64,29 +69,19 @@ const locale = 'vi';
       
       <Breadcrumb title={title} items={breadcrumbItems} />
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '960px', margin: '0 auto' }}>
-          <article className="service-detail-content" style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+      <section class="section-padding">
+        <div class="container" style="max-width: 960px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
             
             {/* Last Updated */}
-            <div style={{ fontSize: '13.5px', color: 'var(--text-light)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style="font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
               <span>Cập nhật mới nhất: 2026-08-14</span>
-              <span style={{ margin: '0 8px', color: '#ccc' }}>|</span>
+              <span style="margin: 0 8px; color: #ccc;">|</span>
               <span>Cửa hàng & Kho hàng chính: TP. Biên Hòa, Tỉnh Đồng Nai</span>
             </div>
 
             {/* Answer Box / Hero Intro */}
-            <div style={{ 
-              fontWeight: 600, 
-              fontSize: '17.5px', 
-              color: 'var(--text-dark)', 
-              marginBottom: '30px', 
-              padding: '20px 26px', 
-              backgroundColor: '#f0f7ff', 
-              borderLeft: '5px solid var(--primary-color)',
-              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-              lineHeight: '1.65'
-            }}>
+            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
               <strong>Máy nén khí Khải Nguyên Đồng Nai</strong> là cửa hàng và trung tâm kỹ thuật chuyên cung cấp 
               <strong> máy nén khí công nghiệp</strong>, <strong>phụ tùng máy nén khí trục vít chính hãng</strong>, 
               dịch vụ cho thuê và <strong>sửa chữa máy nén khí tại Đồng Nai</strong>. Kho hàng rộng lớn ngay tại Biên Hòa 
@@ -94,29 +89,29 @@ const locale = 'vi';
             </div>
 
             {/* Grid Thống Kê Nổi Bật */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '35px' }}>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>2h Hỏa Tốc</div>
-                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Giao linh kiện tận nhà máy KCN</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 35px;">
+              <div style="background-color: var(--bg-light); padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--primary-color);">2h Hỏa Tốc</div>
+                <div style="font-size: 14px; color: var(--text-light);">Giao linh kiện tận nhà máy KCN</div>
               </div>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>100% Chính Hãng</div>
-                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Dầu & phụ tùng Fusheng, Kobelco</div>
+              <div style="background-color: var(--bg-light); padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--primary-color);">100% Chính Hãng</div>
+                <div style="font-size: 14px; color: var(--text-light);">Dầu & phụ tùng Fusheng, Kobelco</div>
               </div>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>24/7 Hỗ Trợ</div>
-                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Xử lý sự cố dừng máy khẩn cấp</div>
+              <div style="background-color: var(--bg-light); padding: 18px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                <div style="font-size: 28px; font-weight: 800; color: var(--primary-color);">24/7 Hỗ Trợ</div>
+                <div style="font-size: 14px; color: var(--text-light);">Xử lý sự cố dừng máy khẩn cấp</div>
               </div>
             </div>
 
             {/* Dịch Vụ Cung Cấp */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
               Các Dịch Vụ Máy Nén Khí Khải Nguyên Phục Vụ Tại Đồng Nai
             </h2>
             
-            <div style={{ display: 'grid', gap: '20px', margin: '20px 0' }}>
-              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
-                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+            <div style="display: grid; gap: 20px; margin: 20px 0;">
+              <div style="background-color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                <h3 style="margin: 0 0 10px; font-size: 18px; color: var(--primary-color);">
                   1. Mua Bán Máy Nén Khí Công Nghiệp & Máy Nén Khí Cao Áp
                 </h3>
                 <p>
@@ -126,8 +121,8 @@ const locale = 'vi';
                 </p>
               </div>
 
-              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
-                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+              <div style="background-color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                <h3 style="margin: 0 0 10px; font-size: 18px; color: var(--primary-color);">
                   2. Cung Cấp Linh Kiện & Phụ Tùng Máy Nén Khí Trục Vít
                 </h3>
                 <p>
@@ -136,8 +131,8 @@ const locale = 'vi';
                 </p>
               </div>
 
-              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
-                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+              <div style="background-color: #fff; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                <h3 style="margin: 0 0 10px; font-size: 18px; color: var(--primary-color);">
                   3. Dịch Vụ Sửa Máy Công Nghiệp & Bảo Trì Máy Nén Khí Tận Nơi 24/7
                 </h3>
                 <p>
@@ -149,13 +144,13 @@ const locale = 'vi';
             </div>
 
             {/* Các KCN Phục Vụ Tại Đồng Nai */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
               Danh Sách Các Khu Công Nghiệp Phục Vụ Hỏa Tốc Tại Đồng Nai
             </h2>
             <p>
               Khải Nguyên cam kết cử kỹ thuật viên có mặt tại xưởng hoặc giao hàng hỏa tốc chỉ trong vòng 2 giờ cho các Khu công nghiệp:
             </p>
-            <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '10px', paddingLeft: '20px' }}>
+            <ul style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; padding-left: 20px;">
               <li><strong>KCN Amata</strong> (TP. Biên Hòa)</li>
               <li><strong>KCN Biên Hòa 1 & Biên Hòa 2</strong></li>
               <li><strong>KCN Nhơn Trạch 1, 2, 3, 5, 6</strong></li>
@@ -165,36 +160,36 @@ const locale = 'vi';
             </ul>
 
             {/* Google Map Nhúng & Địa chỉ cửa hàng */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
               Bản Đồ Vị Trí Cửa Hàng Máy Nén Khí Khải Nguyên Đồng Nai
             </h2>
-            <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '30px' }}>
-              <p style={{ margin: '0 0 10px', fontWeight: 600, fontSize: '16px' }}>
+            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 30px;">
+              <p style="margin: 0 0 10px; font-weight: 600; font-size: 16px;">
                 <strong>Địa chỉ cửa hàng & kho chính:</strong> 762a Tổ 25, Khu Phố 5, Phường Long Bình, TP. Biên Hòa, Tỉnh Đồng Nai
               </p>
-              <p style={{ margin: '0 0 15px', fontWeight: 600 }}>
-                <strong>Hotline / Zalo tư vấn 24/7:</strong> <a href="tel:0909513637" style={{ color: 'var(--primary-color)', fontSize: '18px', fontWeight: 800 }}>0909.513.637</a>
+              <p style="margin: 0 0 15px; font-weight: 600;">
+                <strong>Hotline / Zalo tư vấn 24/7:</strong> <a href="tel:0909513637" style="color: var(--primary-color); font-size: 18px; font-weight: 800;">0909.513.637</a>
               </p>
               
               {/* Google Maps Iframe Embed */}
-              <div style={{ width: '100%', height: '380px', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 3px 10px rgba(0,0,0,0.1)' }}>
+              <div style="width: 100%; height: 380px; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
                 <iframe
                   title="Vị trí Máy Nén Khí Khải Nguyên Đồng Nai trên Google Maps"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.4811989069357!2d106.883713!3d10.926839!2m3!1f0!0f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dfbc6c703db5%3A0x280eefb3cbfbb!2zNzYyYSBU4buVIDI1LCBLUCA1LCBMb25nIELDrG5oLCBUaMOgbmggcGjhu5EgQmnDqm4gSMOyYSwgxJDhu5NuZyBOYWksIFZpZXRuYW0!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"
                   width="100%"
                   height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen={true}
+                  style="border: 0;"
+                  allowfullscreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
-              <div style={{ marginTop: '12px', textAlign: 'right' }}>
+              <div style="margin-top: 12px; text-align: right;">
                 <a 
                   href="https://maps.app.goo.gl/zewZCeEwq8KnPSMk6" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--primary-color)', fontWeight: 600, fontSize: '14px', textDecoration: 'underline' }}
+                  style="color: var(--primary-color); font-weight: 600; font-size: 14px; text-decoration: underline;"
                 >
                   Mở chỉ đường trực tiếp trên ứng dụng Google Maps
                 </a>

@@ -1,95 +1,49 @@
 ---
-import { PageService } from '@/services/page.service';
+import Layout from '@/layouts/Layout.astro';
+import { CategoryRepository } from '@/repositories/category.repository';
 import { ProductService } from '@/services/product.service';
-import { ProductRepository } from '@/repositories/product.repository';
-import { CategoryService } from '@/services/category.service';
 import Breadcrumb from '@/components/Breadcrumb';
+import ProductGrid from '@/features/products/ProductGrid';
 import ProductSidebar from '@/features/products/ProductSidebar';
 import ProductSort from '@/features/products/ProductSort';
-import ProductGrid from '@/features/products/ProductGrid';
 import Pagination from '@/components/Pagination';
 import CTABanner from '@/components/CTABanner';
-import { getLocale, getDictionary } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+import { getDictionary } from '@/lib/i18n';
+
 const locale = 'vi';
+const dict = await getDictionary(locale);
 
+const categories = await CategoryRepository.getAllCategories();
+const { products, total } = await ProductService.getProducts();
 
-  const locale = "vi";
-  const dict = await getDictionary(locale);
-
-  const resolvedParams = searchParams ? await searchParams : {};
-  const searchQuery = resolvedParams?.search;
-  const categoryParam = resolvedParams?.category;
-  const sortQuery = resolvedParams?.sort || 'newest';
-  const pageQuery = parseInt(resolvedParams?.page || '1', 10);
-  
-  const limit = 18;
-
-  // Split selected category slugs
-  const selectedCategories = categoryParam ? categoryParam.split(',') : [];
-
-  // Tối ưu hóa: Nạp song song danh mục, toàn bộ sản phẩm và danh sách sản phẩm phân trang
-  const [rawCategories, allProducts, { products, total }] = await Promise.all([
-    CategoryService.getCategories(),
-    ProductRepository.getAllProducts(),
-    ProductService.getProducts({
-      search: searchQuery,
-      categories: selectedCategories,
-      sort: sortQuery,
-      page: pageQuery,
-      limit: limit
-    })
-  ]);
-
-  // Tính toán số lượng sản phẩm động thực tế theo từng danh mục (chỉ đếm các sản phẩm đã xuất bản)
-  const categories = rawCategories.map(cat => {
-    const count = allProducts.filter(p => p.category === cat.slug).length;
-    return {
-      ...cat,
-      count
-    };
-  });
-
-  const breadcrumbItems = [{ label: dict.common.products }];
-
-  let bannerTitle = dict.products.title;
-  if (searchQuery) {
-    bannerTitle = `${locale === 'vi' ? 'Kết quả tìm kiếm' : locale === 'zh' ? '搜索结果' : 'Search results'}: "${searchQuery}"`;
-    breadcrumbItems.push({ label: `"${searchQuery}"` });
-  }
-
-  
+const breadcrumbItems = [
+  { label: dict.common.products }
+];
 ---
 
-<Layout locale={locale}>
-  <div>
-      <Breadcrumb title={bannerTitle} items={breadcrumbItems} />
+<Layout
+  title="Sản Phẩm & Phụ Tùng Máy Nén Khí | Khải Nguyên"
+  description="Cung cấp phụ tùng máy nén khí trục vít, piston, dầu máy, lọc dầu, lọc gió chính hãng tại Biên Hòa, Đồng Nai, Bình Dương, Long An, HCM."
+  canonical="https://maynenkhikhainguyen.com/san-pham"
+  locale={locale}
+>
+  <Breadcrumb title={dict.products.title} items={breadcrumbItems} locale={locale} />
 
-      <section className="section-padding">
-        <div className="container product-page-layout">
-          {/* Products Sidebar Filters */}
-          <ProductSidebar categories={categories} locale={locale} />
+  <section class="section-padding">
+    <div class="container product-page-layout">
+      <ProductSidebar categories={categories} locale={locale} client:load />
 
-          {/* Products Listing Grid */}
-          <div className="products-main">
-            <div className="product-listing-header">
-              <h2>{dict.products.components} <span>({total} {dict.products.count})</span></h2>
-              
-              {/* Product Sort Selector */}
-              <ProductSort locale={locale} />
-            </div>
-
-            {/* Products Card Grid */}
-            <ProductGrid products={products} searchQuery={searchQuery} />
-
-            {/* URL Parameter-based Pagination */}
-            <Pagination total={total} limit={limit} currentPage={pageQuery} />
-          </div>
+      <div class="products-main">
+        <div class="product-listing-header">
+          <h2>{dict.common.allProducts} <span>({total} {dict.products.count})</span></h2>
+          <ProductSort locale={locale} client:load />
         </div>
-      </section>
 
-      <CTABanner locale={locale} />
+        <ProductGrid products={products} />
+        <Pagination total={total} limit={12} currentPage={1} baseUrl="/san-pham" />
+      </div>
     </div>
+  </section>
+
+  <CTABanner locale={locale} />
 </Layout>

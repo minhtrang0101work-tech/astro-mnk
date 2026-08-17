@@ -1,4 +1,4 @@
-import { NewsItem } from '@/types';
+import type { NewsItem } from '@/types';
 import { NewsRepository } from '@/repositories/news.repository';
 import { removeAccents } from '@/lib/utils';
 

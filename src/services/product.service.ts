@@ -1,4 +1,4 @@
-import { Product } from '@/types';
+import type { Product } from '@/types';
 import { ProductRepository } from '@/repositories/product.repository';
 import { removeAccents } from '@/lib/utils';
 

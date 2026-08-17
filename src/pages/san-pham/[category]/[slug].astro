@@ -1,415 +1,148 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+import { ProductRepository } from '@/repositories/product.repository';
 import { ProductService } from '@/services/product.service';
 import Breadcrumb from '@/components/Breadcrumb';
 import ProductGallery from '@/features/products/ProductGallery';
 import ProductDescription from '@/features/products/ProductDescription';
 import ProductCard from '@/features/products/ProductCard';
 import CTABanner from '@/components/CTABanner';
-import { getLocale, getDictionary } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
+import { getDictionary } from '@/lib/i18n';
 
 export async function getStaticPaths() {
-  const products = await ProductService.getAll();
+  const products = await ProductRepository.getAllProducts();
   return products.map(product => ({
     params: { category: product.category, slug: product.slug },
     props: { product }
   }));
 }
 
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+const { category, slug } = Astro.params;
+const { product } = Astro.props;
+
 const locale = 'vi';
+const dict = await getDictionary(locale);
 
+let relatedProducts = await ProductService.getRelatedProducts(product.id, product.category, 3);
+if (relatedProducts.length === 0) {
+  const featured = await ProductService.getFeaturedProducts(4);
+  relatedProducts = featured.filter(p => p.id !== product.id).slice(0, 3);
+}
 
-  const locale = "vi";
-  const dict = await getDictionary(locale);
+const baseUrl = 'https://maynenkhikhainguyen.com';
+const absoluteImageUrl = product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`;
+const cleanDescription = product.description ? product.description.replace(/<[^>]*>?/gm, '').trim() : '';
+const finalDescription = cleanDescription || `Chuyên cung cấp ${product.title} chính hãng, chất lượng cao, giá cạnh tranh nhất tại Khải Nguyên.`;
 
-  const resolvedParams = params ? await params : { category: '', slug: '' };
-  const { category, slug } = resolvedParams;
-
-  const product = await ProductService.getProductBySlug(slug);
-
-  if (!product) {
-    notFound();
+const productSchema = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": product.title,
+  "image": [absoluteImageUrl],
+  "description": finalDescription,
+  "sku": product.id,
+  "mpn": (product.specs && product.specs['Mã MPN'] !== 'Chưa cập nhật') ? product.specs['Mã MPN'] : undefined,
+  "brand": {
+    "@type": "Brand",
+    "name": (product.specs && product.specs['Thương hiệu']) || "Khải Nguyên"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": `${baseUrl}/san-pham/${category}/${product.slug}`,
+    "priceCurrency": "VND",
+    "price": (product.price && product.price !== 'Liên hệ báo giá') ? parseInt(product.price.replace(/[^0-9]/g, '') || "3000000", 10) : 3000000,
+    "priceValidUntil": "2026-12-31",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
   }
+};
 
-  // Lấy các sản phẩm liên quan cùng danh mục
-  let relatedProducts = await ProductService.getRelatedProducts(product.id, product.category, 3);
-  
-  // Fallback: Nếu không tìm thấy sản phẩm liên quan cùng danh mục, lấy các sản phẩm nổi bật khác để hiển thị
-  if (relatedProducts.length === 0) {
-    const featured = await ProductService.getFeaturedProducts(4);
-    relatedProducts = featured.filter(p => p.id !== product.id).slice(0, 3);
-  }
-
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://maynenkhikhainguyen.com';
-  
-  // Xử lý ảnh đại diện tuyệt đối hoặc tương đối
-  const absoluteImageUrl = product.image.startsWith('http')
-    ? product.image
-    : `${baseUrl}${product.image}`;
-
-  // Làm sạch phần mô tả khỏi các thẻ HTML
-  const cleanDescription = product.description
-    ? product.description.replace(/<[^>]*>?/gm, '').trim()
-    : '';
-  const finalDescription = cleanDescription || `Chuyên cung cấp ${product.title} chính hãng, chất lượng cao, giá cạnh tranh nhất tại Khải Nguyên. Liên hệ ngay để được báo giá và tư vấn kỹ thuật.`;
-
-  const productSchema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": product.title,
-    "image": absoluteImageUrl,
-    "description": finalDescription,
-    "sku": product.id,
-    "mpn": (product.specs && product.specs['Mã MPN'] !== 'Chưa cập nhật') ? product.specs['Mã MPN'] : undefined,
-    "offers": {
-      "@type": "Offer",
-      "url": `${baseUrl}/san-pham/${category}/${product.slug}`,
-      "priceCurrency": "VND",
-      "price": "0",
-      "priceValidUntil": "2030-12-31",
-      "validFrom": "2026-01-01",
-      "availability": "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition",
-      "shippingDetails": {
-        "@type": "OfferShippingDetails",
-        "shippingRate": {
-          "@type": "MonetaryAmount",
-          "value": 0,
-          "currency": "VND"
-        },
-        "shippingDestination": {
-          "@type": "DefinedRegion",
-          "addressCountry": "VN"
-        },
-        "deliveryTime": {
-          "@type": "ShippingDeliveryTime",
-          "handlingTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 0,
-            "maxValue": 1,
-            "unitCode": "DAY"
-          },
-          "transitTime": {
-            "@type": "QuantitativeValue",
-            "minValue": 1,
-            "maxValue": 3,
-            "unitCode": "DAY"
-          }
-        }
-      }
-    },
-    "brand": {
-      "@type": "Brand",
-      "name": (product.specs && product.specs['Thương hiệu']) || "Khải Nguyên"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "15"
-    },
-    "review": {
-      "@type": "Review",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
-      "author": {
-        "@type": "Person",
-        "name": "Khách hàng"
-      }
-    }
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": locale === 'vi' 
-          ? `Linh kiện ${product.title} có tương thích với dòng máy nén khí của tôi không?` 
-          : locale === 'zh'
-          ? `该 ${product.title} 配件是否与我的空压机型号兼容？`
-          : `Is this ${product.title} compatible with my air compressor model?`,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": locale === 'vi'
-            ? `Các sản phẩm linh kiện do Khải Nguyên cung cấp (bao gồm cả ${product.title}) được thiết kế tương thích chuẩn cho các dòng máy nén khí trục vít Atlas Copco, Kobelco, Hitachi, Ingersoll Rand... Vui lòng liên hệ Hotline 0909 513 637 và gửi mã model máy để kỹ sư của chúng tôi xác minh sự phù hợp 100%.`
-            : locale === 'zh'
-            ? `凯源提供的配件（包括 ${product.title}）与阿特拉斯·科普柯、神钢、日立、英格索兰等各大品牌螺杆式空压机精准兼容。请拨打热线0909 513 637并发送您的机器型号，我们的工程师将为您进行100%匹配确认。`
-            : `Spare parts supplied by Khai Nguyen (including ${product.title}) are designed to be fully compatible with screw air compressors from major brands like Atlas Copco, Kobelco, Hitachi, Ingersoll Rand... Please contact Hotline 0909 513 637 with your machine model for 100% verification.`
-        }
-      },
-      {
-        "@type": "Question",
-        "name": locale === 'vi' ? "Linh kiện phụ tùng máy nén khí được bảo hành bao lâu?" : locale === 'zh' ? "空压机配件的保修期是多久？" : "How long is the warranty for the air compressor spare parts?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": locale === 'vi'
-            ? "Các sản phẩm lọc dầu, lọc gió được bảo hành 3 tháng (tương đương 2.000 giờ chạy máy). Lọc tách dầu khí nén được bảo hành 6 tháng (tương đương 4.000 giờ chạy máy). Các két làm mát giải nhiệt hoặc phụ tùng cơ khí nặng khác bảo hành từ 12 đến 24 tháng."
-            : locale === 'zh'
-            ? "油滤、空滤配件保修3个月（相当于2000小时运行时间）。油水分离器（油分）保修6个月（相当于4000小时运行时间）。冷却器散热片或重型机械配件保修12至24个月。"
-            : "Air filters and oil filters are warrantied for 3 months (2,000 running hours). Oil separators are warrantied for 6 months (4,000 running hours). Cooling radiators and heavy mechanical parts carry a 12 to 24-month warranty."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": locale === 'vi' ? "Khải Nguyên có hỗ trợ thay thế phụ tùng tận nơi không?" : locale === 'zh' ? "凯源是否提供上门配件安装和更换服务？" : "Does Khai Nguyen support on-site spare parts replacement?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": locale === 'vi'
-            ? "Có, chúng tôi có đội ngũ kỹ thuật giao hàng và hỗ trợ thay thế phụ tùng, lọc, dầu máy nén khí trực tiếp tại nhà xưởng của bạn ở khu vực Đồng Nai, Bình Dương, Long An, HCMC để đảm bảo quy trình bảo dưỡng chuẩn kỹ thuật."
-            : locale === 'zh'
-            ? "是的，我们拥有专业技术团队，可在同奈、平阳、隆安、胡志明市等地区的工厂现场提供配件交付及空压机三滤、润滑油的更换安装服务，确保保养流程符合标准技术规范。"
-            : "Yes, our technical team supports delivery and replacement of filters and compressor oil directly at your factory in Dong Nai, Binh Duong, Long An, and HCMC to guarantee correct technical procedures."
-        }
-      }
-    ]
-  };
-
-  const breadcrumbItems = [
-    { label: dict.common.products, href: '/san-pham' },
-    { label: product.categoryName, href: `/san-pham/${product.category}` },
-    { label: product.title }
-  ];
-
-  
+const breadcrumbItems = [
+  { label: dict.common.products, href: '/san-pham' },
+  { label: product.categoryName, href: `/san-pham/${product.category}` },
+  { label: product.title }
+];
 ---
 
-<Layout locale={locale}>
-  <div className="product-detail-page-container">
-      <script type="application/ld+json" is:inline
-        set:html={JSON.stringify(productSchema)}
-      />
-      <script type="application/ld+json" is:inline
-        set:html={JSON.stringify(faqSchema)}
-      />
-      <Breadcrumb title="Thông tin chi tiết sản phẩm" items={breadcrumbItems} />
+<Layout
+  title={`${product.title} | Phụ Tùng Máy Nén Khí Khải Nguyên`}
+  description={finalDescription.slice(0, 160)}
+  canonical={`${baseUrl}/san-pham/${category}/${product.slug}`}
+  image={absoluteImageUrl}
+  schema={productSchema}
+  locale={locale}
+>
+  <div class="product-detail-page-container">
+    <Breadcrumb title={product.title} items={breadcrumbItems} locale={locale} />
 
-      <section className="section-padding">
-        <div className="container">
-          <div className="detail-grid">
-            {/* Left Column: Gallery */}
-            <ProductGallery initialImage={product.image} />
+    <section class="section-padding">
+      <div class="container">
+        <div class="detail-grid">
+          <ProductGallery initialImage={product.image} client:load />
+
+          <div class="detail-info">
+            <span class="product-cat">
+              {product.categoryName}
+            </span>
+            <h2 style="font-size: 26px; color: var(--text-dark); margin-bottom: 12px; font-weight: 700;">{product.title}</h2>
             
-            {/* Right Column: Info & CTA */}
-            <div className="detail-info">
-              <span className="product-cat" style={{ 
-                display: 'inline-block', 
-                backgroundColor: 'rgba(255, 107, 0, 0.08)', 
-                color: 'var(--accent-color)', 
-                padding: '4px 12px', 
-                borderRadius: '100px', 
-                fontSize: '12px', 
-                fontWeight: '700', 
-                textTransform: 'uppercase', 
-                marginBottom: '12px', 
-                letterSpacing: '0.5px' 
-              }}>
-                {product.categoryName}
-              </span>
-              <h2 style={{ 
-                fontSize: '32px', 
-                fontWeight: '800', 
-                color: 'var(--text-dark)', 
-                wordBreak: 'break-word', 
-                textWrap: 'balance', 
-                lineHeight: '1.3', 
-                marginBottom: '22px' 
-              }}>{product.title}</h2>
-              
-              {/* AEO Product Answer Block */}
-              <div style={{
-                fontSize: '14.5px',
-                color: 'var(--text-color)',
-                lineHeight: '1.6',
-                marginBottom: '25px',
-                padding: '15px 18px',
-                backgroundColor: 'var(--bg-light)',
-                borderLeft: '4px solid var(--accent-color)',
-                borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.01)'
-              }}>
-                {locale === 'vi'
-                  ? `Sản phẩm ${product.title} là linh kiện phụ tùng thay thế chất lượng OEM, được Khải Nguyên phân phối và lắp đặt tận nơi tại các nhà máy ở Đồng Nai, Bình Dương, và TP.HCM. Sản phẩm đáp ứng đầy đủ các tiêu chuẩn kỹ thuật khắt khe, giúp bảo vệ và tối ưu hiệu suất máy nén khí trục vít.`
-                  : locale === 'zh'
-                  ? `${product.title} 是高质量的 OEM 替换配件，由凯源提供并在同奈、平阳和胡志明市的工厂提供上门安装服务。该配件符合严格的技术标准，有助于保护并优化螺杆空压机运行效率。`
-                  : `The ${product.title} is a premium OEM replacement spare part distributed and installed on-site by Khai Nguyen at factories in Dong Nai, Binh Duong, and HCMC. It meets strict engineering standards to protect and optimize screw compressor efficiency.`}
+            <p style="color: var(--text-color); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+              Sản phẩm {product.title} là linh kiện phụ tùng thay thế chất lượng OEM, được Khải Nguyên phân phối và lắp đặt tận nơi tại các nhà máy ở Đồng Nai, Bình Dương, và TP.HCM.
+            </p>
+
+            <div class="detail-price-box">
+              <div>
+                <span class="price-label">Giá niêm yết:</span>
+                <span class="price-value">{product.price || 'Liên hệ báo giá'}</span>
               </div>
-              <div className="detail-price-box" style={{
-                backgroundColor: 'rgba(255, 107, 0, 0.03)',
-                border: '1px solid rgba(255, 107, 0, 0.12)',
-                borderLeft: '4px solid var(--accent-color)',
-                borderRadius: '8px',
-                padding: '12px 20px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.01)',
-                marginBottom: '25px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px'
-              }}>
-                <i className="fas fa-info-circle" style={{ color: 'var(--accent-color)', fontSize: '18px', flexShrink: 0 }}></i>
-                <span style={{ fontSize: '13.5px', color: 'var(--text-dark)', fontWeight: '600', lineHeight: '1.4', flex: 1 }}>
-                  {dict.productDetail.priceOnSurvey}
-                </span>
-              </div>
-              
-              <div className="detail-actions">
-                <a href={`/lien-he?product=${encodeURIComponent(product.title)}`} className="btn btn-primary" style={{ padding: '15px 35px' }} data-astro-prefetch="hover">
-                  <i className="fab fa-telegram-plane" style={{ marginRight: '8px' }}></i> {dict.productDetail.quoteBtn}
-                </a>
-                <a href="tel:0909513637" className="btn btn-outline-dark" style={{ padding: '15px 35px' }}>
-                  <i className="fas fa-phone-alt" style={{ marginRight: '8px' }}></i> 0909 513 637
-                </a>
-              </div>
-              
-              <ul className="detail-bullets" style={{ 
-                listStyle: 'none', 
-                padding: 0, 
-                margin: '25px 0 0 0', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: '12px' 
-              }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: 'var(--text-dark)' }}>
-                  <i className="fas fa-certificate" style={{ color: '#22c55e', fontSize: '15px' }}></i>
-                  <span>{dict.productDetail.bullet1}</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: 'var(--text-dark)' }}>
-                  <i className="fas fa-shield-alt" style={{ color: '#22c55e', fontSize: '15px' }}></i>
-                  <span>{dict.productDetail.bullet2}</span>
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: 'var(--text-dark)' }}>
-                  <i className="fas fa-user-shield" style={{ color: '#22c55e', fontSize: '15px' }}></i>
-                  <span>{dict.productDetail.bullet3}</span>
-                </li>
-              </ul>
             </div>
+
+            <div class="detail-actions">
+              <a href={`/lien-he?product=${encodeURIComponent(product.title)}`} class="btn btn-primary" style="padding: 15px 35px;" data-astro-prefetch="hover">
+                <i class="fab fa-telegram-plane" style="margin-right: 8px;"></i> {dict.productDetail.quoteBtn}
+              </a>
+              <a href="tel:0909513637" class="btn btn-outline-dark" style="padding: 15px 35px;">
+                <i class="fas fa-phone-alt" style="margin-right: 8px;"></i> 0909 513 637
+              </a>
+            </div>
+
+            <ul class="detail-bullets">
+              <li><i class="fas fa-certificate" style="color: #22c55e; font-size: 15px;"></i> Cam kết chất lượng chính hãng 100%</li>
+              <li><i class="fas fa-shield-alt" style="color: #22c55e; font-size: 15px;"></i> Bảo hành chính hãng uy tín từ 6 - 24 tháng</li>
+              <li><i class="fas fa-user-shield" style="color: #22c55e; font-size: 15px;"></i> Đội ngũ kỹ sư hỗ trợ khảo sát tận nơi miễn phí</li>
+            </ul>
           </div>
-          
-          {/* Tech Specs & Sidebar */}
-          <div className="detail-grid detail-specs-section">
-            {/* Lower Left: Description and specs */}
+        </div>
+
+        <div class="detail-grid detail-specs-section">
+          <div>
             <ProductDescription description={product.description} specs={product.specs} />
-            
-            {/* Lower Right: Trust factors */}
-            <div>
-              <div className="detail-sidebar">
-                <h3 className="sidebar-title">{dict.productDetail.whyTitle}</h3>
-                <ul className="sidebar-reason-list">
-                  <li>
-                    <h4>{dict.home.features.supportTitle}</h4>
-                    <p>{dict.home.features.supportDesc}</p>
-                  </li>
-                  <li>
-                    <h4>{dict.home.features.partsTitle}</h4>
-                    <p>{dict.home.features.partsDesc}</p>
-                  </li>
-                  <li>
-                    <h4>{locale === 'vi' ? 'Khảo sát & tư vấn miễn phí' : locale === 'zh' ? '免费技术巡检与设计' : 'Free inspection & design'}</h4>
-                    <p>{dict.consulting.auditDesc}</p>
-                  </li>
-                </ul>
-                
-                <img 
-                  src="/assets/images/hero_bg.jpg" 
-                  alt="Nhà máy hoạt động máy nén khí" 
-                  style={{ borderRadius: 'var(--radius-sm)', marginTop: '20px', width: '100%', height: 'auto' }} 
-                />
-              </div>
-            </div>
           </div>
 
-          {/* AEO Product FAQs */}
-          <div style={{ marginTop: '60px', paddingTop: '30px', borderTop: '1px solid #eee' }}>
-            <h3 style={{ fontSize: '20px', color: 'var(--primary-color)', marginBottom: '20px', fontWeight: 700 }}>
-              {locale === 'vi' ? 'Câu hỏi thường gặp về sản phẩm' : locale === 'zh' ? '产品常见问题 (FAQ)' : 'Product FAQs'}
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              {faqSchema.mainEntity.map((item, index) => (
-                <div key={index} style={{ backgroundColor: '#fafafa', padding: '16px 20px', borderRadius: 'var(--radius-sm)', border: '1px solid #f0f0f0' }}>
-                  <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', color: 'var(--text-dark)', fontWeight: 700 }}>
-                    Q: {item.name}
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '14px', color: 'var(--text-color)', lineHeight: '1.5' }}>
-                    A: {item.acceptedAnswer.text}
-                  </p>
-                </div>
+          <div class="detail-sidebar">
+            <h3 class="sidebar-title">{dict.productDetail.whyTitle}</h3>
+            <ul class="sidebar-reason-list">
+              <li><i class="fas fa-check-circle"></i> Linh kiện đúng chuẩn kích thước & áp suất kỹ thuật</li>
+              <li><i class="fas fa-check-circle"></i> Đội ngũ kỹ sư hơn 15 năm kinh nghiệm về khí nén</li>
+              <li><i class="fas fa-check-circle"></i> Hàng sẵn kho Biên Hòa, giao nhanh trong 2 giờ</li>
+              <li><i class="fas fa-check-circle"></i> Giá cả cạnh tranh tối ưu chi phí vận hành</li>
+            </ul>
+          </div>
+        </div>
+
+        {relatedProducts.length > 0 && (
+          <div style="margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px;">
+            <h3 class="specs-title">{dict.productDetail.relatedTitle}</h3>
+            <div class="products-grid">
+              {relatedProducts.map((related) => (
+                <ProductCard product={related} />
               ))}
             </div>
           </div>
-
-          {/* Related Products */}
-          {relatedProducts.length > 0 && (
-            <div style={{ marginTop: '80px' }}>
-              <h3 className="specs-title">{dict.productDetail.relatedTitle}</h3>
-              <div className="products-grid">
-                {relatedProducts.map(related => (
-                  <ProductCard key={related.id} product={related} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <CTABanner locale={locale} />
-
-      {/* Sticky Bottom Action Bar on Mobile */}
-      <div className="mobile-sticky-action-bar" style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 -3px 15px rgba(0,0,0,0.08)',
-        padding: '12px 20px',
-        display: 'none',
-        alignItems: 'center',
-        gap: '12px',
-        zIndex: 998
-      }}>
-        <a 
-          href="tel:0909513637" 
-          style={{
-            width: '50px',
-            height: '50px',
-            borderRadius: '8px',
-            backgroundColor: 'rgba(255, 107, 0, 0.1)',
-            color: 'var(--accent-color)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            flexShrink: 0,
-            border: '1px solid rgba(255, 107, 0, 0.2)'
-          }}
-          aria-label="Gọi ngay hotline"
-        >
-          <i className="fas fa-phone-alt"></i>
-        </a>
-        
-        <a href={`/lien-he?product=${encodeURIComponent(product.title)}`} 
-          className="btn btn-primary"
-          style={{
-            flexGrow: 1,
-            padding: '14px 20px',
-            fontSize: '14px',
-            fontWeight: '700',
-            textAlign: 'center',
-            borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            boxShadow: '0 4px 10px rgba(255, 107, 0, 0.2)'
-          }}
-         data-astro-prefetch="hover">
-          <i className="fab fa-telegram-plane"></i> {dict.productDetail.quoteBtn}
-        </a>
+        )}
       </div>
-    </div>
+    </section>
+
+    <CTABanner locale={locale} />
+  </div>
 </Layout>

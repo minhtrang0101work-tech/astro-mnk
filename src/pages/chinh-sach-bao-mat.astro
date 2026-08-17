@@ -1,14 +1,18 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 import { getLocale } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+
+
+
+
+
+const { zone } = Astro.params;
 const locale = 'vi';
 
-
-  const locale = "vi";
+  
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
 
@@ -26,18 +30,18 @@ const locale = 'vi';
         items={breadcrumbItems} 
       />
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <section class="section-padding">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
           {isEn ? (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 At Khai Nguyen Air Compressor, we understand that your data privacy and security is the foundation of building a reliable, long-term partnership. This policy describes how we collect, use, and protect your information.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. Purpose and Scope of Data Collection
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>
                   Customer information (personal or business) collected when purchasing spare parts, requesting inspections, repairs, or maintenance will be kept strictly confidential.
                 </li>
@@ -49,63 +53,63 @@ const locale = 'vi';
                 </li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. Scope of Information Usage
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 Information provided by customers will only be used by Khai Nguyen internally for the following purposes:
               </p>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>Supplying spare parts, equipment, or executing technical services (repairs, maintenance, leasing) as requested.</li>
                 <li>Sending detailed technical quotes and advising energy-saving compressed air solutions.</li>
                 <li>Notifying routine air compressor maintenance schedules (after every 2,000 or 4,000 running hours).</li>
                 <li>Providing after-sales support and collecting feedback on service quality.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. Data Retention Period
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 Personal data and technical service logs will be stored throughout our cooperation relationship or until requested by the customer to be deleted, ensuring accurate lifetime tracking of your machines.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. Data Administrator
               </h2>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '20px', borderRadius: 'var(--radius-sm)', borderLeft: '4px solid var(--accent-color)', marginBottom: '25px' }}>
-                <strong style={{ fontSize: '16px', color: 'var(--text-dark)' }}>KHAI NGUYEN AIR COMPRESSOR</strong><br />
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-color); margin-bottom: 25px;">
+                <strong style="font-size: 16px; color: var(--text-dark);">KHAI NGUYEN AIR COMPRESSOR</strong><br />
                 <strong>Address:</strong> 762a Hamlet 25, Long Binh Ward, Bien Hoa, Dong Nai.<br />
                 <strong>Hotline:</strong> 0909 513 637<br />
-                <strong>Email:</strong> <a href="mailto:khainguyen209@gmail.com" style={{ color: 'var(--accent-color)' }}>khainguyen209@gmail.com</a><br />
+                <strong>Email:</strong> <a href="mailto:khainguyen209@gmail.com" style="color: var(--accent-color);">khainguyen209@gmail.com</a><br />
                 <strong>Website:</strong> maynenkhikhainguyen.com
               </div>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 5. Means of Data Modification and Removal
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 If you need to change contact info, delivery addresses, or request the removal of your data, please contact us directly via Hotline <strong>0909 513 637</strong> or email: <strong>khainguyen209@gmail.com</strong>. Your request will be processed within 24 business hours.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 6. Commitment to Data Security
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>We commit to using information solely for the intended purposes and keeping all transaction, quotation, and technical design data strictly confidential.</li>
                 <li>We do not transfer, trade, or disclose customer data to third parties for commercial purposes.</li>
                 <li>We apply necessary cybersecurity measures to protect our database systems from unauthorized access or theft.</li>
               </ul>
             </article>
           ) : isZh ? (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 在凯源空压机，我们深知您信息安全与隐私是建立互信共赢合作伙伴关系的基石。本协议阐明了我们如何收集、使用和保护您的相关信息。
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. 信息收集的目的和范围
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>
                   客户（个人或企业）在购买配件、请求现场测定、技术维修或常规保养时所登记的所有业务数据将严格保密。
                 </li>
@@ -117,63 +121,63 @@ const locale = 'vi';
                 </li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. 信息的使用范围
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 客户提供的信息仅用于凯源以下内部服务目的：
               </p>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>根据您的要求提供配件产品发货、有针对性的技术维保、租赁服务。</li>
                 <li>发送详细技术报价单、出具系统节能设计方案。</li>
                 <li>通过Zalo或短信系统定期推送保养到期提醒（每过2000小时或4000小时运行时间）。</li>
                 <li>开展售后服务回访及产品质量意见收集。</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. 数据保留期限
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 客户的企业信息与维保技术历史将永久保存在我们的系统内，或保存至客户发出删除指令为止，以确保存档跟踪的连续性与终身维保精确性。
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. 信息收集与管理机构
               </h2>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '20px', borderRadius: 'var(--radius-sm)', borderLeft: '4px solid var(--accent-color)', marginBottom: '25px' }}>
-                <strong style={{ fontSize: '16px', color: 'var(--text-dark)' }}>凯源空压机</strong><br />
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-color); margin-bottom: 25px;">
+                <strong style="font-size: 16px; color: var(--text-dark);">凯源空压机</strong><br />
                 <strong>地址:</strong> 越南同奈省边和市龙平坊25区762a.<br />
                 <strong>热线电话:</strong> 0909 513 637<br />
-                <strong>服务邮箱:</strong> <a href="mailto:khainguyen209@gmail.com" style={{ color: 'var(--accent-color)' }}>khainguyen209@gmail.com</a><br />
+                <strong>服务邮箱:</strong> <a href="mailto:khainguyen209@gmail.com" style="color: var(--accent-color);">khainguyen209@gmail.com</a><br />
                 <strong>官方网站:</strong> maynenkhikhainguyen.com
               </div>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 5. 个人数据访问与更正途径
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 如需更改您的联系电话、收货厂区地址或注销系统归档，请随时拨打热线 <strong>0909 513 637</strong> 或发送邮件至 <strong>khainguyen209@gmail.com</strong>。我们将在24小时内处理完毕。
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 6. 客户隐私安全保障承诺
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>承诺严防信息泄露，确保每一家合作工厂的设计图纸、气量测定历史和采购报价的安全。</li>
                 <li>绝不为了商业利益向任何第三方倒卖、交易客户数据。</li>
                 <li>应用最新的网络安全措施，确保信息系统不被非法入侵。</li>
               </ul>
             </article>
           ) : (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 Tại Máy nén khí Khải Nguyên, chúng tôi hiểu rằng sự an toàn và bảo mật thông tin của quý khách hàng là yếu tố quan trọng hàng đầu trong việc xây dựng mối quan hệ đối tác bền vững. Chính sách này mô tả cách chúng tôi thu thập, sử dụng và bảo mật dữ liệu của bạn.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. Mục đích và phạm vi thu thập thông tin
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>
                   Các thông tin của khách hàng (cá nhân hoặc doanh nghiệp) khi mua phụ tùng, yêu cầu khảo sát, sửa chữa hoặc bảo dưỡng hệ thống máy nén khí sẽ được bảo mật tuyệt đối.
                 </li>
@@ -185,48 +189,48 @@ const locale = 'vi';
                 </li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. Phạm vi sử dụng thông tin
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 Các thông tin được khách hàng cung cấp sẽ chỉ được Khải Nguyên sử dụng vào các mục đích nội bộ sau:
               </p>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>Cung cấp hàng hóa linh kiện phụ tùng, thực hiện các dịch vụ kỹ thuật (sửa chữa, bảo trì, cho thuê máy nén khí) theo yêu cầu.</li>
                 <li>Gửi báo giá kỹ thuật chi tiết, tư vấn giải pháp khí nén tiết kiệm điện năng.</li>
                 <li>Thông báo lịch bảo dưỡng định kỳ máy nén khí (sau mỗi 2.000 giờ hoặc 4.000 giờ chạy máy).</li>
                 <li>Chăm sóc khách hàng sau bán hàng và tiếp nhận ý kiến phản hồi về chất lượng dịch vụ.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. Thời gian lưu trữ thông tin
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 Thông tin cá nhân và lịch sử kỹ thuật hệ thống máy nén khí của khách hàng sẽ được lưu trữ trong suốt thời gian thiết lập mối quan hệ hợp tác hoặc cho đến khi khách hàng có yêu cầu hủy bỏ, nhằm đảm bảo việc theo dõi bảo dưỡng trọn đời máy được chính xác.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. Đơn vị thu thập và quản lý thông tin
               </h2>
-              <div style={{ backgroundColor: 'var(--bg-light)', padding: '20px', borderRadius: 'var(--radius-sm)', borderLeft: '4px solid var(--accent-color)', marginBottom: '25px' }}>
-                <strong style={{ fontSize: '16px', color: 'var(--text-dark)' }}>MÁY NÉN KHÍ KHẢI NGUYÊN</strong><br />
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-color); margin-bottom: 25px;">
+                <strong style="font-size: 16px; color: var(--text-dark);">MÁY NÉN KHÍ KHẢI NGUYÊN</strong><br />
                 <strong>Địa chỉ:</strong> 762a tổ 25, khu phố 5, Phường Long Bình, Biên Hòa, Đồng Nai.<br />
                 <strong>Hotline:</strong> 0909 513 637<br />
-                <strong>Email:</strong> <a href="mailto:khainguyen209@gmail.com" style={{ color: 'var(--accent-color)' }}>khainguyen209@gmail.com</a><br />
+                <strong>Email:</strong> <a href="mailto:khainguyen209@gmail.com" style="color: var(--accent-color);">khainguyen209@gmail.com</a><br />
                 <strong>Website:</strong> maynenkhikhainguyen.com
               </div>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 5. Phương tiện tiếp cận và chỉnh sửa dữ liệu cá nhân
               </h2>
-              <p style={{ marginBottom: '20px' }}>
+              <p style="margin-bottom: 20px;">
                 Nếu khách hàng có nhu cầu thay đổi thông tin liên lạc, địa chỉ giao hàng hoặc yêu cầu xóa bỏ thông tin trong hệ thống chăm sóc khách hàng của chúng tôi, vui lòng liên hệ trực tiếp qua số Hotline <strong>0909 513 637</strong> hoặc gửi thư về địa chỉ Email: <strong>khainguyen209@gmail.com</strong>. Yêu cầu của quý khách sẽ được xử lý cập nhật trong vòng 24 giờ làm việc.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 6. Cam kết bảo mật thông tin khách hàng
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>Chúng tôi cam kết sử dụng thông tin đúng mục đích và bảo mật tuyệt đối mọi thông tin giao dịch, báo giá, phương án kỹ thuật thiết kế của từng nhà xưởng.</li>
                 <li>Không chuyển nhượng, mua bán hay tiết lộ dữ liệu khách hàng cho bên thứ ba vì bất kỳ mục đích thương mại nào.</li>
                 <li>Áp dụng các biện pháp an ninh mạng cần thiết để bảo vệ hệ thống cơ sở dữ liệu tránh khỏi các cuộc tấn công đánh cắp thông tin trái phép.</li>

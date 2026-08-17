@@ -1,14 +1,18 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 import { getLocale } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+
+
+
+
+
+const { zone } = Astro.params;
 const locale = 'vi';
 
-
-  const locale = "vi";
+  
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
 
@@ -26,30 +30,30 @@ const locale = 'vi';
         items={breadcrumbItems} 
       />
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <section class="section-padding">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
           {isEn ? (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 The industrial air compressor parts and mechanical components market in Vietnam is growing rapidly. To expand our distribution network and bring high-quality products closer to factories, Khai Nguyen welcomes cooperation opportunities with commercial entities and technical service workshops nationwide under an extremely favorable wholesale policy.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. Outstanding Advantages of Khai Nguyen
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>Over 15 Years of Experience:</strong> A solid reputation in importing and distributing compressor oils, oil separators, air filters, solenoid valves, and heat exchangers from major global brands.</li>
                 <li><strong>Large Stock Available:</strong> Our main warehouse is strategically located in Bien Hoa, Dong Nai - the industrial gateway of Southern Vietnam, ensuring abundant stock and fast delivery.</li>
                 <li><strong>Dedicated Technical Support:</strong> We always accompany and support dealers with technical installation advice and troubleshooting.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. Wholesale Ordering Process for Dealers
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 Dealers can select and order parts using the following steps:
               </p>
-              <ol style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ol style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>Reference our regularly updated product catalogs on: <strong>maynenkhikhainguyen.com</strong>.</li>
                 <li>Compile your part number list, technical parameters (or pictures of old parts) and requested quantities.</li>
                 <li>Send your inquiry for wholesale quotation through our direct contact channels:
@@ -59,55 +63,55 @@ const locale = 'vi';
                   </ul>
                 </li>
               </ol>
-              <p style={{ fontStyle: 'italic', marginBottom: '25px' }}>
+              <p style="font-style: italic; margin-bottom: 25px;">
                 * <strong>Flexible Policy:</strong> Khai Nguyen does not impose minimum order quantities (MOQ). You are free to mix different component lines based on your clients&rsquo; actual needs. Once verified as a dealer/technician, wholesale prices apply from the very first order.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. Dealer Benefits and Support Policies
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>High Discounts:</strong> An attractive progressive discount scale. Dealers with good cumulative sales or quarterly commitments receive special pricing and regional exclusivity.</li>
                 <li><strong>Technical Support:</strong> Access to datasheets, catalogs, and detailed installation guidelines. We are ready to assist in surveying large factory projects alongside you.</li>
                 <li><strong>Marketing & Logistics:</strong> High-resolution photos/videos of parts are provided for your marketing. Fast delivery is supported to long-distance shipping hubs across Southern Vietnam.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. Payment Methods
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>Direct Payment in Bien Hoa:</strong> Settle payment on delivery after verifying all parts and tax invoices.</li>
                 <li><strong>Remote Purchases (Shipping via Hubs):</strong> 100% bank transfer or deposit/advance payment prior to warehousing dispatch.</li>
                 <li><strong>Project Contracts:</strong> Payments are processed according to payment schedules explicitly detailed in signed economic contracts.</li>
               </ul>
 
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: '30px', textAlign: 'center' }}>
-                <h3 style={{ color: 'var(--text-dark)', marginBottom: '10px' }}>COOPERATING FOR SUSTAINABLE GROWTH</h3>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 30px; text-align: center;">
+                <h3 style="color: var(--text-dark); margin-bottom: 10px;">COOPERATING FOR SUSTAINABLE GROWTH</h3>
                 <p>Khai Nguyen always prioritizes protecting the profitability and growth of our dealers. We look forward to cooperating with you!</p>
               </div>
             </article>
           ) : isZh ? (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 越南的工业零配件及压缩空气服务市场正处于蓬勃发展阶段。为了进一步拓宽销售网络，凯源竭诚欢迎全国各地的贸易商、技术维修服务商加入合作，我们将为您提供极具竞争力的批发折扣与大客户支持政策。
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. 凯源核心优势
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>15年以上行业经验:</strong> 拥有完善的进口资质，直接从全球知名品牌厂商进口螺杆机润滑油、油分罐、空滤、油滤、电磁阀、散热器等。</li>
                 <li><strong>大型仓储现货供应:</strong> 仓库总部设在同奈省边和市（南部工业核心区），库存充沛，确保下单后闪电发货。</li>
                 <li><strong>专业技术后盾:</strong> 拥有一支高水准工程师团队，可为经销商的客户提供技术支持、交叉咨询和现场维保指导。</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. 经销商批发采购流程
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 合作伙伴可通过以下步骤选购所需零配件：
               </p>
-              <ol style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ol style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>参考我们网站上定期更新的产品分类与清单：<strong>maynenkhikhainguyen.com</strong>。</li>
                 <li>整理汇总所需配件件号、技术参数（或旧配件的实物照片）以及采购数量。</li>
                 <li>通过以下联系渠道发送批发询价单：
@@ -117,55 +121,55 @@ const locale = 'vi';
                   </ul>
                 </li>
               </ol>
-              <p style={{ fontStyle: 'italic', marginBottom: '25px' }}>
+              <p style="font-style: italic; margin-bottom: 25px;">
                 * <strong>灵活起订政策:</strong> 凯源不设最低起订量限制。您可以根据客户实际需要自由组合不同种类的配件。一旦核实您是商业贸易商或技术维修商，我们将从首笔订单起直接适用批发底价。
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. 经销商支持与权益保障
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>高额折扣返利:</strong> 采用阶梯式批发折扣。对于累计采购额达标或承诺年度采购量的经销商，提供专属协议底价及区域独家销售保护。</li>
                 <li><strong>技术赋能:</strong> 提供产品技术参数表、选型手册及安装视频。随时协助或协同参与大中型空压机系统项目的现场技术方案规划。</li>
                 <li><strong>宣传及物流支持:</strong> 提供真实的产品实物照片与展示视频供经销商用于日常销售。支持快捷发送货运站，方便远距离交货。</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. 付款方式
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>现场交易 (边和市仓库):</strong> 现场提货，核对无误后付款放行。</li>
                 <li><strong>远程交易 (货运站发货/快递):</strong> 装车出库前，100%银行转账或按商定比例支付订金。</li>
                 <li><strong>大客户及合同项目:</strong> 严格按照双方签订的正式经济合同中的结算条款及信用期限执行。</li>
               </ul>
 
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: '30px', textAlign: 'center' }}>
-                <h3 style={{ color: 'var(--text-dark)', marginBottom: '10px' }}>合作共赢 · 携手并进</h3>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 30px; text-align: center;">
+                <h3 style="color: var(--text-dark); margin-bottom: 10px;">合作共赢 · 携手并进</h3>
                 <p>凯源始终坚持与经销商利益共享、合作共赢。我们非常荣幸能与您携手开拓市场！</p>
               </div>
             </article>
           ) : (
-            <article className="policy-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
-              <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '25px' }}>
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
                 Thị trường dịch vụ phụ tùng, linh kiện cơ khí và khí nén công nghiệp tại Việt Nam đang tăng trưởng vô cùng mạnh mẽ. Nhằm mở rộng mạng lưới phân phối và đưa các dòng sản phẩm chất lượng cao đến gần hơn với các nhà máy, Khải Nguyên chào đón cơ hội hợp tác cùng các đơn vị thương mại, các xưởng dịch vụ kỹ thuật trên toàn quốc với chính sách bán sỉ (bán buôn) cực kỳ ưu đãi.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 1. Thế mạnh vượt trội của Máy nén khí Khải Nguyên
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>Hơn 15 năm kinh nghiệm:</strong> Uy tín vững vàng trong nhập khẩu trực tiếp và phân phối dầu máy nén khí, lọc tách dầu, lọc gió, van điện từ và két tản nhiệt chính hãng từ các thương hiệu lớn toàn cầu.</li>
                 <li><strong>Kho hàng sẵn có số lượng lớn:</strong> Trụ sở kho đặt tại Biên Hòa, Đồng Nai - cửa ngõ công nghiệp miền Southern, đảm bảo lượng hàng dự phòng dồi dào, sẵn sàng bàn giao nhanh chóng.</li>
                 <li><strong>Đội ngũ kỹ thuật hỗ trợ chuyên sâu:</strong> Luôn đồng hành tư vấn, hỗ trợ chuyên môn lắp đặt và xử lý sự cố cho khách hàng của đại lý.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 2. Cách thức đặt hàng sỉ dành cho đại lý
               </h2>
-              <p style={{ marginBottom: '15px' }}>
+              <p style="margin-bottom: 15px;">
                 Quý đối tác vui lòng lựa chọn và lên danh sách phụ tùng cần nhập theo các bước sau:
               </p>
-              <ol style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ol style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li>Tham khảo các danh mục sản phẩm được cập nhật thường xuyên trên website: <strong>maynenkhikhainguyen.com</strong>.</li>
                 <li>Tổng hợp danh sách mã hàng, thông số kỹ thuật (hoặc hình ảnh thực tế phụ tùng cũ cần thay thế) và số lượng cần mua.</li>
                 <li>Gửi danh sách yêu cầu báo giá sỉ qua các kênh liên hệ trực tiếp:
@@ -175,30 +179,30 @@ const locale = 'vi';
                   </ul>
                 </li>
               </ol>
-              <p style={{ fontStyle: 'italic', marginBottom: '25px' }}>
+              <p style="font-style: italic; margin-bottom: 25px;">
                 * <strong>Chính sách linh hoạt:</strong> Khải Nguyên không giới hạn số lượng tối thiểu cho mỗi đơn hàng. Bạn có thể tự do lựa chọn phối hợp nhiều dòng linh kiện khác nhau tùy thuộc vào nhu cầu thực tế của khách hàng của bạn. Khi xác nhận bạn là đơn vị thương mại hoặc kỹ thuật, nhân viên bán buôn sẽ áp dụng bảng giá sỉ ngay từ đơn hàng đầu tiên.
               </p>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 3. Quyền lợi và chính sách hỗ trợ Đại lý
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>Mức chiết khấu cao:</strong> Bảng chiết khấu lũy tiến hấp dẫn. Đại lý có doanh số tích lũy tốt hoặc cam kết doanh số quý/năm sẽ nhận được mức giá đặc biệt ưu đãi và các chính sách độc quyền khu vực.</li>
                 <li><strong>Hỗ trợ kỹ thuật:</strong> Cung cấp tài liệu thông số kỹ thuật, catalogue sản phẩm và hướng dẫn lắp đặt chi tiết. Sẵn sàng hỗ trợ tư vấn chéo hoặc đồng hành cùng đại lý khảo sát các dự án hệ thống khí nén lớn.</li>
                 <li><strong>Hỗ trợ Marketing và giao nhận:</strong> Hỗ trợ hình ảnh, video sản phẩm thực tế để đại lý làm tư liệu bán hàng. Hỗ trợ giao hàng nhanh ra các chành xe liên tỉnh tại khu vực TP.HCM, Bình Dương, Đồng Nai đối với các đại lý ở xa.</li>
               </ul>
 
-              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '30px', marginBottom: '15px', fontWeight: 700 }}>
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
                 4. Hình thức thanh toán
               </h2>
-              <ul style={{ paddingLeft: '20px', marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
                 <li><strong>Giao dịch trực tiếp tại Biên Hòa:</strong> Thanh toán ngay khi nhận hàng và kiểm tra đầy đủ hóa đơn chứng từ.</li>
                 <li><strong>Giao dịch từ xa (Chuyển chành xe/Chuyển phát nhanh):</strong> Thanh toán chuyển khoản 100% tiền hàng hoặc tạm ứng/đặt cọc theo thỏa thuận trước khi chúng tôi xuất kho và vận chuyển ra chành xe.</li>
                 <li><strong>Đối với khách hàng dự án/hợp đồng:</strong> Thực hiện thanh toán và công nợ theo đúng các điều khoản quy định rõ trong hợp đồng kinh tế đã ký kết.</li>
               </ul>
 
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: '30px', textAlign: 'center' }}>
-                <h3 style={{ color: 'var(--text-dark)', marginBottom: '10px' }}>HỢP TÁC CÙNG PHÁT TRIỂN BỀN VỮNG</h3>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 30px; text-align: center;">
+                <h3 style="color: var(--text-dark); margin-bottom: 10px;">HỢP TÁC CÙNG PHÁT TRIỂN BỀN VỮNG</h3>
                 <p>Khải Nguyên luôn đặt mục tiêu song hành và bảo vệ lợi nhuận của các đại lý lên hàng đầu. Rất hân hạnh được hợp tác cùng quý đối tác!</p>
               </div>
             </article>

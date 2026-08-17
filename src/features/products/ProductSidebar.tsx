@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Category } from '@/types';
+import type { Category } from '@/types';
 
 interface ProductSidebarProps {
   categories: Category[];

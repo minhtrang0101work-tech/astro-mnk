@@ -1,4 +1,4 @@
-import { Product } from '@/types';
+import type { Product } from '@/types';
 import { mockProducts } from '@/data/mock/products';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
 

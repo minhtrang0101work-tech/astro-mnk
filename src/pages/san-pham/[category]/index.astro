@@ -1,108 +1,67 @@
 ---
-import { CategoryService } from '@/services/category.service';
+import Layout from '@/layouts/Layout.astro';
+import { CategoryRepository } from '@/repositories/category.repository';
 import { ProductService } from '@/services/product.service';
-import { ProductRepository } from '@/repositories/product.repository';
 import Breadcrumb from '@/components/Breadcrumb';
+import ProductGrid from '@/features/products/ProductGrid';
 import ProductSidebar from '@/features/products/ProductSidebar';
 import ProductSort from '@/features/products/ProductSort';
-import ProductGrid from '@/features/products/ProductGrid';
 import Pagination from '@/components/Pagination';
 import CTABanner from '@/components/CTABanner';
-import { getLocale, getDictionary } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
+import { getDictionary } from '@/lib/i18n';
 
 export async function getStaticPaths() {
-  const categories = await ProductService.getCategories();
+  const categories = await CategoryRepository.getAllCategories();
   return categories.map(cat => ({
     params: { category: cat.slug },
     props: { category: cat }
   }));
 }
 
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+const { category: categorySlug } = Astro.params;
+const { category: currentCategory } = Astro.props;
+
 const locale = 'vi';
+const dict = await getDictionary(locale);
 
+const categories = await CategoryRepository.getAllCategories();
+const { products, total } = await ProductService.getProducts({ categories: [categorySlug] });
 
-  const locale = "vi";
-  const dict = await getDictionary(locale);
-
-  const resolvedParams = params ? await params : { category: '' };
-  const categorySlug = resolvedParams.category;
-
-  const categoriesList = await CategoryService.getCategories();
-  const currentCategory = categoriesList.find(c => c.slug === categorySlug);
-
-  if (!currentCategory) {
-    notFound();
-  }
-
-  const resolvedSearchParams = searchParams ? await searchParams : {};
-  const searchQuery = resolvedSearchParams?.search;
-  const sortQuery = resolvedSearchParams?.sort || 'newest';
-  const pageQuery = parseInt(resolvedSearchParams?.page || '1', 10);
-  
-  const limit = 18;
-
-  const [allProducts, { products, total }] = await Promise.all([
-    ProductRepository.getAllProducts(),
-    ProductService.getProducts({
-      search: searchQuery,
-      categories: [categorySlug],
-      sort: sortQuery,
-      page: pageQuery,
-      limit: limit
-    })
-  ]);
-
-  const categories = categoriesList.map(cat => {
-    const count = allProducts.filter(p => p.category === cat.slug).length;
-    return {
-      ...cat,
-      count
-    };
-  });
-
-  const breadcrumbItems = [
-    { label: dict.common.products, href: '/san-pham' },
-    { label: currentCategory.name }
-  ];
-
-  let bannerTitle = `${locale === 'vi' ? 'Danh mục' : locale === 'zh' ? '分类' : 'Category'}: ${currentCategory.name}`;
-  if (searchQuery) {
-    bannerTitle = `${locale === 'vi' ? 'Kết quả tìm kiếm trong' : locale === 'zh' ? '在分类中搜索结果' : 'Search results in'} ${currentCategory.name}: "${searchQuery}"`;
-  }
-
-  
+const pageTitle = `${currentCategory?.name || 'Sản phẩm'} | Máy Nén Khí Khải Nguyên`;
+const breadcrumbItems = [
+  { label: dict.common.products, href: '/san-pham' },
+  { label: currentCategory?.name || categorySlug }
+];
 ---
 
-<Layout locale={locale}>
-  <div>
-      <Breadcrumb title={bannerTitle} items={breadcrumbItems} />
+<Layout
+  title={pageTitle}
+  description={`Danh mục ${currentCategory?.name || categorySlug} chất lượng cao, phân phối và lắp đặt tại Biên Hòa, Đồng Nai, Bình Dương, Long An.`}
+  canonical={`https://maynenkhikhainguyen.com/san-pham/${categorySlug}`}
+  locale={locale}
+>
+  <Breadcrumb title={currentCategory?.name || 'Danh mục sản phẩm'} items={breadcrumbItems} locale={locale} />
 
-      <section className="section-padding">
-        <div className="container product-page-layout">
-          {/* Products Sidebar Filters */}
-          <ProductSidebar categories={categories} locale={locale} />
+  <section class="section-padding">
+    <div class="container product-page-layout">
+      <ProductSidebar 
+        categories={categories} 
+        locale={locale} 
+        selectedCategories={[categorySlug]} 
+        client:load 
+      />
 
-          {/* Products Listing Grid */}
-          <div className="products-main">
-            <div className="product-listing-header">
-              <h2>{currentCategory.name} <span>({total} {dict.products.count})</span></h2>
-              
-              {/* Product Sort Selector */}
-              <ProductSort locale={locale} />
-            </div>
-
-            {/* Products Card Grid */}
-            <ProductGrid products={products} searchQuery={searchQuery} />
-
-            {/* URL Parameter-based Pagination */}
-            <Pagination total={total} limit={limit} currentPage={pageQuery} />
-          </div>
+      <div class="products-main">
+        <div class="product-listing-header">
+          <h2>{currentCategory?.name} <span>({total} {dict.products.count})</span></h2>
+          <ProductSort locale={locale} client:load />
         </div>
-      </section>
 
-      <CTABanner locale={locale} />
+        <ProductGrid products={products} />
+        <Pagination total={total} limit={12} currentPage={1} baseUrl={`/san-pham/${categorySlug}`} />
+      </div>
     </div>
+  </section>
+
+  <CTABanner locale={locale} />
 </Layout>

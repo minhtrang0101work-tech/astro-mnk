@@ -1,60 +1,446 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
+
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 import { getLocale, getDictionary } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
 
-export async function getStaticPaths() {
-
-  const items = [
-    { zone: 'kcn-amata' },
-    { zone: 'kcn-bien-hoa-1' },
-    { zone: 'kcn-bien-hoa-2' },
-    { zone: 'kcn-nhon-trach' },
-    { zone: 'kcn-nhon-trach-1' },
-    { zone: 'kcn-nhon-trach-2' },
-    { zone: 'kcn-vsip' },
-    { zone: 'kcn-vsip-1' },
-    { zone: 'kcn-vsip-2' },
-    { zone: 'kcn-song-than' },
-    { zone: 'kcn-giang-dien' },
-    { zone: 'kcn-long-thanh' },
-    { zone: 'kcn-my-phuoc' },
-    { zone: 'kcn-phan-thiet' },
-    { zone: 'kcn-phu-my' },
-    { zone: 'kcn-dong-xuyen' },
-    { zone: 'kcn-trang-bang' },
-    { zone: 'kcn-phuoc-dong' },
-    { zone: 'kcn-thuan-dao' },
-    { zone: 'bien-hoa' },
-    { zone: 'nhon-trach' },
-    { zone: 'trang-bom' },
-    { zone: 'long-thanh' },
-    { zone: 'di-an' },
-    { zone: 'thuan-an' },
-    { zone: 'thu-dau-mot' },
-    { zone: 'duc-hoa' },
-    { zone: 'quan-12' },
-    { zone: 'binh-tan' },
-    { zone: 'dong-nai' },
-    { zone: 'binh-duong' },
-    { zone: 'ho-chi-minh' },
-    { zone: 'long-an' },
-    { zone: 'binh-thuan' },
-    { zone: 'ba-ria-vung-tau' },
-    { zone: 'tay-ninh' }
-  ];
-  return items.map(item => ({ params: item, props: item }));
+interface ZoneRepairPageProps {
+  params: Promise<{ zone: string }>;
 }
 
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+
+interface ZoneDetails {
+  nameVi: string;
+  nameEn: string;
+  nameZh: string;
+  locationVi: string;
+  locationEn: string;
+  locationZh: string;
+  introVi: string;
+  introEn: string;
+  introZh: string;
+}
+
+const zoneInfoMap: { [key: string]: ZoneDetails } = {
+  "kcn-amata": {
+    "nameVi": "Khu công nghiệp Amata (Biên Hòa, Đồng Nai)",
+    "nameEn": "Amata Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "安美达工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Amata (Biên Hòa, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Amata Industrial Park (Bien Hoa, Dong Nai). Our engineering team arrives on-site within 2 hours.",
+    "introZh": "凯源空压机为安美达工业区 (同奈省边和市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 小时内到达现场。"
+  },
+  "kcn-bien-hoa-1": {
+    "nameVi": "Khu công nghiệp Biên Hòa 1 (Biên Hòa, Đồng Nai)",
+    "nameEn": "Bien Hoa 1 Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "边和第一工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Biên Hòa 1 (Biên Hòa, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Bien Hoa 1 Industrial Park (Bien Hoa, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为边和第一工业区 (同奈省边和市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内到达现场。"
+  },
+  "kcn-bien-hoa-2": {
+    "nameVi": "Khu công nghiệp Biên Hòa 2 (Biên Hòa, Đồng Nai)",
+    "nameEn": "Bien Hoa 2 Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "边和第二工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Biên Hòa 2 (Biên Hòa, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Bien Hoa 2 Industrial Park (Bien Hoa, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为边和第二工业区 (同奈省边和市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内到达现场。"
+  },
+  "kcn-nhon-trach": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Nhơn Trạch (Nhơn Trạch, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Nhon Trach Industrial Park (Nhon Trach, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为仁泽工业区 (同奈省仁泽县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内到达现场。"
+  },
+  "kcn-nhon-trach-1": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch 1 (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach 1 Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽第一工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Nhơn Trạch 1 (Nhơn Trạch, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Nhon Trach 1 Industrial Park (Nhon Trach, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为仁泽第一工业区 (同奈省仁泽县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内到达现场。"
+  },
+  "kcn-nhon-trach-2": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch 2 (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach 2 Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽第二工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Nhơn Trạch 2 (Nhơn Trạch, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Nhon Trach 2 Industrial Park (Nhon Trach, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为仁泽第二工业区 (同奈省仁泽县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内到达现场。"
+  },
+  "kcn-vsip": {
+    "nameVi": "Khu công nghiệp VSIP (Bình Dương)",
+    "nameEn": "VSIP Industrial Park (Binh Duong)",
+    "nameZh": "新加坡工业区 (平阳省)",
+    "locationVi": "Bình Dương",
+    "locationEn": "Binh Duong",
+    "locationZh": "平阳省",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp VSIP (Bình Dương). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in VSIP Industrial Park (Binh Duong). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为新加坡工业区 (平阳省) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-vsip-1": {
+    "nameVi": "Khu công nghiệp VSIP 1 (Thuận An, Bình Dương)",
+    "nameEn": "VSIP 1 Industrial Park (Thuan An, Binh Duong)",
+    "nameZh": "新加坡第一工业区 (平阳省顺安市)",
+    "locationVi": "Thuận An, Bình Dương",
+    "locationEn": "Thuan An, Binh Duong",
+    "locationZh": "平阳省顺安市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp VSIP 1 (Thuận An, Bình Dương). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in VSIP 1 Industrial Park (Thuan An, Binh Duong). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为新加坡第一工业区 (平阳省顺安市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-vsip-2": {
+    "nameVi": "Khu công nghiệp VSIP 2 (Tân Uyên, Bình Dương)",
+    "nameEn": "VSIP 2 Industrial Park (Tan Uyen, Binh Duong)",
+    "nameZh": "新加坡第二工业区 (平阳省新渊市)",
+    "locationVi": "Tân Uyên, Bình Dương",
+    "locationEn": "Tan Uyen, Binh Duong",
+    "locationZh": "平阳省新渊市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp VSIP 2 (Tân Uyên, Bình Dương). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in VSIP 2 Industrial Park (Tan Uyen, Binh Duong). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为新加坡第二工业区 (平阳省新渊市) 的工厂提供 24/7 紧急维修、主机大修 và định kỳ保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-song-than": {
+    "nameVi": "Khu công nghiệp Sóng Thần (Dĩ An, Bình Dương)",
+    "nameEn": "Song Than Industrial Park (Di An, Binh Duong)",
+    "nameZh": "神浪工业区 (平阳省宜安市)",
+    "locationVi": "Dĩ An, Bình Dương",
+    "locationEn": "Di An, Binh Duong",
+    "locationZh": "平阳省宜安市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Sóng Thần (Dĩ An, Bình Dương). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Song Than Industrial Park (Di An, Binh Duong). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为神浪工业区 (平阳省宜安市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-giang-dien": {
+    "nameVi": "Khu công nghiệp Giang Điền (Trảng Bom, Đồng Nai)",
+    "nameEn": "Giang Dien Industrial Park (Trang Bom, Dong Nai)",
+    "nameZh": "江田工业区 (同奈省壮奔县)",
+    "locationVi": "Trảng Bom, Đồng Nai",
+    "locationEn": "Trang Bom, Dong Nai",
+    "locationZh": "同奈省壮奔县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Giang Điền (Trảng Bom, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Giang Dien Industrial Park (Trang Bom, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为江田工业区 (同奈省壮奔县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-long-thanh": {
+    "nameVi": "Khu công nghiệp Long Thành (Long Thành, Đồng Nai)",
+    "nameEn": "Long Thanh Industrial Park (Long Thanh, Dong Nai)",
+    "nameZh": "隆成工业区 (同奈省隆成县)",
+    "locationVi": "Long Thành, Đồng Nai",
+    "locationEn": "Long Thanh, Dong Nai",
+    "locationZh": "同奈省隆成县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Long Thành (Long Thành, Đồng Nai). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Long Thanh Industrial Park (Long Thanh, Dong Nai). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为隆成工业区 (同奈省隆成县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-my-phuoc": {
+    "nameVi": "Khu công nghiệp Mỹ Phước (Bến Cát, Bình Dương)",
+    "nameEn": "My Phuoc Industrial Park (Ben Cat, Binh Duong)",
+    "nameZh": "美福工业区 (平阳省滨吉市)",
+    "locationVi": "Bến Cát, Bình Dương",
+    "locationEn": "Ben Cat, Binh Duong",
+    "locationZh": "平阳省滨吉市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Mỹ Phước (Bến Cát, Bình Dương). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in My Phuoc Industrial Park (Ben Cat, Binh Duong). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为美福工业区 (平阳省滨吉市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-phan-thiet": {
+    "nameVi": "Khu công nghiệp Phan Thiết (Phan Thiết, Bình Thuận)",
+    "nameEn": "Phan Thiet Industrial Park (Phan Thiet, Binh Thuan)",
+    "nameZh": "潘切工业区 (平顺省潘切市)",
+    "locationVi": "Phan Thiết, Bình Thuận",
+    "locationEn": "Phan Thiet, Binh Thuan",
+    "locationZh": "平顺省潘切市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Phan Thiết (Phan Thiết, Bình Thuận). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Phan Thiet Industrial Park (Phan Thiet, Binh Thuan). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为潘切工业区 (平顺省潘切市) 的工厂提供 24/7 紧急维修、主机大修 và 定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-phu-my": {
+    "nameVi": "Khu công nghiệp Phú Mỹ (Phú Mỹ, Bà Rịa - Vũng Tàu)",
+    "nameEn": "Phu My Industrial Park (Phu My, Ba Ria - Vung Tau)",
+    "nameZh": "富美工业区 (巴地头顿省富美市)",
+    "locationVi": "Phú Mỹ, Bà Rịa - Vũng Tàu",
+    "locationEn": "Phu My, Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省富美市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Phú Mỹ (Phú Mỹ, Bà Rịa - Vũng Tàu). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Phu My Industrial Park (Phu My, Ba Ria - Vung Tau). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为富美工业区 (巴地头顿省富美市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-dong-xuyen": {
+    "nameVi": "Khu công nghiệp Đông Xuyên (Vũng Tàu, Bà Rịa - Vũng Tàu)",
+    "nameEn": "Dong Xuyen Industrial Park (Vung Tau, Ba Ria - Vung Tau)",
+    "nameZh": "东川工业区 (巴地头顿省头顿市)",
+    "locationVi": "Vũng Tàu, Bà Rịa - Vũng Tàu",
+    "locationEn": "Vung Tau, Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省头顿市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Đông Xuyên (Vũng Tàu, Bà Rịa - Vũng Tàu). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Dong Xuyen Industrial Park (Vung Tau, Ba Ria - Vung Tau). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为东川工业区 (巴地头顿省头顿市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-trang-bang": {
+    "nameVi": "Khu công nghiệp Trảng Bàng (Trảng Bàng, Tây Ninh)",
+    "nameEn": "Trang Bang Industrial Park (Trang Bang, Tay Ninh)",
+    "nameZh": "壮庞工业区 (西宁省壮庞市)",
+    "locationVi": "Trảng Bàng, Tây Ninh",
+    "locationEn": "Trang Bang, Tay Ninh",
+    "locationZh": "西宁省壮庞市",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Trảng Bàng (Trảng Bàng, Tây Ninh). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Trang Bang Industrial Park (Trang Bang, Tay Ninh). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为壮庞工业区 (西宁省壮庞市) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-phuoc-dong": {
+    "nameVi": "Khu công nghiệp Phước Đông (Gò Dầu, Tây Ninh)",
+    "nameEn": "Phuoc Dong Industrial Park (Go Dau, Tay Ninh)",
+    "nameZh": "福东工业区 (西宁省鹅油县)",
+    "locationVi": "Gò Dầu, Tây Ninh",
+    "locationEn": "Go Dau, Tay Ninh",
+    "locationZh": "西宁省鹅油县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Phước Đông (Gò Dầu, Tây Ninh). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Phuoc Dong Industrial Park (Go Dau, Tay Ninh). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为福东工业区 (西宁省鹅油县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "kcn-thuan-dao": {
+    "nameVi": "Khu công nghiệp Thuận Đạo (Bến Lức, Long An)",
+    "nameEn": "Thuan Dao Industrial Park (Ben Luc, Long An)",
+    "nameZh": "顺道工业区 (隆安省奔力县)",
+    "locationVi": "Bến Lức, Long An",
+    "locationEn": "Ben Luc, Long An",
+    "locationZh": "隆安省奔力县",
+    "introVi": "Khải Nguyên cung cấp dịch vụ sửa chữa máy nén khí trục vít khẩn cấp, đại tu đầu nén và bảo dưỡng định kỳ 24/7 cho các nhà máy tại Khu công nghiệp Thuận Đạo (Bến Lức, Long An). Đội ngũ kỹ sư cơ điện có mặt tại xưởng trong vòng 2 đến 4 giờ kể từ khi nhận cuộc gọi sự cố dừng máy.",
+    "introEn": "Khai Nguyen provides emergency repair, air end overhaul, and 24/7 maintenance services for factories in Thuan Dao Industrial Park (Ben Luc, Long An). Our engineering team arrives on-site within 2 to 4 hours.",
+    "introZh": "凯源空压机为顺道工业区 (隆安省奔力县) 的工厂提供 24/7 紧急维修、主机大修和定期保养服务。技术人员将在 2 至 4 小时内 xử lý sự cố."
+  },
+  "bien-hoa": {
+    "nameVi": "Thành phố Biên Hòa (Tỉnh Đồng Nai)",
+    "nameEn": "Bien Hoa City (Dong Nai Province)",
+    "nameZh": "边和市 (同奈省)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Thành phố Biên Hòa (Tỉnh Đồng Nai). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Bien Hoa City (Dong Nai Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为边和市 (同奈省) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "nhon-trach": {
+    "nameVi": "Huyện Nhơn Trạch (Tỉnh Đồng Nai)",
+    "nameEn": "Nhon Trach District (Dong Nai Province)",
+    "nameZh": "仁泽县 (同奈省)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Huyện Nhơn Trạch (Tỉnh Đồng Nai). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Nhon Trach District (Dong Nai Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为仁泽县 (同奈省) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "trang-bom": {
+    "nameVi": "Huyện Trảng Bom (Tỉnh Đồng Nai)",
+    "nameEn": "Trang Bom District (Dong Nai Province)",
+    "nameZh": "壮奔县 (同奈省)",
+    "locationVi": "Trảng Bom, Đồng Nai",
+    "locationEn": "Trang Bom, Dong Nai",
+    "locationZh": "同奈省壮奔县",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Huyện Trảng Bom (Tỉnh Đồng Nai). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Trang Bom District (Dong Nai Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为壮奔县 (同奈省) 提供螺杆空压机上门维修、定期保养 và OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "long-thanh": {
+    "nameVi": "Huyện Long Thành (Tỉnh Đồng Nai)",
+    "nameEn": "Long Thanh District (Dong Nai Province)",
+    "nameZh": "隆成县 (同奈省)",
+    "locationVi": "Long Thành, Đồng Nai",
+    "locationEn": "Long Thanh, Dong Nai",
+    "locationZh": "同奈省隆成县",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Huyện Long Thành (Tỉnh Đồng Nai). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Long Thanh District (Dong Nai Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为隆成县 (同奈省) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "di-an": {
+    "nameVi": "Thành phố Dĩ An (Tỉnh Bình Dương)",
+    "nameEn": "Di An City (Binh Duong Province)",
+    "nameZh": "宜安市 (平阳省)",
+    "locationVi": "Dĩ An, Bình Dương",
+    "locationEn": "Di An, Binh Duong",
+    "locationZh": "平阳省宜安市",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Thành phố Dĩ An (Tỉnh Bình Dương). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Di An City (Binh Duong Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为宜安市 (平阳省) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "thuan-an": {
+    "nameVi": "Thành phố Thuận An (Tỉnh Bình Dương)",
+    "nameEn": "Thuan An City (Binh Duong Province)",
+    "nameZh": "顺安市 (平阳省)",
+    "locationVi": "Thuận An, Bình Dương",
+    "locationEn": "Thuan An, Binh Duong",
+    "locationZh": "平阳省顺安市",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Thành phố Thuận An (Tỉnh Bình Dương). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Thuan An City (Binh Duong Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为顺安市 (平阳省) 提供螺杆空压机上门维修、定期保养 và OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "thu-dau-mot": {
+    "nameVi": "Thành phố Thủ Dầu Một (Tỉnh Bình Dương)",
+    "nameEn": "Thu Dau Mot City (Binh Duong Province)",
+    "nameZh": "土龙木市 (平阳省)",
+    "locationVi": "Thủ Dầu Một, Bình Dương",
+    "locationEn": "Thu Dau Mot, Binh Duong",
+    "locationZh": "平阳省土龙木市",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Thành phố Thủ Dầu Một (Tỉnh Bình Dương). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Thu Dau Mot City (Binh Duong Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为土龙木市 (平阳省) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "duc-hoa": {
+    "nameVi": "Huyện Đức Hòa (Tỉnh Long An)",
+    "nameEn": "Duc Hoa District (Long An Province)",
+    "nameZh": "德和县 (隆安省)",
+    "locationVi": "Đức Hòa, Long An",
+    "locationEn": "Duc Hoa, Long An",
+    "locationZh": "隆安省德和县",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Huyện Đức Hòa (Tỉnh Long An). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Duc Hoa District (Long An Province). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为德和县 (隆安省) 提供螺杆空压机上门维修、定期保养 và OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "quan-12": {
+    "nameVi": "Quận 12 (Thành phố Hồ Chí Minh)",
+    "nameEn": "District 12 (Ho Chi Minh City)",
+    "nameZh": "第十二郡 (胡志明市)",
+    "locationVi": "Quận 12, TP. Hồ Chí Minh",
+    "locationEn": "District 12, HCMC",
+    "locationZh": "胡志明市第十二郡",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Quận 12 (Thành phố Hồ Chí Minh). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in District 12 (Ho Chi Minh City). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为第十二郡 (胡志明市) 提供螺杆空压机上门维修、定期保养和 OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "binh-tan": {
+    "nameVi": "Quận Bình Tân (Thành phố Hồ Chí Minh)",
+    "nameEn": "Binh Tan District (Ho Chi Minh City)",
+    "nameZh": "平新郡 (胡志明市)",
+    "locationVi": "Quận Bình Tân, TP. Hồ Chí Minh",
+    "locationEn": "Binh Tan District, HCMC",
+    "locationZh": "胡志明市平新郡",
+    "introVi": "Khải Nguyên chuyên sửa chữa máy nén khí trục vít, bảo dưỡng định kỳ và cung cấp phụ tùng tiêu hao OEM tận nơi tại các phường và doanh nghiệp thuộc Quận Bình Tân (Thành phố Hồ Chí Minh). Đội ngũ kỹ thuật túc trực tại đây đảm bảo có mặt tại xưởng của bạn nhanh chóng.",
+    "introEn": "Khai Nguyen specializes in screw compressor repair, scheduled maintenance, and OEM parts supply on-site in Binh Tan District (Ho Chi Minh City). Our local technician team guarantees rapid response.",
+    "introZh": "凯源专业为平新郡 (胡志明市) 提供螺杆空压机上门维修、定期保养 và OEM 零配件供应。我们在当地驻守技术团队确保快速到达现场。"
+  },
+  "dong-nai": {
+    "nameVi": "Tỉnh Đồng Nai",
+    "nameEn": "Dong Nai Province",
+    "nameZh": "同奈省",
+    "locationVi": "Đồng Nai",
+    "locationEn": "Dong Nai",
+    "locationZh": "同奈省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Đồng Nai. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Dong Nai Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为同奈省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保及时处理."
+  },
+  "binh-duong": {
+    "nameVi": "Tỉnh Bình Dương",
+    "nameEn": "Binh Duong Province",
+    "nameZh": "平阳省",
+    "locationVi": "Bình Dương",
+    "locationEn": "Binh Duong",
+    "locationZh": "平阳省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Bình Dương. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Binh Duong Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为平阳省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保及时处理."
+  },
+  "ho-chi-minh": {
+    "nameVi": "Thành phố Hồ Chí Minh",
+    "nameEn": "Ho Chi Minh City",
+    "nameZh": "胡志明市",
+    "locationVi": "Hồ Chí Minh",
+    "locationEn": "HCMC",
+    "locationZh": "胡志明市",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Thành phố Hồ Chí Minh. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Ho Chi Minh City. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为胡志明市的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保及时处理."
+  },
+  "long-an": {
+    "nameVi": "Tỉnh Long An",
+    "nameEn": "Long An Province",
+    "nameZh": "隆安省",
+    "locationVi": "Long An",
+    "locationEn": "Long An",
+    "locationZh": "隆安省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Long An. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Long An Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为隆安省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保及时处理."
+  },
+  "binh-thuan": {
+    "nameVi": "Tỉnh Bình Thuận",
+    "nameEn": "Binh Thuan Province",
+    "nameZh": "平顺省",
+    "locationVi": "Bình Thuận",
+    "locationEn": "Binh Thuan",
+    "locationZh": "平顺省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Bình Thuận. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Binh Thuan Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为平顺省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保及时处理."
+  },
+  "ba-ria-vung-tau": {
+    "nameVi": "Tỉnh Bà Rịa - Vũng Tàu",
+    "nameEn": "Ba Ria - Vung Tau Province",
+    "nameZh": "巴地头顿省",
+    "locationVi": "Bà Rịa - Vũng Tàu",
+    "locationEn": "Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Bà Rịa - Vũng Tàu. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Ba Ria - Vung Tau Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为巴地头顿省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保."
+  },
+  "tay-ninh": {
+    "nameVi": "Tỉnh Tây Ninh",
+    "nameEn": "Tay Ninh Province",
+    "nameZh": "西宁省",
+    "locationVi": "Tây Ninh",
+    "locationEn": "Tay Ninh",
+    "locationZh": "西宁省",
+    "introVi": "Dịch vụ sửa chữa, bảo trì máy nén khí trục vít và cung cấp phụ tùng máy nén khí chính hãng tận nơi cho các doanh nghiệp, nhà máy, xí nghiệp tại khu vực Tỉnh Tây Ninh. Đội ngũ kỹ thuật hỗ trợ di chuyển nhanh ứng cứu sự cố dừng máy kịp thời.",
+    "introEn": "On-site repair, maintenance, and genuine spare parts supply services for screw air compressors in Tay Ninh Province. Our technician team coordinates rapid travel to handle unexpected shutdowns.",
+    "introZh": "凯源空压机为西宁省的企业、工厂提供上门螺杆空压机维修、保养及原厂配件供应服务。我们团队快速响应，确保."
+  }
+};
+
+
+
+export async function getStaticPaths() {
+  const zones = [
+    'kcn-amata', 'kcn-bien-hoa-1', 'kcn-bien-hoa-2', 'kcn-nhon-trach', 'kcn-nhon-trach-1', 'kcn-nhon-trach-2',
+    'kcn-vsip', 'kcn-vsip-1', 'kcn-vsip-2', 'kcn-song-than', 'kcn-giang-dien', 'kcn-long-thanh', 'kcn-my-phuoc',
+    'kcn-phan-thiet', 'kcn-phu-my', 'kcn-dong-xuyen', 'kcn-trang-bang', 'kcn-phuoc-dong', 'kcn-thuan-dao',
+    'bien-hoa', 'nhon-trach', 'trang-bom', 'long-thanh', 'di-an', 'thuan-an', 'thu-dau-mot', 'duc-hoa',
+    'quan-12', 'binh-tan', 'dong-nai', 'binh-duong', 'ho-chi-minh', 'long-an', 'binh-thuan', 'ba-ria-vung-tau', 'tay-ninh'
+  ];
+  return zones.map(zone => ({ params: { zone } }));
+}
+
+const { zone } = Astro.params;
 const locale = 'vi';
 
-
-  const resolvedParams = await params;
-  const zone = resolvedParams.zone;
-  const locale = "vi";
+  
+  
+  
   const dict = await getDictionary(locale);
   
   const info = zoneInfoMap[zone] || zoneInfoMap['kcn-amata'];
@@ -106,41 +492,31 @@ const locale = 'vi';
       
       <Breadcrumb title={locale === 'vi' ? `Sửa Chữa Máy Nén Khí Tại ${info.locationVi}` : `Air Compressor Repair in ${info.locationEn}`} items={breadcrumbItems} />
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <article className="service-detail-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+      <section class="section-padding">
+        <div class="container" style="max-width: 900px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
             
             {/* AEO Freshness Signal */}
-            <div style={{ fontSize: '13.5px', color: 'var(--text-light)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="far fa-calendar-alt"></i>
+            <div style="font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 6px;">
+              <i class="far fa-calendar-alt"></i>
               <span>{locale === 'vi' ? 'Cập nhật lần cuối: 2026-08-04' : locale === 'zh' ? '最后更新: 2026-08-04' : 'Last updated: 2026-08-04'}</span>
-              <span style={{ margin: '0 8px', color: '#ccc' }}>|</span>
-              <i className="far fa-user"></i>
+              <span style="margin: 0 8px; color: #ccc;">|</span>
+              <i class="far fa-user"></i>
               <span>{locale === 'vi' ? 'Tác giả: Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên' : locale === 'zh' ? '作者: 凯源空压机单位工程师' : 'Author: Engineer from Khai Nguyen Air Compressor'}</span>
             </div>
 
             {/* AEO Answer Block */}
-            <div style={{ 
-              fontWeight: 600, 
-              fontSize: '17px', 
-              color: 'var(--text-dark)', 
-              marginBottom: '25px', 
-              padding: '18px 24px', 
-              backgroundColor: 'var(--bg-light)', 
-              borderLeft: '4px solid var(--primary-color)',
-              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-              lineHeight: '1.6'
-            }}>
+            <div style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px; padding: 18px 24px; background-color: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.6;">
               {locale === 'vi' ? info.introVi : locale === 'zh' ? info.introZh : info.introEn}
             </div>
 
-            <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '15px', fontWeight: 700 }}>
+            <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-weight: 700;">
               {locale === 'vi' ? `Dịch vụ kỹ thuật máy nén khí trục vít tại ${info.locationVi}` : `Compressor Technical Services in ${info.locationEn}`}
             </h2>
             
             {locale === 'vi' ? (
               <p>
-                Khải Nguyên thực hiện quy trình kỹ thuật sửa chữa đạt tiêu chuẩn cao giúp đảm bảo tính liên tục của hệ thống khí nén tại các dây chuyền sản xuất. Chúng tôi hỗ trợ quý khách hàng tìm hiểu kỹ về nguyên lý hoạt động qua bài viết <a href="/tin-tuc/tin-tuc/may-nen-khi-la-gi" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">máy nén khí là gì</a> trước khi tiến hành đại tu đầu nén:
+                Khải Nguyên thực hiện quy trình kỹ thuật sửa chữa đạt tiêu chuẩn cao giúp đảm bảo tính liên tục của hệ thống khí nén tại các dây chuyền sản xuất. Chúng tôi hỗ trợ quý khách hàng tìm hiểu kỹ về nguyên lý hoạt động qua bài viết <a href="/tin-tuc/tin-tuc/may-nen-khi-la-gi" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">máy nén khí là gì</a> trước khi tiến hành đại tu đầu nén:
               </p>
             ) : (
               <p>
@@ -148,7 +524,7 @@ const locale = 'vi';
               </p>
             )}
 
-            <ul style={{ paddingLeft: '20px', marginBottom: '25px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <ul style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px;">
               {locale === 'vi' ? (
                 <>
                   <li>
@@ -158,7 +534,7 @@ const locale = 'vi';
                     <strong>Xử lý lỗi quá nhiệt (High Temperature):</strong> Vệ sinh két làm mát bằng hóa chất chuyên dụng, thay thế van hằng nhiệt hoạt động sai lệch áp suất, thay dầu máy nén khí gốc tổng hợp chịu nhiệt cao.
                   </li>
                   <li>
-                    <strong>Cung cấp phụ tùng thay thế định kỳ:</strong> Thay thế <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">lọc tách dầu trục vít</a>, các loại <a href="/san-pham/bo-loc-va-tach-khi-nen" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">phụ tùng lọc máy nén khí</a>, lọc nhớt, và cung cấp <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">dầu máy nén khí trục vít</a> chất lượng OEM tương thích hoàn toàn Kobelco, Hitachi, Atlas Copco, Fusheng...
+                    <strong>Cung cấp phụ tùng thay thế định kỳ:</strong> Thay thế <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">lọc tách dầu trục vít</a>, các loại <a href="/san-pham/bo-loc-va-tach-khi-nen" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">phụ tùng lọc máy nén khí</a>, lọc nhớt, và cung cấp <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">dầu máy nén khí trục vít</a> chất lượng OEM tương thích hoàn toàn Kobelco, Hitachi, Atlas Copco, Fusheng...
                   </li>
                 </>
               ) : (
@@ -170,103 +546,91 @@ const locale = 'vi';
                     <strong>High-Temperature Error Fixing:</strong> Washing radiators, replacing thermostatic valves, and injecting high-temp synthetic lubricants.
                   </li>
                   <li>
-                    <strong>Scheduled OEM Spare Parts:</strong> Supplying premium <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">oil separators</a>, <a href="/san-pham/bo-loc-va-tach-khi-nen" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">compressor filters</a>, and <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" style={{ color: 'var(--primary-color)', fontWeight: '600', textDecoration: 'underline' }} data-astro-prefetch="hover">lubricants</a> fully compatible with Kobelco, Hitachi, Atlas Copco, Fusheng...
+                    <strong>Scheduled OEM Spare Parts:</strong> Supplying premium <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">oil separators</a>, <a href="/san-pham/bo-loc-va-tach-khi-nen" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">compressor filters</a>, and <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" style="color: var(--primary-color); font-weight: 600; text-decoration: underline;" data-astro-prefetch="hover">lubricants</a> fully compatible with Kobelco, Hitachi, Atlas Copco, Fusheng...
                   </li>
                 </>
               )}
             </ul>
 
             {/* Horizontal Project Gallery */}
-            <h3 style={{ fontSize: '18px', color: 'var(--text-dark)', marginTop: '40px', marginBottom: '20px', fontWeight: 700 }}>
+            <h3 style="font-size: 18px; color: var(--text-dark); margin-top: 40px; margin-bottom: 20px; font-weight: 700;">
               {locale === 'vi' ? 'Hình ảnh hoạt động dịch vụ kỹ thuật thực tế tại công trình' : 'Real-Site Technical Operations Gallery'}
             </h3>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-              gap: '15px', 
-              marginBottom: '35px' 
-            }}>
-              <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #eee', backgroundColor: '#fff' }}>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 35px;">
+              <div style="border-radius: 8px; overflow: hidden; border: 1px solid #eee; background-color: #fff;">
                 <img 
                   src="/assets/images/ky-thuat-sua-may-nen-khi-nha-may.jpg" 
                   alt="Đội ngũ kỹ thuật Khải Nguyên đại tu sửa chữa máy nén khí trục vít trực tiếp tại nhà xưởng" 
-                  style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+                  style="width: 100%; height: 150px; object-fit: cover;"
                 />
-                <p style={{ margin: '8px 12px', fontSize: '13px', color: 'var(--text-light)', lineHeight: '1.4' }}>
+                <p style="margin: 8px 12px; font-size: 13px; color: var(--text-light); line-height: 1.4;">
                   {locale === 'vi' ? 'Kỹ thuật viên đang đại tu cụm đầu nén lớn.' : 'Technicians overhauling compressor air end.'}
                 </p>
               </div>
-              <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #eee', backgroundColor: '#fff' }}>
+              <div style="border-radius: 8px; overflow: hidden; border: 1px solid #eee; background-color: #fff;">
                 <img 
                   src="/assets/images/truc-vit-dau-nen-chinh-hang.jpg" 
                   alt="Căn chỉnh căn khe hở cặp trục vít rotor đầu nén máy nén khí trục vít" 
-                  style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+                  style="width: 100%; height: 150px; object-fit: cover;"
                 />
-                <p style={{ margin: '8px 12px', fontSize: '13px', color: 'var(--text-light)', lineHeight: '1.4' }}>
+                <p style="margin: 8px 12px; font-size: 13px; color: var(--text-light); line-height: 1.4;">
                   {locale === 'vi' ? 'Cặp trục vít đực cái được căn chỉnh khe hở.' : 'Rotor screw pairs aligned precisely.'}
                 </p>
               </div>
-              <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #eee', backgroundColor: '#fff' }}>
+              <div style="border-radius: 8px; overflow: hidden; border: 1px solid #eee; background-color: #fff;">
                 <img 
                   src="/assets/images/ve-sinh-ket-giai-nhiet-he-thong-loc.jpg" 
                   alt="Vệ sinh két làm mát và bảo dưỡng bầu lọc tách dầu máy nén khí trục vít" 
-                  style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+                  style="width: 100%; height: 150px; object-fit: cover;"
                 />
-                <p style={{ margin: '8px 12px', fontSize: '13px', color: 'var(--text-light)', lineHeight: '1.4' }}>
+                <p style="margin: 8px 12px; font-size: 13px; color: var(--text-light); line-height: 1.4;">
                   {locale === 'vi' ? 'Bầu lọc tách dầu đang bảo trì định kỳ.' : 'Separator vessel oil filters maintenance.'}
                 </p>
               </div>
-              <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #eee', backgroundColor: '#fff' }}>
+              <div style="border-radius: 8px; overflow: hidden; border: 1px solid #eee; background-color: #fff;">
                 <img 
                   src="/assets/images/giao-nhanh-dau-loc-may-nen-khi.jpg" 
                   alt="Vận chuyển giao nhanh phụ tùng lọc tách dầu lọc nhớt máy nén khí tận nơi" 
-                  style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+                  style="width: 100%; height: 150px; object-fit: cover;"
                 />
-                <p style={{ margin: '8px 12px', fontSize: '13px', color: 'var(--text-light)', lineHeight: '1.4' }}>
+                <p style="margin: 8px 12px; font-size: 13px; color: var(--text-light); line-height: 1.4;">
                   {locale === 'vi' ? 'Giao nhanh dầu Fusheng & lọc phụ tùng tận xưởng.' : 'Delivering Fusheng oil buckets and filters.'}
                 </p>
               </div>
             </div>
 
             {/* Local CTA Box */}
-            <div style={{
-              backgroundColor: 'rgba(255, 107, 0, 0.04)',
-              border: '1px solid rgba(255, 107, 0, 0.15)',
-              borderRadius: '8px',
-              padding: '24px',
-              margin: '35px 0',
-              textAlign: 'center'
-            }}>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '18px', color: 'var(--text-dark)', fontWeight: 700 }}>
+            <div style="background-color: rgba(255, 107, 0, 0.04); border: 1px solid rgba(255, 107, 0, 0.15); border-radius: 8px; padding: 24px; margin: 35px 0; text-align: center;">
+              <h3 style="margin: 0 0 10px 0; font-size: 18px; color: var(--text-dark); font-weight: 700;">
                 {locale === 'vi' ? `Yêu Cầu Sửa Chữa Khẩn Cấp Tại ${info.locationVi}` : `Emergency Repair Request in ${info.locationEn}`}
               </h3>
-              <p style={{ margin: '0 0 20px 0', fontSize: '14.5px', color: 'var(--text-color)' }}>
+              <p style="margin: 0 0 20px 0; font-size: 14.5px; color: var(--text-color);">
                 {locale === 'vi' 
                   ? `Khảo sát chẩn đoán miễn phí tận nơi tại xưởng. Đội ngũ kỹ thuật túc trực có mặt trong vòng 2 - 4 giờ.`
                   : `Free on-site diagnostic survey. Our local technician team arrives within 2 to 4 hours.`}
               </p>
-              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a href="tel:0909513637" className="btn btn-primary" style={{ padding: '12px 25px' }}>
-                  <i className="fas fa-phone-alt" style={{ marginRight: '8px' }}></i> 0909 513 637
+              <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="tel:0909513637" class="btn btn-primary" style="padding: 12px 25px;">
+                  <i class="fas fa-phone-alt" style="margin-right: 8px;"></i> 0909 513 637
                 </a>
-                <a href={`/lien-he?zone=${zone}`} className="btn btn-outline-dark" style={{ padding: '12px 25px' }} data-astro-prefetch="hover">
+                <a href={`/lien-he?zone=${zone}`} class="btn btn-outline-dark" style="padding: 12px 25px;" data-astro-prefetch="hover">
                   {dict.productDetail.quoteBtn}
                 </a>
               </div>
             </div>
 
             {/* Local FAQ section */}
-            <div style={{ marginTop: '50px', paddingTop: '30px', borderTop: '1px solid #eee' }}>
-              <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginBottom: '20px', fontWeight: 700 }}>
+            <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
+              <h2 style="font-size: 22px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700;">
                 {locale === 'vi' ? 'Câu hỏi thường gặp' : 'Frequently Asked Questions'}
               </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style="display: flex; flex-direction: column; gap: 20px;">
                 {faqSchema.mainEntity.map((item, index) => (
-                  <div key={index} style={{ backgroundColor: '#fafafa', padding: '18px', borderRadius: 'var(--radius-sm)', border: '1px solid #f0f0f0' }}>
-                    <h3 style={{ margin: '0 0 8px 0', fontSize: '16px', color: 'var(--text-dark)', fontWeight: 700 }}>
+                  <div style="background-color: #fafafa; padding: 18px; border-radius: var(--radius-sm); border: 1px solid #f0f0f0;">
+                    <h3 style="margin: 0 0 8px 0; font-size: 16px; color: var(--text-dark); font-weight: 700;">
                       Q: {item.name}
                     </h3>
-                    <p style={{ margin: 0, fontSize: '14.5px', color: 'var(--text-color)', lineHeight: '1.6' }}>
+                    <p style="margin: 0; font-size: 14.5px; color: var(--text-color); line-height: 1.6;">
                       A: {item.acceptedAnswer.text}
                     </p>
                   </div>
@@ -275,67 +639,67 @@ const locale = 'vi';
             </div>
 
             {/* Geographic links menu */}
-            <div style={{ marginTop: '60px', paddingTop: '40px', borderTop: '2px solid var(--primary-color)' }}>
-              <h3 style={{ fontSize: '18px', color: 'var(--primary-color)', marginBottom: '20px', fontWeight: 700, textAlign: 'center' }}>
+            <div style="margin-top: 60px; padding-top: 40px; border-top: 2px solid var(--primary-color);">
+              <h3 style="font-size: 18px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; text-align: center;">
                 {locale === 'vi' ? 'HỆ THỐNG DỊCH VỤ KỸ THUẬT MÁY NÉN KHÍ MIỀN NAM' : 'SOUTHERN VIETNAM COMPRESSOR TECHNICAL SERVICE SYSTEM'}
               </h3>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '25px', marginTop: '20px' }}>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 20px;">
                 <div>
-                  <h4 style={{ fontSize: '14.5px', color: 'var(--text-dark)', borderBottom: '1px solid #ddd', paddingBottom: '8px', marginBottom: '12px', fontWeight: 700 }}>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
                     🏭 {locale === 'vi' ? 'Theo Khu Công Nghiệp (KCN)' : 'By Industrial Park'}
                   </h4>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px' }}>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-amata" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Amata</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-1" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Biên Hòa 1</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-2" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Biên Hòa 2</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-1" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Nhơn Trạch 1</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-2" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Nhơn Trạch 2</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-1" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN VSIP 1</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-2" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN VSIP 2</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-song-than" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Sóng Thần</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-giang-dien" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Giang Điền</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-long-thanh" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Long Thành</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-my-phuoc" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Mỹ Phước</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-phan-thiet" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Phan Thiết</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-phu-my" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Phú Mỹ</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-dong-xuyen" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Đông Xuyên</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-trang-bang" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Trảng Bàng</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-phuoc-dong" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Phước Đông</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/kcn-thuan-dao" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ KCN Thuận Đạo</a></li>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/kcn-amata" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Amata</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-song-than" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Sóng Thần</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-giang-dien" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Giang Điền</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Long Thành</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-my-phuoc" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Mỹ Phước</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phan-thiet" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phan Thiết</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phu-my" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phú Mỹ</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-dong-xuyen" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Đông Xuyên</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-trang-bang" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Trảng Bàng</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phuoc-dong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phước Đông</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-thuan-dao" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Thuận Đạo</a></li>
                   </ul>
                 </div>
                 
                 <div>
-                  <h4 style={{ fontSize: '14.5px', color: 'var(--text-dark)', borderBottom: '1px solid #ddd', paddingBottom: '8px', marginBottom: '12px', fontWeight: 700 }}>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
                     📍 {locale === 'vi' ? 'Theo Quận / Huyện' : 'By District'}
                   </h4>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px' }}>
-                    <li><a href="/sua-chua-may-nen-khi/bien-hoa" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Thành phố Biên Hòa</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/nhon-trach" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Huyện Nhơn Trạch</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/trang-bom" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Huyện Trảng Bom</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/long-thanh" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Huyện Long Thành</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/di-an" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Thành phố Dĩ An</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/thuan-an" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Thành phố Thuận An</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/thu-dau-mot" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Thành phố Thủ Dầu Một</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/duc-hoa" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Huyện Đức Hòa</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/quan-12" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Quận 12 (TP. HCM)</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/binh-tan" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Quận Bình Tân (TP. HCM)</a></li>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/bien-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Biên Hòa</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/nhon-trach" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Nhơn Trạch</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/trang-bom" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Trảng Bom</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Long Thành</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/di-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Dĩ An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/thuan-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thuận An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/thu-dau-mot" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thủ Dầu Một</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/duc-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Đức Hòa</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/quan-12" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận 12 (TP. HCM)</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-tan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận Bình Tân (TP. HCM)</a></li>
                   </ul>
                 </div>
                 
                 <div>
-                  <h4 style={{ fontSize: '14.5px', color: 'var(--text-dark)', borderBottom: '1px solid #ddd', paddingBottom: '8px', marginBottom: '12px', fontWeight: 700 }}>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
                     🗺️ {locale === 'vi' ? 'Theo Tỉnh / Thành' : 'By Province'}
                   </h4>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '13.5px' }}>
-                    <li><a href="/sua-chua-may-nen-khi/dong-nai" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Đồng Nai</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/binh-duong" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Bình Dương</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/ho-chi-minh" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Thành phố Hồ Chí Minh</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/long-an" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Long An</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/binh-thuan" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Bình Thuận</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/ba-ria-vung-tau" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Bà Rịa - Vũng Tàu</a></li>
-                    <li><a href="/sua-chua-may-nen-khi/tay-ninh" style={{ color: 'var(--text-color)', textDecoration: 'none' }} data-astro-prefetch="hover">→ Tỉnh Tây Ninh</a></li>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/dong-nai" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Đồng Nai</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-duong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Dương</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/ho-chi-minh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Hồ Chí Minh</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/long-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Long An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-thuan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Thuận</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/ba-ria-vung-tau" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bà Rịa - Vũng Tàu</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/tay-ninh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Tây Ninh</a></li>
                   </ul>
                 </div>
               </div>

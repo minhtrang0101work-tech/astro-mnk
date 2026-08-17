@@ -1,4 +1,4 @@
-import { NewsItem } from '@/types';
+import type { NewsItem } from '@/types';
 import { mockNews } from '@/data/mock/news';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
 

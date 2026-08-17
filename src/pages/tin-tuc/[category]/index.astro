@@ -1,12 +1,12 @@
 ---
-import { PageService } from '@/services/page.service';
+import Layout from '@/layouts/Layout.astro';
+import { NewsRepository } from '@/repositories/news.repository';
 import { NewsService } from '@/services/news.service';
 import Breadcrumb from '@/components/Breadcrumb';
-import NewsCard from '@/features/news/NewsCard';
-import CTABanner from '@/components/CTABanner';
+import NewsCard, { categoryMap } from '@/features/news/NewsCard';
 import NewsletterForm from '@/components/NewsletterForm';
-import { getLocale, getDictionary } from '@/lib/i18n';
-import Layout from '@/layouts/Layout.astro';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
 
 export async function getStaticPaths() {
   const categories = ['bao-tri', 'cong-nghe', 'du-an', 'tu-van', 'tin-tuc', 'kien-thuc', 'ky-thuat'];
@@ -15,130 +15,56 @@ export async function getStaticPaths() {
   }));
 }
 
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
+const { category } = Astro.params;
 const locale = 'vi';
+const dict = await getDictionary(locale);
 
+const { news: articles } = await NewsService.getNews({ category });
+const catObj = categoryMap[category] || { vi: category, zh: category, en: category };
+const categoryName = catObj.vi;
 
-  const locale = "vi";
-  const dict = await getDictionary(locale);
-
-  const resolvedParams = params ? await params : { category: '' };
-  const activeCategory = resolvedParams.category;
-
-  const validCategories = ['tin-tuc', 'tu-van', 'bao-tri', 'du-an'];
-  if (!validCategories.includes(activeCategory)) {
-    notFound();
-  }
-
-  // Tối ưu hóa: Nạp song song danh sách bài viết theo bộ lọc và toàn bộ bài viết để tính số lượng
-  const [filteredResult, allNewsResult] = await Promise.all([
-    NewsService.getNews({ category: activeCategory }),
-    NewsService.getNews()
-  ]);
-  const articles = filteredResult.news;
-  const allNews = allNewsResult.news;
-  const totalCount = allNews.length;
-  const tinTucCount = allNews.filter(n => n.category === 'tin-tuc' || n.category === 'cong-nghe').length;
-  const tuVanCount = allNews.filter(n => n.category === 'tu-van' || n.category === 'ky-thuat' || n.category === 'kien-thuc').length;
-  const baoTriCount = allNews.filter(n => n.category === 'bao-tri').length;
-  const duAnCount = allNews.filter(n => n.category === 'du-an').length;
-
-  const breadcrumbItems = [
-    { label: dict.common.news, href: '/tin-tuc' },
-    { label: getCategoryName(activeCategory, locale) }
-  ];
-  const pageTitle = `${locale === 'vi' ? 'Danh mục' : locale === 'zh' ? '分类' : 'Category'}: ${getCategoryName(activeCategory, locale)}`;
-
-  // Categories helper to highlight active link
-  const getStyle = (cat?: string) => {
-    return activeCategory === cat ? { color: 'var(--accent-color)', fontWeight: 700 } : {};
-  };
-
-  
+const breadcrumbItems = [
+  { label: dict.common.news, href: '/tin-tuc' },
+  { label: categoryName }
+];
 ---
 
-<Layout locale={locale}>
-  <div>
-      <Breadcrumb title={pageTitle} items={breadcrumbItems} />
+<Layout
+  title={`${categoryName} | Tin Tức Khải Nguyên`}
+  description={`Tổng hợp tin tức, hướng dẫn kỹ thuật chuyên mục ${categoryName} máy nén khí Khải Nguyên.`}
+  canonical={`https://maynenkhikhainguyen.com/tin-tuc/${category}`}
+  locale={locale}
+>
+  <Breadcrumb title={categoryName} items={breadcrumbItems} locale={locale} />
 
-      <section className="section-padding">
-        <div className="container blog-layout">
-          {/* Main news grid */}
-          <div className="blog-main">
-            <div style={{ borderBottom: '2px solid var(--border-color)', paddingBottom: '12px', marginBottom: '30px' }}>
-              <h2 style={{ fontSize: '22px', fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>
-                {`${locale === 'vi' ? 'BÀI VIẾT THUỘC' : locale === 'zh' ? '文章分类' : 'ARTICLES IN'} "${getCategoryName(activeCategory, locale).toUpperCase()}"`}
-              </h2>
-            </div>
+  <section class="section-padding">
+    <div class="container blog-layout">
+      <div class="blog-main">
+        <h2 class="section-title" style="margin-bottom: 30px; font-size: 24px;">CHUYÊN MỤC "{categoryName.toUpperCase()}"</h2>
 
-            {articles.length === 0 ? (
-              <div style={{ padding: '60px 0', textAlign: 'center', color: 'var(--text-light)' }}>
-                <i className="fas fa-folder-open" style={{ fontSize: '48px', marginBottom: '15px', color: 'var(--accent-color)' }}></i>
-                <h3>{dict.news.noArticles}</h3>
-                <p>{dict.news.noArticlesDesc}</p>
-              </div>
-            ) : (
-              <div className="blog-grid">
-                {articles.map((article) => (
-                  <NewsCard key={article.id} news={article} locale={locale} />
-                ))}
-              </div>
-            )}
-
-            {/* Pagination */}
-            {articles.length > 0 && (
-              <div className="pagination" style={{ marginTop: '40px' }}>
-                <a href="#" className="pagination-item active" data-astro-prefetch="hover">1</a>
-                <a href="#" className="pagination-item" data-astro-prefetch="hover">2</a>
-                <a href="#" className="pagination-item" data-astro-prefetch="hover">3</a>
-              </div>
-            )}
+        {articles.length > 0 ? (
+          <div class="blog-grid">
+            {articles.map((article) => (
+              <NewsCard news={article} locale={locale} />
+            ))}
           </div>
+        ) : (
+          <div style="text-align: center; padding: 40px 0; color: var(--text-light);">
+            <p>Đang cập nhật bài viết cho chuyên mục này.</p>
+          </div>
+        )}
+      </div>
 
-          {/* Sidebar */}
-          <aside className="blog-sidebar">
-            {/* Widget 1: Newsletter */}
-            <div className="sidebar-widget">
-              <h3>{dict.news.newsletterTitle}</h3>
-              <div className="widget-newsletter" style={{ marginTop: '15px' }}>
-                <p style={{ color: 'var(--text-light)', fontSize: '13.5px', marginBottom: '15px', lineHeight: '1.5' }}>
-                  {dict.news.newsletterDesc}
-                </p>
-                <NewsletterForm />
-              </div>
-            </div>
-
-            {/* Widget 2: Categories */}
-            <div className="sidebar-widget">
-              <h3>{locale === 'vi' ? 'DANH MỤC TIN TỨC' : locale === 'zh' ? '新闻分类' : 'NEWS CATEGORIES'}</h3>
-              <ul className="widget-categories-list">
-                <li>
-                  <a href="/tin-tuc" style={getStyle('')} data-astro-prefetch="hover">{locale === 'vi' ? 'Tất cả tin tức' : locale === 'zh' ? '所有资讯' : 'All News'}</a>
-                  <span className="count">{totalCount}</span>
-                </li>
-                <li>
-                  <a href="/tin-tuc/tin-tuc" style={getStyle('tin-tuc')} data-astro-prefetch="hover">{getCategoryName('tin-tuc', locale)}</a>
-                  <span className="count">{tinTucCount}</span>
-                </li>
-                <li>
-                  <a href="/tin-tuc/tu-van" style={getStyle('tu-van')} data-astro-prefetch="hover">{getCategoryName('tu-van', locale)}</a>
-                  <span className="count">{tuVanCount}</span>
-                </li>
-                <li>
-                  <a href="/tin-tuc/bao-tri" style={getStyle('bao-tri')} data-astro-prefetch="hover">{getCategoryName('bao-tri', locale)}</a>
-                  <span className="count">{baoTriCount}</span>
-                </li>
-                <li>
-                  <a href="/tin-tuc/du-an" style={getStyle('du-an')} data-astro-prefetch="hover">{getCategoryName('du-an', locale)}</a>
-                  <span className="count">{duAnCount}</span>
-                </li>
-              </ul>
-            </div>
-          </aside>
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h3>Đăng ký nhận tin</h3>
+          <div class="widget-newsletter" style="margin-top: 15px;">
+            <NewsletterForm dict={dict.footer} client:visible />
+          </div>
         </div>
-      </section>
-
-      <CTABanner locale={locale} />
+      </aside>
     </div>
+  </section>
+
+  <CTABanner locale={locale} />
 </Layout>

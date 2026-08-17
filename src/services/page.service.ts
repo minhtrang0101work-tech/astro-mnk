@@ -1,4 +1,4 @@
-import { PageMetadata } from '@/types';
+import type { PageMetadata } from '@/types';
 import { PageRepository } from '@/repositories/page.repository';
 
 export class PageService {

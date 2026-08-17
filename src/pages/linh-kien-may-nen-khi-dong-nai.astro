@@ -1,11 +1,16 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+
+
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
-import Layout from '@/layouts/Layout.astro';
-const { zone, category, slug } = Astro.params;
-const props = Astro.props;
-const locale = 'vi';
 
+
+
+
+
+const { zone } = Astro.params;
+const locale = 'vi';
 
   const title = 'Kho Linh Kiện & Phụ Tùng Máy Nén Khí Tại Đồng Nai - Giao Hàng 2h';
   const breadcrumbItems = [
@@ -50,29 +55,19 @@ const locale = 'vi';
       
       <Breadcrumb title={title} items={breadcrumbItems} />
 
-      <section className="section-padding">
-        <div className="container" style={{ maxWidth: '960px', margin: '0 auto' }}>
-          <article className="service-detail-content" style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+      <section class="section-padding">
+        <div class="container" style="max-width: 960px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
             
             {/* Intro */}
-            <div style={{ 
-              fontWeight: 600, 
-              fontSize: '17.5px', 
-              color: 'var(--text-dark)', 
-              marginBottom: '30px', 
-              padding: '20px 26px', 
-              backgroundColor: '#f0f7ff', 
-              borderLeft: '5px solid var(--primary-color)',
-              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
-              lineHeight: '1.65'
-            }}>
+            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
               <strong>Khải Nguyên</strong> tự hào là kho phân phối <strong>linh kiện máy nén khí Đồng Nai</strong> quy mô lớn nhất 
               khu vực Biên Hòa. Chúng tôi chuyên cung cấp sỉ & lẻ <strong>phụ tùng máy nén khí trục vít</strong> chính hãng 
               cho các thương hiệu Hitachi, Kobelco, Fusheng, Atlas Copco, Ingersoll Rand với cam kết giao hàng tận nơi trong vòng 2h.
             </div>
 
             {/* Kho hàng thực tế */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
               Kho Linh Kiện & Phụ Tùng Máy Nén Khí Sẵn Hàng Tại Biên Hòa
             </h2>
             <p>
@@ -81,51 +76,51 @@ const locale = 'vi';
             </p>
 
             {/* Bảng linh kiện phụ tùng */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
               Bảng Danh Mục Phụ Tùng Máy Nén Khí Trục Vít Phân Phối
             </h2>
             
-            <div style={{ overflowX: 'auto', margin: '20px 0' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '15px' }}>
+            <div style="overflow-x: auto; margin: 20px 0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
                 <thead>
-                  <tr style={{ backgroundColor: 'var(--primary-color)', color: '#fff' }}>
-                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Nhóm Linh Kiện</th>
-                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Sản Phẩm Chi Tiết</th>
-                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Thời Gian Sử Dụng Khuyên Dùng</th>
-                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Giao Hàng Đồng Nai</th>
+                  <tr style="background-color: var(--primary-color); color: #fff;">
+                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Nhóm Linh Kiện</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Sản Phẩm Chi Tiết</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Thời Gian Sử Dụng Khuyên Dùng</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Giao Hàng Đồng Nai</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>Bộ Lọc Tách Dầu</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Lọc tách Fusheng, Kobelco, Hitachi, Mann Filter</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>3.000h - 4.000h chạy máy</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>Hỏa tốc 2 giờ</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Bộ Lọc Tách Dầu</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Lọc tách Fusheng, Kobelco, Hitachi, Mann Filter</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">3.000h - 4.000h chạy máy</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
                   </tr>
-                  <tr style={{ backgroundColor: '#f8fafc' }}>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>Lọc Dầu & Lọc Gió</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Lõi lọc gió bụi mịn, lọc dầu bôi trơn cao cấp</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>2.000h - 3.000h chạy máy</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>Hỏa tốc 2 giờ</td>
+                  <tr style="background-color: #f8fafc;">
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Lọc Dầu & Lọc Gió</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Lõi lọc gió bụi mịn, lọc dầu bôi trơn cao cấp</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">2.000h - 3.000h chạy máy</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>Dầu Bôi Trơn</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Dầu Fusheng FS600, dầu Kobelco Genuine, dầu tổng hợp ISO VG46</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>4.000h - 8.000h chạy máy</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>Hỏa tốc 2 giờ</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Dầu Bôi Trơn</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Dầu Fusheng FS600, dầu Kobelco Genuine, dầu tổng hợp ISO VG46</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">4.000h - 8.000h chạy máy</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
                   </tr>
-                  <tr style={{ backgroundColor: '#f8fafc' }}>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>Van & Cảm Biến</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Van cổ hút, van áp suất tối thiểu, van an toàn, cảm biến nhiệt độ</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Thay khi hỏng / đại tu 12.000h</td>
-                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>Sẵn kho Biên Hòa</td>
+                  <tr style="background-color: #f8fafc;">
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Van & Cảm Biến</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Van cổ hút, van áp suất tối thiểu, van an toàn, cảm biến nhiệt độ</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Thay khi hỏng / đại tu 12.000h</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Sẵn kho Biên Hòa</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             {/* Cam Kết */}
-            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
               Cam Kết Dịch Vụ Cung Cấp Phụ Tùng Tại Đồng Nai
             </h2>
             <ul>
@@ -135,12 +130,12 @@ const locale = 'vi';
               <li><strong>Bảo hành đổi mới:</strong> 1-đổi-1 nếu lỗi nhà sản xuất trong suốt thời gian bảo hành.</li>
             </ul>
 
-            <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '20px', borderRadius: '8px', margin: '30px 0' }}>
-              <h3 style={{ margin: '0 0 8px', color: '#166534', fontSize: '18px' }}>Bạn Cần Báo Giá Phụ Tùng Máy Nén Khí Trục Vít Ngay Bây Giờ?</h3>
-              <p style={{ margin: '0 0 12px' }}>
+            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 8px; margin: 30px 0;">
+              <h3 style="margin: 0 0 8px; color: #166534; font-size: 18px;">Bạn Cần Báo Giá Phụ Tùng Máy Nén Khí Trục Vít Ngay Bây Giờ?</h3>
+              <p style="margin: 0 0 12px;">
                 Liên hệ ngay hotline kho Đồng Nai để nhận báo giá chiết khấu cao nhất cho nhà máy:
               </p>
-              <a href="tel:0909513637" style={{ display: 'inline-block', backgroundColor: 'var(--primary-color)', color: '#fff', padding: '12px 24px', borderRadius: '6px', fontWeight: 700, textDecoration: 'none' }}>
+              <a href="tel:0909513637" style="display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none;">
                 HOTLINE: 0909 513 637
               </a>
             </div>

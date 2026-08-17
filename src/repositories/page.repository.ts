@@ -1,4 +1,4 @@
-import { PageMetadata } from '@/types';
+import type { PageMetadata } from '@/types';
 
 const pagesMetadata: { [key: string]: PageMetadata } = {
   'home': {

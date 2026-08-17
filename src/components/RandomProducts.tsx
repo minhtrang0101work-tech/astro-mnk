@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Product } from '@/types';
+import type { Product } from '@/types';
 import ProductCard from '@/features/products/ProductCard';
 
 interface RandomProductsProps {

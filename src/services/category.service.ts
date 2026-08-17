@@ -1,4 +1,4 @@
-import { Category } from '@/types';
+import type { Category } from '@/types';
 import { CategoryRepository } from '@/repositories/category.repository';
 
 export class CategoryService {

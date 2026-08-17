@@ -1,4 +1,4 @@
-import { NewsItem } from '@/types';
+import type { NewsItem } from '@/types';
 
 const defaultContentHtmlVi = `
   <p>Trong quá trình vận hành nhà xưởng công nghiệp tại Đồng Nai, Bình Dương và khu vực Đông Nam Bộ, hệ thống khí nén đóng vai trò cực kỳ then chốt. Bất kỳ một sự cố nhỏ nào của máy nén khí, dù là dòng máy trục vít Kobelco, Hitachi hay Fusheng, đều có thể dẫn đến việc ngưng trệ dây chuyền sản xuất hàng loạt, gây tổn hại trực tiếp đến tiến độ giao hàng và doanh thu của doanh nghiệp.</p>
