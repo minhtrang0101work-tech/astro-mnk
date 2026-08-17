@@ -1,16 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://maynenkhikhainguyen.com',
-  output: 'static', // Static Site Generation (SSG) tối ưu cho Cloudflare Pages
-  adapter: cloudflare({
-    imageService: 'cloudflare', // Tận dụng Cloudflare Image Resizing
-  }),
+  output: 'static', // 100% Static Site Generation (SSG) tối ưu cho Cloudflare Pages
   integrations: [
     react(),
     sitemap({

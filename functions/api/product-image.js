@@ -1,7 +1,3 @@
-export const prerender = false;
-
-import type { APIRoute } from 'astro';
-
 const ALLOWED_DOMAINS = [
   'dev-maynenkhikhainguyen.pantheonsite.io',
   'maynenkhikhainguyen.lovestoblog.com',
@@ -9,16 +5,16 @@ const ALLOWED_DOMAINS = [
   'lovestoblog.com'
 ];
 
-export const GET: APIRoute = async ({ request }) => {
+export async function onRequestGet(context) {
   try {
-    const { searchParams } = new URL(request.url);
-    const imageUrl = searchParams.get('url');
+    const url = new URL(context.request.url);
+    const imageUrl = url.searchParams.get('url');
 
     if (!imageUrl) {
       return new Response('Missing image URL parameter', { status: 400 });
     }
 
-    let parsedUrl: URL;
+    let parsedUrl;
     try {
       parsedUrl = new URL(imageUrl);
     } catch {
@@ -34,7 +30,6 @@ export const GET: APIRoute = async ({ request }) => {
     );
 
     if (!isDomainAllowed) {
-      console.warn(`Blocked image proxy request for unauthorized domain: ${parsedUrl.hostname}`);
       return new Response('Unauthorized domain', { status: 403 });
     }
 
@@ -49,11 +44,6 @@ export const GET: APIRoute = async ({ request }) => {
     }
 
     const contentType = response.headers.get('content-type') || 'image/jpeg';
-    
-    if (!contentType.startsWith('image/')) {
-      return new Response('Requested URL is not an image', { status: 400 });
-    }
-
     const buffer = await response.arrayBuffer();
 
     return new Response(buffer, {
@@ -64,7 +54,6 @@ export const GET: APIRoute = async ({ request }) => {
       },
     });
   } catch (error) {
-    console.error('Error in product image proxy route:', error);
     return new Response('Internal Server Error', { status: 500 });
   }
-};
+}
