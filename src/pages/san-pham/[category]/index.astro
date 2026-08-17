@@ -57,11 +57,11 @@ const breadcrumbItems = [
           <ProductSort locale={locale} client:load />
         </div>
 
-        <ProductGrid products={products} />
+        <ProductGrid products={products} client:load />
         <Pagination total={total} limit={12} currentPage={1} baseUrl={`/san-pham/${categorySlug}`} />
       </div>
     </div>
   </section>
 
-  <CTABanner locale={locale} />
+  <CTABanner client:visible locale={locale} />
 </Layout>

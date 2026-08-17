@@ -1,13 +1,61 @@
+import { useState, useEffect } from 'react';
 import type { Product } from '@/types';
 import ProductCard from './ProductCard';
+import { removeAccents } from '@/lib/utils';
 
 interface ProductGridProps {
   products: Product[];
   searchQuery?: string;
 }
 
-export default function ProductGrid({ products, searchQuery }: ProductGridProps) {
-  if (products.length === 0) {
+export default function ProductGrid({ products: initialProducts, searchQuery: initialSearch }: ProductGridProps) {
+  const [displayProducts, setDisplayProducts] = useState<Product[]>(initialProducts);
+  const [searchQuery, setSearchQuery] = useState(initialSearch || '');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const params = new URLSearchParams(window.location.search);
+    const searchParam = params.get('search') || params.get('q') || '';
+    const catParam = params.get('category') || '';
+    const sortParam = params.get('sort') || 'newest';
+
+    setSearchQuery(searchParam);
+
+    let filtered = [...initialProducts];
+
+    // 1. Search Query Filter
+    if (searchParam) {
+      const searchNormalized = removeAccents(searchParam.toLowerCase().trim());
+      filtered = filtered.filter(p => {
+        const titleNormalized = removeAccents((p.title || '').toLowerCase());
+        const descNormalized = removeAccents((p.description || '').toLowerCase());
+        const catNormalized = removeAccents((p.categoryName || '').toLowerCase());
+        return (
+          titleNormalized.includes(searchNormalized) ||
+          descNormalized.includes(searchNormalized) ||
+          catNormalized.includes(searchNormalized)
+        );
+      });
+    }
+
+    // 2. Category Checkboxes Filter
+    if (catParam) {
+      const categories = catParam.split(',');
+      filtered = filtered.filter(p => categories.includes(p.category));
+    }
+
+    // 3. Sorting
+    if (sortParam === 'name-asc') {
+      filtered.sort((a, b) => a.title.localeCompare(b.title, 'vi'));
+    } else if (sortParam === 'name-desc') {
+      filtered.sort((a, b) => b.title.localeCompare(a.title, 'vi'));
+    }
+
+    setDisplayProducts(filtered);
+  }, [initialProducts]);
+
+  if (displayProducts.length === 0) {
     return (
       <div className="products-grid" style={{ display: 'block' }}>
         <div 
@@ -44,7 +92,7 @@ export default function ProductGrid({ products, searchQuery }: ProductGridProps)
 
   return (
     <div className="products-grid">
-      {products.map(product => (
+      {displayProducts.map(product => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
