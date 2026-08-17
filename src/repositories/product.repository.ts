@@ -1,6 +1,7 @@
 import type { Product } from '@/types';
 import { mockProducts } from '@/data/mock/products';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
+import { translateProduct } from '@/lib/translate';
 
 const CMS_PROVIDER = import.meta.env.CMS_PROVIDER || process.env.CMS_PROVIDER || 'MOCK';
 
@@ -46,8 +47,6 @@ function normalizeWpProduct(wpProduct: any): Product {
   }
 
   // Định dạng hiển thị giá theo yêu cầu:
-  // Nếu có giá > 0: hiển thị "Từ x.xxx.xxx đ"
-  // Ngược lại hiển thị "Liên hệ báo giá"
   let priceDisplay = 'Liên hệ báo giá';
   if (acf.price) {
     const priceNum = Number(acf.price);
@@ -84,56 +83,68 @@ function normalizeWpProduct(wpProduct: any): Product {
 }
 
 export class ProductRepository {
-  static async getAllProducts(): Promise<Product[]> {
+  static async getAllProducts(locale: string = 'vi'): Promise<Product[]> {
+    let products: Product[] = [];
+
     if (CMS_PROVIDER === 'MOCK') {
-      return mockProducts;
-    }
+      products = mockProducts;
+    } else {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let allProducts: any[] = [];
+        let page = 1;
+        let hasMore = true;
 
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let allProducts: any[] = [];
-      let page = 1;
-      let hasMore = true;
-
-      while (hasMore) {
-        const data = await fetchWordPressREST(`wp/v2/san-pham?_embed=true&per_page=100&page=${page}`);
-        if (Array.isArray(data) && data.length > 0) {
-          allProducts = [...allProducts, ...data];
-          if (data.length < 100) {
-            hasMore = false;
+        while (hasMore) {
+          const data = await fetchWordPressREST(`wp/v2/san-pham?_embed=true&per_page=100&page=${page}`);
+          if (Array.isArray(data) && data.length > 0) {
+            allProducts = [...allProducts, ...data];
+            if (data.length < 100) {
+              hasMore = false;
+            } else {
+              page++;
+            }
           } else {
-            page++;
+            hasMore = false;
           }
-        } else {
-          hasMore = false;
         }
-      }
 
-      if (allProducts.length > 0) {
-        return allProducts.map(normalizeWpProduct);
+        if (allProducts.length > 0) {
+          products = allProducts.map(normalizeWpProduct);
+        } else {
+          products = mockProducts;
+        }
+      } catch (error) {
+        console.error('Error fetching products from WordPress REST API:', error);
+        products = mockProducts;
       }
-    } catch (error) {
-      console.error('Error fetching products from WordPress REST API:', error);
     }
 
-    // Tự động fallback về dữ liệu có sẵn để đảm bảo tốc độ tải trang luôn dưới 0.2s
-    return mockProducts;
+    return products.map(p => translateProduct(p, locale));
   }
 
-  static async getProductBySlug(slug: string): Promise<Product | undefined> {
+  static async getProductBySlug(slug: string, locale: string = 'vi'): Promise<Product | undefined> {
+    let product: Product | undefined;
+
     if (CMS_PROVIDER === 'MOCK') {
-      return mockProducts.find(p => p.slug === slug);
-    }
-
-    try {
-      const data = await fetchWordPressREST(`wp/v2/san-pham?slug=${slug}&_embed=true`);
-      if (Array.isArray(data) && data.length > 0) {
-        return normalizeWpProduct(data[0]);
+      product = mockProducts.find(p => p.slug === slug);
+    } else {
+      try {
+        const data = await fetchWordPressREST(`wp/v2/san-pham?slug=${slug}&_embed=true`);
+        if (Array.isArray(data) && data.length > 0) {
+          product = normalizeWpProduct(data[0]);
+        } else {
+          product = mockProducts.find(p => p.slug === slug);
+        }
+      } catch (error) {
+        console.error(`Error fetching product by slug (${slug}) from WordPress:`, error);
+        product = mockProducts.find(p => p.slug === slug);
       }
-    } catch (error) {
-      console.error(`Error fetching product by slug (${slug}) from WordPress:`, error);
     }
 
-    return mockProducts.find(p => p.slug === slug);
+    if (product) {
+      return translateProduct(product, locale);
+    }
+    return undefined;
   }
 }

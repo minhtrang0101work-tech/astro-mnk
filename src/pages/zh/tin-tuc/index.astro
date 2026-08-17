@@ -10,7 +10,7 @@ import { getDictionary } from '@/lib/i18n';
 const locale = 'zh';
 const dict = await getDictionary(locale);
 
-const { news: articles } = await NewsService.getNews();
+const { news: articles } = await NewsService.getNews({}, locale);
 
 const breadcrumbItems = [
   { label: dict.common.news }

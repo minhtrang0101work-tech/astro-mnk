@@ -14,7 +14,7 @@ const locale = 'vi';
 const dict = await getDictionary(locale);
 
 const categories = await CategoryRepository.getAllCategories();
-const { products, total } = await ProductService.getProducts();
+const { products, total } = await ProductService.getProducts({}, locale);
 
 const breadcrumbItems = [
   { label: dict.common.products }

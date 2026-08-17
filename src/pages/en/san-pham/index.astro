@@ -14,7 +14,7 @@ const locale = 'en';
 const dict = await getDictionary(locale);
 
 const categories = await CategoryRepository.getAllCategories();
-const { products, total } = await ProductService.getProducts();
+const { products, total } = await ProductService.getProducts({}, locale);
 
 const breadcrumbItems = [
   { label: dict.common.products }
@@ -39,7 +39,7 @@ const breadcrumbItems = [
           <ProductSort locale="en" client:load />
         </div>
 
-        <ProductGrid products={products} client:load />
+        <ProductGrid products={products} locale={locale} client:load />
         <Pagination total={total} limit={12} currentPage={1} baseUrl="/san-pham" />
       </div>
     </div>

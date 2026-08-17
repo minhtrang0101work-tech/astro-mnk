@@ -13,8 +13,8 @@ const dict = await getDictionary(locale);
 
 // Parallel data fetching for maximum build performance
 const [featuredProducts, latestNews] = await Promise.all([
-  ProductService.getBestSellers(12),
-  NewsService.getLatestNews(3),
+  ProductService.getBestSellers(12, locale),
+  NewsService.getLatestNews(3, locale),
 ]);
 
 const faqSchema = {

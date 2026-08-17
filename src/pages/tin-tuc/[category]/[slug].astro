@@ -9,7 +9,7 @@ import CTABanner from '@/components/CTABanner';
 import { getDictionary } from '@/lib/i18n';
 
 export async function getStaticPaths() {
-  const newsList = await NewsRepository.getAllNews();
+  const newsList = await NewsRepository.getAllNews('vi');
   return newsList.map(news => ({
     params: { category: news.category, slug: news.slug },
     props: { news }

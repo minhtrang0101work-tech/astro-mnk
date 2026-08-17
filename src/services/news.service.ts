@@ -3,13 +3,16 @@ import { NewsRepository } from '@/repositories/news.repository';
 import { removeAccents } from '@/lib/utils';
 
 export class NewsService {
-  static async getNews(filters: {
-    category?: string;
-    search?: string;
-    page?: number;
-    limit?: number;
-  } = {}): Promise<{ news: NewsItem[]; total: number }> {
-    let news = await NewsRepository.getAllNews();
+  static async getNews(
+    filters: {
+      category?: string;
+      search?: string;
+      page?: number;
+      limit?: number;
+    } = {},
+    locale: string = 'vi'
+  ): Promise<{ news: NewsItem[]; total: number }> {
+    let news = await NewsRepository.getAllNews(locale);
 
     // 1. News Category Filter
     if (filters.category) {
@@ -42,21 +45,21 @@ export class NewsService {
     return { news, total };
   }
 
-  static async getNewsBySlug(slug: string): Promise<NewsItem | undefined> {
-    return NewsRepository.getNewsBySlug(slug);
+  static async getNewsBySlug(slug: string, locale: string = 'vi'): Promise<NewsItem | undefined> {
+    return NewsRepository.getNewsBySlug(slug, locale);
   }
 
-  static async getLatestNews(limit = 3): Promise<NewsItem[]> {
-    const { news } = await this.getNews();
+  static async getLatestNews(limit = 3, locale: string = 'vi'): Promise<NewsItem[]> {
+    const { news } = await this.getNews({}, locale);
     return news.slice(0, limit);
   }
 
-  static async getRelatedNews(newsId: string, category: string, limit = 3): Promise<NewsItem[]> {
-    const { news } = await this.getNews({ category });
+  static async getRelatedNews(newsId: string, category: string, limit = 3, locale: string = 'vi'): Promise<NewsItem[]> {
+    const { news } = await this.getNews({ category }, locale);
     let related = news.filter(n => n.id !== newsId);
     
     if (related.length < limit) {
-      const { news: allNews } = await this.getNews();
+      const { news: allNews } = await this.getNews({}, locale);
       const extraNews = allNews.filter(n => n.id !== newsId && !related.some(r => r.id === n.id));
       related = [...related, ...extraNews].slice(0, limit);
     }
@@ -64,8 +67,8 @@ export class NewsService {
     return related;
   }
 
-  static async searchNews(query: string): Promise<NewsItem[]> {
-    const { news } = await this.getNews({ search: query });
+  static async searchNews(query: string, locale: string = 'vi'): Promise<NewsItem[]> {
+    const { news } = await this.getNews({ search: query }, locale);
     return news;
   }
 }

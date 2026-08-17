@@ -57,7 +57,7 @@ const breadcrumbItems = [
           <ProductSort locale="en" client:load />
         </div>
 
-        <ProductGrid products={products} client:load />
+        <ProductGrid products={products} locale={locale} client:load />
         <Pagination total={total} limit={12} currentPage={1} baseUrl={`/san-pham/${categorySlug}`} />
       </div>
     </div>

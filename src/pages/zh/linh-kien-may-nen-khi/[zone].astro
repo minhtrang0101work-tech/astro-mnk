@@ -446,7 +446,7 @@ const locale = 'zh';
   const details = zoneInfoMap[zone] || zoneInfoMap['kcn-amata'];
   
   // Read products from repository for display
-  const allProducts = await ProductRepository.getAllProducts();
+  const allProducts = await ProductRepository.getAllProducts(locale);
   // Filter for parts-related categories to make the base array highly relevant
   const partsProducts = allProducts.filter(p => 
     p.category === 'bo-loc-va-tach-khi-nen' || 

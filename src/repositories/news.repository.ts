@@ -1,6 +1,7 @@
 import type { NewsItem } from '@/types';
 import { mockNews } from '@/data/mock/news';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
+import { translateNews } from '@/lib/translate';
 
 const CMS_PROVIDER = import.meta.env.CMS_PROVIDER || process.env.CMS_PROVIDER || 'MOCK';
 
@@ -18,15 +19,14 @@ function normalizeWpPost(wpPost: any): NewsItem {
     }
   }
 
-  // Trích xuất danh mục từ _embedded (nếu sử dụng _embed=true)
+  // Trích xuất danh mục từ _embedded
   let categorySlug = 'tin-tuc';
   const terms = wpPost._embedded?.['wp:term']?.[0];
   if (terms && terms.length > 0) {
-    // Lấy slug của danh mục đầu tiên
     categorySlug = terms[0].slug;
   }
 
-  // Chuẩn hóa slug danh mục từ WordPress khớp với cấu hình của hệ thống website
+  // Chuẩn hóa slug danh mục từ WordPress
   if (categorySlug === 'tin-tuc-nganh') categorySlug = 'tin-tuc';
   if (categorySlug === 'tu-van-ky-thuat') categorySlug = 'tu-van';
   if (categorySlug === 'bao-tri-bao-duong') categorySlug = 'bao-tri';
@@ -39,7 +39,7 @@ function normalizeWpPost(wpPost: any): NewsItem {
       ? wpPost.excerpt.rendered.replace(/<[^>]*>/g, '').replace(/\r?\n|\r/g, ' ').trim()
       : '';
 
-  // Định dạng ngày hiển thị (DD/MM/YYYY hoặc vi-VN)
+  // Định dạng ngày hiển thị
   let formattedDate = '';
   try {
     const d = new Date(wpPost.date);
@@ -65,38 +65,50 @@ function normalizeWpPost(wpPost: any): NewsItem {
 }
 
 export class NewsRepository {
-  static async getAllNews(): Promise<NewsItem[]> {
+  static async getAllNews(locale: string = 'vi'): Promise<NewsItem[]> {
+    let news: NewsItem[] = [];
+
     if (CMS_PROVIDER === 'MOCK') {
-      return mockNews;
+      news = mockNews;
+    } else {
+      try {
+        const data = await fetchWordPressREST('wp/v2/posts?_embed=true&per_page=100');
+        if (Array.isArray(data) && data.length > 0) {
+          news = data.map(normalizeWpPost);
+        } else {
+          news = mockNews;
+        }
+      } catch (error) {
+        console.error('Error fetching news from WordPress REST API:', error);
+        news = mockNews;
+      }
     }
 
-    try {
-      const data = await fetchWordPressREST('wp/v2/posts?_embed=true&per_page=100');
-      if (Array.isArray(data) && data.length > 0) {
-        return data.map(normalizeWpPost);
-      }
-    } catch (error) {
-      console.error('Error fetching news from WordPress REST API:', error);
-    }
-    
-    // Tự động fallback về mockNews để trang luôn tải nhanh tức thì
-    return mockNews;
+    return news.map(n => translateNews(n, locale));
   }
 
-  static async getNewsBySlug(slug: string): Promise<NewsItem | undefined> {
+  static async getNewsBySlug(slug: string, locale: string = 'vi'): Promise<NewsItem | undefined> {
+    let item: NewsItem | undefined;
+
     if (CMS_PROVIDER === 'MOCK') {
-      return mockNews.find(n => n.slug === slug);
-    }
-
-    try {
-      const data = await fetchWordPressREST(`wp/v2/posts?slug=${slug}&_embed=true`);
-      if (Array.isArray(data) && data.length > 0) {
-        return normalizeWpPost(data[0]);
+      item = mockNews.find(n => n.slug === slug);
+    } else {
+      try {
+        const data = await fetchWordPressREST(`wp/v2/posts?slug=${slug}&_embed=true`);
+        if (Array.isArray(data) && data.length > 0) {
+          item = normalizeWpPost(data[0]);
+        } else {
+          item = mockNews.find(n => n.slug === slug);
+        }
+      } catch (error) {
+        console.error(`Error fetching news by slug (${slug}) from WordPress:`, error);
+        item = mockNews.find(n => n.slug === slug);
       }
-    } catch (error) {
-      console.error(`Error fetching news by slug (${slug}) from WordPress:`, error);
     }
 
-    return mockNews.find(n => n.slug === slug);
+    if (item) {
+      return translateNews(item, locale);
+    }
+    return undefined;
   }
 }
