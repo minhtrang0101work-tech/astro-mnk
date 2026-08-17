@@ -463,12 +463,189 @@ export function translateSpecs(specs?: { [key: string]: string }, locale: string
 /**
  * Dịch tin tức sang ngôn ngữ yêu cầu (vi, en, zh)
  */
+
+// Bản dịch chi tiết cho toàn bộ bài viết tin tức / kỹ thuật
+export const newsTranslationMap: { [slug: string]: { en: Partial<NewsItem>; zh: Partial<NewsItem> } } = {
+  'van-an-toan-may-nen-khi': {
+    en: {
+      title: 'Air Compressor Safety Valves: Mechanism, Sizing, and Set Pressure Standards',
+      description: 'Comprehensive guide to safety relief valve mechanisms, set-pressure calculation, and safety inspection rules.',
+      content: `
+        <p><strong>Air Compressor Safety Relief Valves (Safety Valves)</strong> are automatic mechanical overpressure protection devices installed on air-oil separators and air receivers. When vessel pressure exceeds design limits, the valve instantly opens to release excess air, preventing catastrophic vessel rupture.</p>
+        <h2>1. Common Safety Relief Valve Specifications Table</h2>
+        <div style="overflow-x: auto; margin: 20px 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+            <thead>
+              <tr style="background-color: var(--primary-color); color: #fff;">
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Connection Thread</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Set Relief Pressure</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Standard Applications</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1/4" (DN8) - 3/8" (DN10)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">8 Bar - 10 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">Small piston compressors, oil-free dental units</td>
+              </tr>
+              <tr style="background-color: #f8fafc;">
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1/2" (DN15) - 3/4" (DN20)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 13 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10HP - 50HP screw compressor separator vessels</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1" (DN25) - 2" (DN50)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 40 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">1,000L - 5,000L industrial air receiver tanks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2>2. Operational Principles & Mandatory Calibration</h2>
+        <p>When internal pressure overcomes spring tension, the disc lifts to exhaust compressed air. Under Vietnamese safety regulations, all pressure vessel safety valves must undergo annual third-party calibration and lead-sealing.</p>
+      `
+    },
+    zh: {
+      title: '工业空压机安全阀：结构原理、规格选型与跳动压力设定规范',
+      description: '详尽解析储气罐与空压机安全阀工作机制，防止超压爆炸事故，符合越南国家特种设备检验标准。',
+      content: `
+        <p><strong>工业空压机安全阀（Safety Valve）</strong> 是安装于油气桶及储气罐上的全自动机械泄压防护装置。当容器内气压超过预设安全极限时，安全阀瞬间起跳排气，彻底杜绝压力容器超压爆炸隐患，保障车间人员与设备绝对安全。</p>
+        <h2>一、常用工业空压机安全阀规格参数表</h2>
+        <div style="overflow-x: auto; margin: 20px 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+            <thead>
+              <tr style="background-color: var(--primary-color); color: #fff;">
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">螺纹接口规格</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">设定起跳压力 (Set Pressure)</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">适用设备与场景</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1/4" (DN8) - G 3/8" (DN10)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">8 Bar - 10 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">小型活塞空压机、医用无油静音空压机</td>
+              </tr>
+              <tr style="background-color: #f8fafc;">
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1/2" (DN15) - G 3/4" (DN20)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 13 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10HP - 50HP 工业螺杆空压机油气分离桶</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1" (DN25) - G 2" (DN50)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 40 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">1000L - 5000L 大容量工业储气罐及高压管网</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2>二、工作原理与特种设备年检标准</h2>
+        <p>当容器内介质压力超过弹簧预紧力时，阀芯被顶开泄放压缩空气。根据越南特种设备安全技术检验规范，所有在用压力容器安全阀必须每年由国家授权检测机构进行校验并加施铅封。</p>
+      `
+    }
+  },
+  'van-an-toan-may-nen-khi-cau-tao-nguyen-ly-va-cach-cai-dat': {
+    en: {
+      title: 'Air Compressor Safety Valves: Mechanism, Sizing, and Set Pressure Standards',
+      description: 'Comprehensive guide to safety relief valve mechanisms, set-pressure calculation, and safety inspection rules.',
+      content: `
+        <p><strong>Air Compressor Safety Relief Valves (Safety Valves)</strong> are automatic mechanical overpressure protection devices installed on air-oil separators and air receivers. When vessel pressure exceeds design limits, the valve instantly opens to release excess air, preventing catastrophic vessel rupture.</p>
+        <h2>1. Common Safety Relief Valve Specifications Table</h2>
+        <div style="overflow-x: auto; margin: 20px 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+            <thead>
+              <tr style="background-color: var(--primary-color); color: #fff;">
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Connection Thread</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Set Relief Pressure</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">Standard Applications</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1/4" (DN8) - 3/8" (DN10)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">8 Bar - 10 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">Small piston compressors, oil-free dental units</td>
+              </tr>
+              <tr style="background-color: #f8fafc;">
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1/2" (DN15) - 3/4" (DN20)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 13 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10HP - 50HP screw compressor separator vessels</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">1" (DN25) - 2" (DN50)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 40 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">1,000L - 5,000L industrial air receiver tanks</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2>2. Operational Principles & Mandatory Calibration</h2>
+        <p>When internal pressure overcomes spring tension, the disc lifts to exhaust compressed air. Under Vietnamese safety regulations, all pressure vessel safety valves must undergo annual third-party calibration and lead-sealing.</p>
+      `
+    },
+    zh: {
+      title: '工业空压机安全阀：结构原理、规格选型与跳动压力设定规范',
+      description: '详尽解析储气罐与空压机安全阀工作机制，防止超压爆炸事故，符合越南国家特种设备检验标准。',
+      content: `
+        <p><strong>工业空压机安全阀（Safety Valve）</strong> 是安装于油气桶及储气罐上的全自动机械泄压防护装置。当容器内气压超过预设安全极限时，安全阀瞬间起跳排气，彻底杜绝压力容器超压爆炸隐患，保障车间人员与设备绝对安全。</p>
+        <h2>一、常用工业空压机安全阀规格参数表</h2>
+        <div style="overflow-x: auto; margin: 20px 0;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+            <thead>
+              <tr style="background-color: var(--primary-color); color: #fff;">
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">螺纹接口规格</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">设定起跳压力 (Set Pressure)</th>
+                <th style="padding: 12px 15px; border: 1px solid #ddd;">适用设备与场景</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1/4" (DN8) - G 3/8" (DN10)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">8 Bar - 10 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">小型活塞空压机、医用无油静音空压机</td>
+              </tr>
+              <tr style="background-color: #f8fafc;">
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1/2" (DN15) - G 3/4" (DN20)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 13 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10HP - 50HP 工业螺杆空压机油气分离桶</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">G 1" (DN25) - G 2" (DN50)</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">10 Bar - 40 Bar</td>
+                <td style="padding: 12px 15px; border: 1px solid #ddd;">1000L - 5000L 大容量工业储气罐及高压管网</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2>二、工作原理与特种设备年检标准</h2>
+        <p>当容器内介质压力超过弹簧预紧力时，阀芯被顶开泄放压缩空气。根据越南特种设备安全技术检验规范，所有在用压力容器安全阀必须每年由国家授权检测机构进行校验并加施铅封。</p>
+      `
+    }
+  }
+};
+
+
 export function translateNews(newsItem: NewsItem, locale: string = 'vi'): NewsItem {
   if (locale === 'vi') return newsItem;
 
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
 
+  // 1. Kiểm tra bản dịch chính xác theo slug trong newsTranslationMap
+  const mapped = newsTranslationMap[newsItem.slug];
+  if (mapped) {
+    const target = isZh ? mapped.zh : mapped.en;
+    if (target) {
+      return {
+        ...newsItem,
+        title: target.title || (isZh ? (newsItem.titleZh || newsItem.title) : (newsItem.titleEn || newsItem.title)),
+        description: target.description || (isZh ? (newsItem.descriptionZh || newsItem.description) : (newsItem.descriptionEn || newsItem.description)),
+        content: target.content || (isZh ? (newsItem.contentZh || newsItem.content) : (newsItem.contentEn || newsItem.content)),
+      };
+    }
+  }
+
+  // 2. Fallback về các trường có sẵn trong model
   return {
     ...newsItem,
     title: isZh ? (newsItem.titleZh || newsItem.title) : isEn ? (newsItem.titleEn || newsItem.title) : newsItem.title,
