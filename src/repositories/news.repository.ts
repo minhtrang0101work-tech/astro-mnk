@@ -2,7 +2,7 @@ import type { NewsItem } from '@/types';
 import { mockNews } from '@/data/mock/news';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
 
-const CMS_PROVIDER = process.env.CMS_PROVIDER || 'MOCK';
+const CMS_PROVIDER = import.meta.env.CMS_PROVIDER || process.env.CMS_PROVIDER || 'MOCK';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function normalizeWpPost(wpPost: any): NewsItem {

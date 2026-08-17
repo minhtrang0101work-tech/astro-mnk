@@ -2,7 +2,7 @@ import type { Product } from '@/types';
 import { mockProducts } from '@/data/mock/products';
 import { fetchWordPressREST } from '@/lib/api/wordpress';
 
-const CMS_PROVIDER = process.env.CMS_PROVIDER || 'MOCK';
+const CMS_PROVIDER = import.meta.env.CMS_PROVIDER || process.env.CMS_PROVIDER || 'MOCK';
 
 function formatVND(value: number): string {
   try {

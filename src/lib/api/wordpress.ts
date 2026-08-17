@@ -1,13 +1,25 @@
-const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL || '';
+const WORDPRESS_API_URL = (import.meta.env.WORDPRESS_API_URL || process.env.WORDPRESS_API_URL || '').replace(/\/+$/, '');
 
 export async function fetchWordPressREST(endpoint: string, options: RequestInit = {}) {
   if (!WORDPRESS_API_URL) return null;
 
-  const url = `${WORDPRESS_API_URL}/${endpoint}`;
+  let baseUrl = WORDPRESS_API_URL;
+  let cleanEndpoint = endpoint.replace(/^\/+/, '');
+
+  // Tự động chuẩn hóa URL linh hoạt
+  if (!baseUrl.includes('/wp-json')) {
+    baseUrl = `${baseUrl}/wp-json`;
+  }
+  
+  if (baseUrl.endsWith('/wp/v2') && cleanEndpoint.startsWith('wp/v2/')) {
+    cleanEndpoint = cleanEndpoint.replace(/^wp\/v2\//, '');
+  }
+
+  const url = `${baseUrl}/${cleanEndpoint}`;
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
 
     const res = await fetch(url, {
       ...options,
@@ -22,7 +34,7 @@ export async function fetchWordPressREST(endpoint: string, options: RequestInit 
     clearTimeout(timeoutId);
 
     if (!res.ok) {
-      console.warn(`WordPress REST API non-200 response: ${res.status} ${res.statusText}`);
+      console.warn(`WordPress REST API non-200 response: ${res.status} ${res.statusText} (${url})`);
       return null;
     }
 
