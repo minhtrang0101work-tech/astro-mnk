@@ -456,8 +456,8 @@ const locale = 'en';
   );
 
   const breadcrumbItems = [
-    { label: locale === 'vi' ? 'Linh kiện máy nén khí' : 'Parts', href: '/linh-kien-may-nen-khi' },
-    { label: details.nameVi }
+    { label: locale === 'vi' ? 'Air Compressor Spare Parts' : 'Parts', href: '/linh-kien-may-nen-khi' },
+    { label: locale === 'zh' ? details.nameZh : locale === 'en' ? details.nameEn : details.nameVi }
   ];
 
   const faqSchema = {
@@ -467,13 +467,13 @@ const locale = 'en';
       {
         "@type": "Question",
         "name": locale === 'vi' 
-          ? `Thời gian giao phụ tùng máy nén khí đến ${details.locationVi} là bao lâu?` 
-          : `How long does it take to deliver compressor parts to ${details.locationVi}?`,
+          ? `Thời gian giao phụ tùng máy nén khí đến ${locale === 'zh' ? details.locationZh : locale === 'en' ? details.locationEn : details.locationVi} là bao lâu?` 
+          : `How long does it take to deliver compressor parts to ${locale === 'zh' ? details.locationZh : locale === 'en' ? details.locationEn : details.locationVi}?`,
         "acceptedAnswer": {
           "@type": "Answer",
           "text": locale === 'vi' 
-            ? `Khải Nguyên hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ tận nơi nhà xưởng tại ${details.nameVi} đối với các phụ tùng tiêu hao định kỳ có sẵn như lọc tách dầu, lọc dầu, lọc gió và dầu làm mát máy nén khí.` 
-            : `Khai Nguyen supports express delivery within 2 hours to factories in ${details.nameVi} for standard parts in stock, including oil separators, oil filters, air filters, and lubricants.`
+            ? `Khải Nguyên hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ tận nơi nhà xưởng tại ${locale === 'zh' ? details.nameZh : locale === 'en' ? details.nameEn : details.nameVi} đối với các phụ tùng tiêu hao định kỳ có sẵn như lọc tách dầu, lọc dầu, lọc gió và dầu làm mát máy nén khí.` 
+            : `Khai Nguyen supports express delivery within 2 hours to factories in ${locale === 'zh' ? details.nameZh : locale === 'en' ? details.nameEn : details.nameVi} for standard parts in stock, including oil separators, oil filters, air filters, and lubricants.`
         }
       },
       {
@@ -499,7 +499,7 @@ const locale = 'en';
       <script type="application/ld+json" is:inline
         set:html={JSON.stringify(faqSchema)}
       />
-      <Breadcrumb title={locale === 'vi' ? `Cung Cấp Linh Kiện Tại ${details.locationVi}` : `Parts Supply in ${details.locationVi}`} items={breadcrumbItems} />
+      <Breadcrumb title={locale === 'vi' ? `Cung Cấp Linh Kiện Tại ${locale === 'zh' ? details.locationZh : locale === 'en' ? details.locationEn : details.locationVi}` : `Parts Supply in ${locale === 'zh' ? details.locationZh : locale === 'en' ? details.locationEn : details.locationVi}`} items={breadcrumbItems} />
 
       <section class="section-padding">
         <div class="container" style="max-width: 900px; margin: 0 auto;">
@@ -516,13 +516,13 @@ const locale = 'en';
 
             {/* Introductory Box */}
             <div style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px; padding: 18px 24px; background-color: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.6;">
-              {details.introVi}
+              {locale === 'zh' ? details.introZh : locale === 'en' ? details.introEn : details.introVi}
             </div>
 
             <p>
               {locale === 'vi' 
-                ? `Nhằm hỗ trợ tốt nhất cho hoạt động vận hành liên tục của các nhà máy tại ${details.nameVi}, Khải Nguyên cung cấp kho phụ tùng đa dạng, đầy đủ kích thước và thông số kỹ thuật tương thích hoàn toàn với hệ thống máy nén khí trục vít của bạn.`
-                : `To best support the continuous operation of factories in ${details.nameVi}, Khai Nguyen offers a diverse inventory of spare parts, fully compatible with your air compressor systems.`}
+                ? `Nhằm hỗ trợ tốt nhất cho hoạt động vận hành liên tục của các nhà máy tại ${locale === 'zh' ? details.nameZh : locale === 'en' ? details.nameEn : details.nameVi}, Khải Nguyên cung cấp kho phụ tùng đa dạng, đầy đủ kích thước và thông số kỹ thuật tương thích hoàn toàn với hệ thống máy nén khí trục vít của bạn.`
+                : `To best support the continuous operation of factories in ${locale === 'zh' ? details.nameZh : locale === 'en' ? details.nameEn : details.nameVi}, Khai Nguyen offers a diverse inventory of spare parts, fully compatible with your air compressor systems.`}
             </p>
 
             {/* Grid Gallery displaying real B2B photos of our works */}
