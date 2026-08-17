@@ -1,109 +1,60 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
-
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 
-
-
-
-
-const { zone } = Astro.params;
 const locale = 'zh';
+const title = '24/7 工业机电设备与螺杆式空压机紧急抢修服务';
+const breadcrumbItems = [{ label: title }];
 
-  const title = 'Dịch Vụ Sửa Máy Công Nghiệp & Sửa Chữa Máy Nén Khí 24/7';
-  const breadcrumbItems = [{ label: title }];
-
-  const serviceSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    'name': 'Dịch Vụ Sửa Máy Công Nghiệp & Máy Nén Khí Khải Nguyên',
-    'provider': {
-      '@type': 'LocalBusiness',
-      'name': 'Máy Nén Khí Khải Nguyên',
-      'telephone': '0909.513.637',
-      'address': {
-        '@type': 'PostalAddress',
-        'streetAddress': '762a Tổ 25, KP 5, Phường Long Bình',
-        'addressLocality': 'Biên Hòa',
-        'addressRegion': 'Đồng Nai'
-      }
-    },
-    'areaServed': ['Đồng Nai', 'Biên Hòa', 'Bình Dương', 'TP. Hồ Chí Minh'],
-    'serviceType': 'Sửa chữa và đại tu máy nén khí công nghiệp'
-  };
-
-  
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'name': '凯源机械 24/7 工业机电设备与空压机紧急抢修',
+  'provider': {
+    '@type': 'LocalBusiness',
+    'name': '凯源机械'
+  },
+  'areaServed': ['同奈省', '边和市', '平阳省', '胡志明市'],
+  'serviceType': '工业机电设备与螺杆式空压机抢修大修'
+};
 ---
 
-<Layout locale="zh">
+<Layout locale="zh" title={title} description="越南同奈、平阳及南部工业区 24/7 工业机电设备、螺杆式空压机、工业电机与变频器紧急抢修大修服务。">
   <div>
-      <script type="application/ld+json" is:inline
-        set:html={JSON.stringify(serviceSchema)}
-      />
-      
-      <Breadcrumb title={title} items={breadcrumbItems} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+    <Breadcrumb title={title} items={breadcrumbItems} locale="zh" />
 
-      <section class="section-padding">
-        <div class="container" style="max-width: 960px; margin: 0 auto;">
-          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
-            
-            {/* Intro Box */}
-            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #fff7ed; border-left: 5px solid #ea580c; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
-              <strong>Dịch vụ sửa máy công nghiệp Khải Nguyên</strong> giải quyết triệt để mọi sự cố dừng máy khẩn cấp, 
-              hỏng hóc <strong>đầu nén trục vít</strong>, tăng nhiệt độ quá tải, keo dầu bôi trơn hay tụt áp khí nén. 
-              Đội ngũ kỹ sư cơ điện giàu kinh nghiệm có mặt trực tiếp tại nhà máy của bạn chỉ từ <strong>2 đến 4 giờ</strong>.
-            </div>
+    <section class="section-padding">
+      <div class="container" style="max-width: 960px; margin: 0 auto;">
+        <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
+          
+          <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
+            <strong>凯源机械 24/7 工业抢修技术中心</strong> 为同奈省、平阳省及胡志明市各工业区外资工厂提供 
+            <strong>工业螺杆式空压机、三相异步电机、变频器与车间气动管网</strong> 快速故障诊断与大修服务。
+          </div>
 
-            {/* Xưởng sửa chữa đại tu */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
-              Xưởng Đại Tu & Sửa Chữa Máy Nén Khí Công Nghiệp
-            </h2>
-            <p>
-              Đối với các ca hư hỏng nặng như bó kẹt trục vít, hỏng vòng bi đầu nén, vỡ bánh răng truyền động hay cháy động cơ điện, 
-              Khải Nguyên trang bị đầy đủ máy móc chuyên dụng tại xưởng Biên Hòa để căn chỉnh khe hở trục vít micrometer chuẩn xác:
-            </p>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
+            一、主要紧急抢修业务范围
+          </h2>
+          <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>螺杆主机头大修:</strong> 阴阳螺杆转子精密间隙调校、进口重载轴承更换与动平衡校正。</li>
+            <li><strong>高温跳机与油路结焦排查:</strong> 快速清洗疏通散热器、更换温控阀芯与抗磨机油。</li>
+            <li><strong>电机与变频控制柜抢修:</strong> 电机绝缘耐压测试、轴承润滑与变频器参数优化。</li>
+            <li><strong>2小时极速到达现场:</strong> 资深双语工程师团队随车携带专用检测设备与备用零件。</li>
+          </ul>
 
-            {/* Các sự cố thường gặp */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Các Lỗi Sự Cố Máy Nén Khí Khải Nguyên Khắc Phục Sửa Chữa
-            </h2>
-            <ul style="padding-left: 20px;">
-              <li><strong>Máy nén khí báo lỗi nhiệt độ cao (Over Temperature):</strong> Xử lý tắc két giải nhiệt, nghẹt lọc dầu, hỏng van hằng nhiệt.</li>
-              <li><strong>Máy nén khí bị keo dầu (Oil Varnish/Sludge):</strong> Súc rửa hệ thống bằng hóa chất chuyên dụng, thay dầu nhớt Fusheng chuẩn.</li>
-              <li><strong>Máy nén khí bị kêu to, rung lắc đầu nén:</strong> Thay bộ vòng bi SKF/FAG cao cấp, căn chỉnh khe hở rotor trục vít.</li>
-              <li><strong>Máy nén khí chạy không ra khí / tụt áp:</strong> Sửa van cổ hút (Unloader valve), van áp suất tối thiểu, lỏng dây curoa.</li>
-              <li><strong>Máy nén khí ra nhiều dầu theo đường khí nén:</strong> Thay bộ lọc tách dầu chính hãng, làm sạch đường thu hồi dầu (Scavenge line).</li>
-            </ul>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px;">
+            二、24/7 紧急抢修联系方式
+          </h2>
+          <div style="background-color: var(--bg-white); border: 2px solid var(--accent-color); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+            <p style="margin-bottom: 8px;"><strong>24/7 抢修热线:</strong> <a href="tel:0909513637" style="color: var(--accent-color); font-weight: 700;">0909 513 637</a></p>
+            <p style="margin-bottom: 0;"><strong>覆盖区域:</strong> 同奈（边和、仁泽、龙城）、平阳（VSIP、神浪、美福）、隆安及胡志明市各工业区。</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-            {/* Quy trình sửa chữa */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Quy Trình 5 Bước Sửa Máy Công Nghiệp Chuẩn Chuyên Nghiệp
-            </h2>
-            <ol style="padding-left: 20px; line-height: 2;">
-              <li><strong>Bước 1: Tiếp nhận cuộc gọi & chẩn đoán sơ bộ:</strong> Kỹ sư lắng nghe hiện tượng báo lỗi qua điện thoại/Zalo.</li>
-              <li><strong>Bước 2: Có mặt tận nơi kiểm tra thực tế:</strong> Kỹ thuật viên di chuyển tới xưởng trong 2h tại Đồng Nai.</li>
-              <li><strong>Bước 3: Lập phương án & báo giá minh bạch:</strong> Đưa ra giải pháp tối ưu chi phí nhất cho doanh nghiệp.</li>
-              <li><strong>Bước 4: Tiến hành sửa chữa / thay thế phụ tùng:</strong> Xử lý nhanh gọn, đúng kỹ thuật.</li>
-              <li><strong>Bước 5: Chạy thử tải & nghiệm thu bảo hành:</strong> Đo dòng điện, áp suất, nhiệt độ đạt chuẩn mới bàn giao.</li>
-            </ol>
-
-            {/* CTA */}
-            <div style="background-color: #fff7ed; border: 1px solid #ffedd5; padding: 20px; border-radius: 8px; margin: 30px 0;">
-              <h3 style="margin: 0 0 8px; color: #c2410c; font-size: 18px;">Nhà Máy Của Bạn Đang Gặp Sự Cố Dừng Máy Dừng Sản Xuất?</h3>
-              <p style="margin: 0 0 12px;">
-                Gọi ngay kỹ sư Khải Nguyên để được tư vấn và cử kỹ thuật xuống hỗ trợ xử lý khẩn cấp 24/7:
-              </p>
-              <a href="tel:0909513637" style="display: inline-block; background-color: #ea580c; color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none;">
-                HOTLINE: 0909 513 637
-              </a>
-            </div>
-
-          </article>
-        </div>
-      </section>
-
-      <CTABanner client:visible />
-    </div>
+    <CTABanner client:visible locale="zh" />
+  </div>
 </Layout>

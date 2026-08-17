@@ -27,7 +27,7 @@ const dict = await getDictionary(locale);
 const categories = await CategoryRepository.getAllCategories();
 const { products, total } = await ProductService.getProducts({ categories: [categorySlug] });
 
-const pageTitle = `${currentCategory?.name || 'Sản phẩm'} | Máy Nén Khí Khải Nguyên`;
+const pageTitle = `${currentCategory?.name || 'Sản phẩm'} | Khai Nguyen Air Compressor`;
 const breadcrumbItems = [
   { label: dict.common.products, href: '/san-pham' },
   { label: currentCategory?.name || categorySlug }
@@ -40,7 +40,7 @@ const breadcrumbItems = [
   canonical={`https://maynenkhikhainguyen.com/san-pham/${categorySlug}`}
   locale="en"
 >
-  <Breadcrumb title={currentCategory?.name || 'Danh mục sản phẩm'} items={breadcrumbItems} locale="en" />
+  <Breadcrumb title={currentCategory?.name || 'Product Categories'} items={breadcrumbItems} locale="en" />
 
   <section class="section-padding">
     <div class="container product-page-layout">

@@ -1,101 +1,61 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
-
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 
-
-
-
-
-const { zone } = Astro.params;
 const locale = 'en';
+const title = 'Industrial Machinery & Air Compressor Preventative Maintenance';
+const breadcrumbItems = [{ label: title }];
 
-  const title = 'Dịch Vụ Industrial Equipment Preventative Maintenance & Máy Nén Khí Trọn Gói';
-  const breadcrumbItems = [{ label: title }];
-
-  
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'name': 'Khai Nguyen Industrial Equipment Preventative Maintenance',
+  'provider': {
+    '@type': 'LocalBusiness',
+    'name': 'Khai Nguyen Air Compressor'
+  },
+  'areaServed': ['Dong Nai', 'Binh Duong', 'Ho Chi Minh City'],
+  'serviceType': 'Industrial Equipment Preventative Maintenance'
+};
 ---
 
-<Layout locale="en">
+<Layout locale="en" title={title} description="Scheduled 2,000h - 4,000h preventative maintenance contracts for screw air compressors and industrial equipment in Southern Vietnam.">
   <div>
-      <Breadcrumb title={title} items={breadcrumbItems} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+    <Breadcrumb title={title} items={breadcrumbItems} locale="en" />
 
-      <section class="section-padding">
-        <div class="container" style="max-width: 960px; margin: 0 auto;">
-          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
-            
-            {/* Intro */}
-            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0fdf4; border-left: 5px solid #16a34a; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
-              <strong>Bảo trì máy công nghiệp định kỳ</strong> là chìa khóa giúp doanh nghiệp ngăn ngừa 95% sự cố dừng máy đột ngột, 
-              tối ưu hiệu suất nén khí và <strong>tiết kiệm đến 20% điện năng tiêu thụ hàng tháng</strong>. 
-              Khải Nguyên cung cấp hợp đồng bảo trì trọn gói theo giờ chạy máy (3.000h, 6.000h, 12.000h) với cam kết SLA cao nhất.
-            </div>
+    <section class="section-padding">
+      <div class="container" style="max-width: 960px; margin: 0 auto;">
+        <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
+          
+          <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
+            <strong>Khai Nguyen Preventative Maintenance Services</strong> offers turnkey 2,000h, 4,000h, and 8,000h scheduled service contracts for 
+            <strong>industrial screw air compressors and auxiliary factory machinery</strong>, helping enterprises reduce unexpected breakdowns by up to 40% and optimize power efficiency.
+          </div>
 
-            {/* Các gói bảo trì */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
-              Các Gói Dịch Vụ Bảo Trì Máy Nén Khí Công Nghiệp Định Kỳ
-            </h2>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
+            1. Standard Maintenance Checklist (12 Points)
+          </h2>
+          <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li>Replacement of genuine synthetic compressor oil, oil filter, air intake filter, and air-oil separator.</li>
+            <li>Cooler cleaning and ultrasonic de-scaling of heat exchangers.</li>
+            <li>Greasing and vibration analysis of main electric motor bearings.</li>
+            <li>Inspection and recalibration of intake modulation valves and solenoid coils.</li>
+            <li>Safety valve pop-off testing and condensate auto-drain service.</li>
+          </ul>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 25px 0;">
-              <div style="background-color: #fff; padding: 22px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <h3 style="margin: 0 0 10px; color: #16a34a; font-size: 18px;">Gói Bảo Dưỡng Tiểu Tu (3.000 Giờ)</h3>
-                <ul style="padding-left: 18px; font-size: 14.5px; line-height: 1.8;">
-                  <li>Thay dầu máy nén khí Fusheng / Kobelco.</li>
-                  <li>Thay lõi lọc dầu, lọc gió mới 100%.</li>
-                  <li>Vệ sinh lọc hút, thổi bụi két giải nhiệt.</li>
-                  <li>Kiểm tra điện áp, dòng tải động cơ.</li>
-                </ul>
-              </div>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px;">
+            2. Schedule a Free Plant Inspection
+          </h2>
+          <div style="background-color: var(--bg-white); border: 2px solid var(--accent-color); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+            <p style="margin-bottom: 8px;"><strong>Consultation Hotline:</strong> <a href="tel:0909513637" style="color: var(--accent-color); font-weight: 700;">0909 513 637</a></p>
+            <p style="margin-bottom: 0;"><strong>Benefit:</strong> Free comprehensive on-site survey and air audit report for factory managers.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-              <div style="background-color: #fff; padding: 22px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <h3 style="margin: 0 0 10px; color: var(--primary-color); font-size: 18px;">Gói Bảo Dưỡng Trung Tu (6.000 Giờ)</h3>
-                <ul style="padding-left: 18px; font-size: 14.5px; line-height: 1.8;">
-                  <li>Toàn bộ hạng mục gói 3.000 giờ.</li>
-                  <li>Thay lọc tách dầu chính hãng.</li>
-                  <li>Bảo dưỡng bộ van cổ hút & van hằng nhiệt.</li>
-                  <li>Bơm mỡ bôi trơn vòng bi động cơ điện.</li>
-                </ul>
-              </div>
-
-              <div style="background-color: #fff; padding: 22px; border-radius: 8px; border: 1px solid #e2e8f0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-                <h3 style="margin: 0 0 10px; color: #c2410c; font-size: 18px;">Gói Đại Tu Toàn Bộ (12.000 Giờ)</h3>
-                <ul style="padding-left: 18px; font-size: 14.5px; line-height: 1.8;">
-                  <li>Tháo rã & vệ sinh toàn bộ máy.</li>
-                  <li>Thay bộ vòng bi SKF/FAG đầu nén trục vít.</li>
-                  <li>Căn chỉnh khe hở trục vít micrometer.</li>
-                  <li>Bảo dưỡng tổng thể hệ thống giải nhiệt & điện.</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Lợi ích bảo trì hợp đồng */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Lợi Ích Khi Ký Hợp Đồng Industrial Equipment Preventative Maintenance Cùng Khải Nguyên
-            </h2>
-            <ul>
-              <li><strong>Ưu tiên xử lý sự cố trong 2h:</strong> Kỹ thuật viên ứng cứu ngay lập tức khi phát sinh báo lỗi khẩn cấp.</li>
-              <li><strong>Chiết khấu giá phụ tùng đến 15%:</strong> Tiết kiệm ngân sách bảo dưỡng định kỳ cho nhà máy.</li>
-              <li><strong>Cho mượn máy nén khí dự phòng miễn phí:</strong> Đảm bảo dây chuyền sản xuất không bị ngắt quãng khi đại tu.</li>
-              <li><strong>Lưu trữ nhật ký vận hành số hóa:</strong> Theo dõi chính xác lịch thay dầu, thay lọc của từng máy.</li>
-            </ul>
-
-            {/* CTA */}
-            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 8px; margin: 30px 0;">
-              <h3 style="margin: 0 0 8px; color: #166534; font-size: 18px;">Yêu Cầu Khảo Sát & Báo Giá Hợp Đồng Bảo Trì Tận Nơi</h3>
-              <p style="margin: 0 0 12px;">
-                Liên hệ ngay phòng dịch vụ khách hàng Khải Nguyên để cử kỹ sư xuống khảo sát miễn phí:
-              </p>
-              <a href="tel:0909513637" style="display: inline-block; background-color: #16a34a; color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none;">
-                HOTLINE: 0909 513 637
-              </a>
-            </div>
-
-          </article>
-        </div>
-      </section>
-
-      <CTABanner client:visible />
-    </div>
+    <CTABanner client:visible locale="en" />
+  </div>
 </Layout>

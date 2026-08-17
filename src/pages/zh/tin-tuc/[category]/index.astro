@@ -30,7 +30,7 @@ const breadcrumbItems = [
 ---
 
 <Layout
-  title={`${categoryName} | Tin Tức Khải Nguyên`}
+  title={`${categoryName} | 凯源技术专栏`}
   description={`Tổng hợp tin tức, hướng dẫn kỹ thuật chuyên mục ${categoryName} máy nén khí Khải Nguyên.`}
   canonical={`https://maynenkhikhainguyen.com/tin-tuc/${category}`}
   locale="zh"
@@ -50,14 +50,14 @@ const breadcrumbItems = [
           </div>
         ) : (
           <div style="text-align: center; padding: 40px 0; color: var(--text-light);">
-            <p>Đang cập nhật bài viết cho chuyên mục này.</p>
+            <p>该专栏文章正在更新中。</p>
           </div>
         )}
       </div>
 
       <aside class="blog-sidebar">
         <div class="sidebar-widget">
-          <h3>Đăng ký nhận tin</h3>
+          <h3>订阅工业技术资讯</h3>
           <div class="widget-newsletter" style="margin-top: 15px;">
             <NewsletterForm dict={dict.footer} client:visible />
           </div>

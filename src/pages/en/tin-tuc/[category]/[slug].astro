@@ -24,11 +24,11 @@ const dict = await getDictionary(locale);
 
 const relatedArticles = await NewsService.getRelatedNews(article.id, article.category, 3);
 const catObj = categoryMap[article.category] || { vi: article.category, zh: article.category, en: article.category };
-const categoryName = catObj.vi;
+const categoryName = catObj['en'];
 
 const breadcrumbItems = [
-  { label: dict.common.news, href: '/tin-tuc' },
-  { label: categoryName, href: `/tin-tuc/${article.category}` },
+  { label: dict.common.news, href: '/en/tin-tuc' },
+  { label: categoryName, href: `/en/tin-tuc/${article.category}` },
   { label: article.title }
 ];
 
@@ -42,14 +42,14 @@ const articleSchema = {
   "dateModified": article.rawDate || article.date,
   "author": [{
     "@type": "Person",
-    "name": "Kỹ sư Khải Nguyên",
+    "name": "Khai Nguyen Senior Engineer",
     "url": baseUrl
   }]
 };
 ---
 
 <Layout
-  title={`${article.title} | Tin Tức Máy Nén Khí Khải Nguyên`}
+  title={`${article.title} | Khai Nguyen Compressor News & Insights`}
   description={article.description}
   canonical={`${baseUrl}/tin-tuc/${category}/${article.slug}`}
   schema={articleSchema}
@@ -66,7 +66,7 @@ const articleSchema = {
             <h1 style="font-size: 28px; color: var(--text-dark); margin: 15px 0; font-weight: 800;">{article.title}</h1>
             <div style="font-size: 13px; color: var(--text-light); margin-bottom: 20px;">
               <i class="far fa-calendar-alt" style="margin-right: 5px;"></i> {article.date} | 
-              <i class="far fa-user" style="margin-left: 10px; margin-right: 5px;"></i> Kỹ sư Khải Nguyên
+              <i class="far fa-user" style="margin-left: 10px; margin-right: 5px;"></i> Khai Nguyen Senior Engineer
             </div>
           </div>
 
@@ -85,7 +85,7 @@ const articleSchema = {
 
           {relatedArticles.length > 0 && (
             <div style="margin-top: 50px; border-top: 1px solid var(--border-color); padding-top: 30px;">
-              <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">Bài viết liên quan</h3>
+              <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">Related Articles</h3>
               <div class="related-news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                 {relatedArticles.map((rel) => (
                   <NewsCard news={rel} locale="en" />
@@ -97,7 +97,7 @@ const articleSchema = {
 
         <aside class="blog-sidebar">
           <div class="sidebar-widget">
-            <h3>Đăng ký nhận tin</h3>
+            <h3>Newsletter Subscription</h3>
             <div class="widget-newsletter" style="margin-top: 15px;">
               <NewsletterForm dict={dict.footer} client:visible />
             </div>

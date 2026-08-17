@@ -1,149 +1,112 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
-
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 
-
-
-
-
-const { zone } = Astro.params;
 const locale = 'en';
+const title = 'Dong Nai Air Compressor Parts Warehouse - 2-Hour Delivery';
+const breadcrumbItems = [
+  { label: 'Air Compressor Parts', href: '/en/linh-kien-may-nen-khi' },
+  { label: 'Dong Nai' }
+];
 
-  const title = 'Kho Linh Kiện & Phụ Tùng Máy Nén Khí Tại Đồng Nai - Giao Hàng 2h';
-  const breadcrumbItems = [
-    { label: 'Linh Kiện Máy Nén Khí', href: '/linh-kien-may-nen-khi' },
-    { label: 'Đồng Nai' }
-  ];
-
-  const productListSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    'name': 'Kho Linh Kiện Phụ Tùng Máy Nén Khí Trục Vít Tại Đồng Nai',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'Dầu máy nén khí Fusheng FS600 chính hãng',
-        'url': 'https://maynenkhikhainguyen.com/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'Bộ lọc tách dầu máy nén khí trục vít',
-        'url': 'https://maynenkhikhainguyen.com/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 3,
-        'name': 'Lõi lọc dầu, lọc gió máy nén khí',
-        'url': 'https://maynenkhikhainguyen.com/san-pham/bo-loc-va-tach-khi-nen/loi-loc'
-      }
-    ]
-  };
-
-  
+const productListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'Dong Nai Screw Air Compressor Spare Parts Hub',
+  'itemListElement': [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Genuine Fusheng FS600 Compressor Oil',
+      'url': 'https://maynenkhikhainguyen.com/en/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng'
+    },
+    {
+      '@type': 'ListItem',
+      'position': 2,
+      'name': 'Screw Compressor Air-Oil Separator',
+      'url': 'https://maynenkhikhainguyen.com/en/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau'
+    },
+    {
+      '@type': 'ListItem',
+      'position': 3,
+      'name': 'Oil Filter & Air Intake Filter Elements',
+      'url': 'https://maynenkhikhainguyen.com/en/san-pham/bo-loc-va-tach-khi-nen/loi-loc'
+    }
+  ]
+};
 ---
 
-<Layout locale="en">
+<Layout locale="en" title={title} description="Authorized central warehouse for screw air compressor spare parts in Dong Nai. Genuine oil, filters, and valves with 2-hour express delivery.">
   <div>
-      <script type="application/ld+json" is:inline
-        set:html={JSON.stringify(productListSchema)}
-      />
-      
-      <Breadcrumb title={title} items={breadcrumbItems} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(productListSchema)} />
+    <Breadcrumb title={title} items={breadcrumbItems} locale="en" />
 
-      <section class="section-padding">
-        <div class="container" style="max-width: 960px; margin: 0 auto;">
-          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
-            
-            {/* Intro */}
-            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
-              <strong>Khải Nguyên</strong> tự hào là kho phân phối <strong>linh kiện máy nén khí Đồng Nai</strong> quy mô lớn nhất 
-              khu vực Biên Hòa. Chúng tôi chuyên cung cấp sỉ & lẻ <strong>phụ tùng máy nén khí trục vít</strong> chính hãng 
-              cho các thương hiệu Hitachi, Kobelco, Fusheng, Atlas Copco, Ingersoll Rand với cam kết giao hàng tận nơi trong vòng 2h.
-            </div>
+    <section class="section-padding">
+      <div class="container" style="max-width: 960px; margin: 0 auto;">
+        <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
+          
+          <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
+            <strong>Khai Nguyen</strong> is the largest authorized <strong>air compressor spare parts warehouse in Dong Nai</strong>. 
+            We distribute genuine wholesale and retail <strong>screw compressor replacement parts</strong> for Hitachi, Kobelco, Fusheng, Atlas Copco, and Ingersoll Rand with a guaranteed 2-hour on-site delivery commitment across all industrial parks.
+          </div>
 
-            {/* Kho hàng thực tế */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
-              Kho Linh Kiện & Phụ Tùng Máy Nén Khí Sẵn Hàng Tại Biên Hòa
-            </h2>
-            <p>
-              Đối với hệ thống máy nén khí công nghiệp, việc thay thế linh kiện phụ tùng tiêu hao đúng định kỳ (2.000h - 4.000h) 
-              là yếu tố quyết định độ bền và tiết kiệm điện năng cho nhà máy. Tại kho Biên Hòa Đồng Nai, Khải Nguyên luôn sẵn sàng:
-            </p>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
+            Comprehensive Spare Parts Inventory in Bien Hoa
+          </h2>
+          <p>
+            For industrial compressed air systems, timely scheduled replacement of consumable parts (every 2,000h - 4,000h) is vital to preserve air-end longevity and prevent unexpected manufacturing downtime.
+          </p>
 
-            {/* Bảng linh kiện phụ tùng */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Bảng Danh Mục Phụ Tùng Máy Nén Khí Trục Vít Phân Phối
-            </h2>
-            
-            <div style="overflow-x: auto; margin: 20px 0;">
-              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
-                <thead>
-                  <tr style="background-color: var(--primary-color); color: #fff;">
-                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Nhóm Linh Kiện</th>
-                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Sản Phẩm Chi Tiết</th>
-                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Thời Gian Sử Dụng Khuyên Dùng</th>
-                    <th style="padding: 12px 15px; border: 1px solid #ddd;">Giao Hàng Đồng Nai</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Bộ Lọc Tách Dầu</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Lọc tách Fusheng, Kobelco, Hitachi, Mann Filter</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">3.000h - 4.000h chạy máy</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
-                  </tr>
-                  <tr style="background-color: #f8fafc;">
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Lọc Dầu & Lọc Gió</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Lõi lọc gió bụi mịn, lọc dầu bôi trơn cao cấp</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">2.000h - 3.000h chạy máy</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Dầu Bôi Trơn</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Dầu Fusheng FS600, dầu Kobelco Genuine, dầu tổng hợp ISO VG46</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">4.000h - 8.000h chạy máy</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Hỏa tốc 2 giờ</td>
-                  </tr>
-                  <tr style="background-color: #f8fafc;">
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Van & Cảm Biến</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Van cổ hút, van áp suất tối thiểu, van an toàn, cảm biến nhiệt độ</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd;">Thay khi hỏng / đại tu 12.000h</td>
-                    <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">Sẵn kho Biên Hòa</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
+            Distributed Spare Parts Catalog
+          </h2>
+          
+          <div style="overflow-x: auto; margin: 20px 0;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 15px;">
+              <thead>
+                <tr style="background-color: var(--primary-color); color: #fff;">
+                  <th style="padding: 12px 15px; border: 1px solid #ddd;">Category</th>
+                  <th style="padding: 12px 15px; border: 1px solid #ddd;">Compatible Brands & Models</th>
+                  <th style="padding: 12px 15px; border: 1px solid #ddd;">Recommended Service Life</th>
+                  <th style="padding: 12px 15px; border: 1px solid #ddd;">Dong Nai Delivery</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Air-Oil Separators</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">Fusheng, Kobelco, Hitachi, Mann Filter</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">3,000h - 4,000h operating hours</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">2-Hour Express</td>
+                </tr>
+                <tr style="background-color: #f8fafc;">
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Oil & Air Filters</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">Microfiber spin-on filters for screw compressors</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">2,000h - 3,000h operating hours</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">2-Hour Express</td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; font-weight: 600;">Compressor Lubricant</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">Fusheng FS600, Kobelco Extra Oil, Shell Corena S3/S4</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd;">3,000h - 4,000h operating hours</td>
+                  <td style="padding: 12px 15px; border: 1px solid #ddd; color: green; font-weight: 600;">2-Hour Express</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-            {/* Cam Kết */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Cam Kết Dịch Vụ Cung Cấp Phụ Tùng Tại Đồng Nai
-            </h2>
-            <ul>
-              <li><strong>Hàng chính hãng 100%:</strong> Đầy đủ chứng nhận CO/CQ từ nhà sản xuất.</li>
-              <li><strong>Giao hàng 2h hỏa tốc:</strong> Vận chuyển trực tiếp bằng xe tải/xe máy tới tận cổng nhà máy tại KCN Amata, Biên Hòa, Nhơn Trạch, Long Thành.</li>
-              <li><strong>Hỗ trợ kỹ thuật thay thế:</strong> Kỹ sư Khải Nguyên hướng dẫn lắp đặt hoặc hỗ trợ nhân công thay thế tận nơi.</li>
-              <li><strong>Bảo hành đổi mới:</strong> 1-đổi-1 nếu lỗi nhà sản xuất trong suốt thời gian bảo hành.</li>
-            </ul>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px;">
+            Order Spare Parts & Request Technical Quotation
+          </h2>
+          <div style="background-color: var(--bg-white); border: 2px solid var(--accent-color); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+            <p style="margin-bottom: 8px;"><strong>Warehouse Address:</strong> 762a Hamlet 25, KP 5, Long Binh Ward, Bien Hoa, Dong Nai</p>
+            <p style="margin-bottom: 8px;"><strong>Hotline / Zalo (24/7):</strong> <a href="tel:0909513637" style="color: var(--accent-color); font-weight: 700;">0909 513 637</a></p>
+            <p style="margin-bottom: 0;"><strong>Support:</strong> Bilingual engineering team available for urgent parts consultation.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 8px; margin: 30px 0;">
-              <h3 style="margin: 0 0 8px; color: #166534; font-size: 18px;">Bạn Cần Báo Giá Phụ Tùng Máy Nén Khí Trục Vít Ngay Bây Giờ?</h3>
-              <p style="margin: 0 0 12px;">
-                Liên hệ ngay hotline kho Đồng Nai để nhận báo giá chiết khấu cao nhất cho nhà máy:
-              </p>
-              <a href="tel:0909513637" style="display: inline-block; background-color: var(--primary-color); color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none;">
-                HOTLINE: 0909 513 637
-              </a>
-            </div>
-
-          </article>
-        </div>
-      </section>
-
-      <CTABanner client:visible />
-    </div>
+    <CTABanner client:visible locale="en" />
+  </div>
 </Layout>

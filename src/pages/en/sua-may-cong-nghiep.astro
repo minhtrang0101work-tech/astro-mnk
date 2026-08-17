@@ -1,109 +1,60 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
-
 import Breadcrumb from '@/components/Breadcrumb';
 import CTABanner from '@/components/CTABanner';
 
-
-
-
-
-const { zone } = Astro.params;
 const locale = 'en';
+const title = '24/7 Industrial Machinery & Screw Air Compressor Repair Services';
+const breadcrumbItems = [{ label: title }];
 
-  const title = 'Dịch Vụ Sửa Máy Công Nghiệp & Sửa Chữa Máy Nén Khí 24/7';
-  const breadcrumbItems = [{ label: title }];
-
-  const serviceSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    'name': 'Dịch Vụ Sửa Máy Công Nghiệp & Máy Nén Khí Khải Nguyên',
-    'provider': {
-      '@type': 'LocalBusiness',
-      'name': 'Máy Nén Khí Khải Nguyên',
-      'telephone': '0909.513.637',
-      'address': {
-        '@type': 'PostalAddress',
-        'streetAddress': '762a Tổ 25, KP 5, Phường Long Bình',
-        'addressLocality': 'Biên Hòa',
-        'addressRegion': 'Đồng Nai'
-      }
-    },
-    'areaServed': ['Đồng Nai', 'Biên Hòa', 'Bình Dương', 'TP. Hồ Chí Minh'],
-    'serviceType': 'Sửa chữa và đại tu máy nén khí công nghiệp'
-  };
-
-  
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'name': 'Khai Nguyen 24/7 Industrial Machinery & Air Compressor Repair',
+  'provider': {
+    '@type': 'LocalBusiness',
+    'name': 'Khai Nguyen Air Compressor'
+  },
+  'areaServed': ['Dong Nai', 'Bien Hoa', 'Binh Duong', 'Ho Chi Minh City'],
+  'serviceType': 'Industrial Machinery & Screw Air Compressor Overhaul'
+};
 ---
 
-<Layout locale="en">
+<Layout locale="en" title={title} description="Emergency 24/7 on-site repair and overhaul services for industrial machinery, screw air compressors, motors, and inverters across Southern Vietnam.">
   <div>
-      <script type="application/ld+json" is:inline
-        set:html={JSON.stringify(serviceSchema)}
-      />
-      
-      <Breadcrumb title={title} items={breadcrumbItems} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+    <Breadcrumb title={title} items={breadcrumbItems} locale="en" />
 
-      <section class="section-padding">
-        <div class="container" style="max-width: 960px; margin: 0 auto;">
-          <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
-            
-            {/* Intro Box */}
-            <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #fff7ed; border-left: 5px solid #ea580c; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
-              <strong>Dịch vụ sửa máy công nghiệp Khải Nguyên</strong> giải quyết triệt để mọi sự cố dừng máy khẩn cấp, 
-              hỏng hóc <strong>đầu nén trục vít</strong>, tăng nhiệt độ quá tải, keo dầu bôi trơn hay tụt áp khí nén. 
-              Đội ngũ kỹ sư cơ điện giàu kinh nghiệm có mặt trực tiếp tại nhà máy của bạn chỉ từ <strong>2 đến 4 giờ</strong>.
-            </div>
+    <section class="section-padding">
+      <div class="container" style="max-width: 960px; margin: 0 auto;">
+        <article class="service-detail-content" style="font-size: 16px; line-height: 1.8; color: var(--text-color);">
+          
+          <div style="font-weight: 600; font-size: 17.5px; color: var(--text-dark); margin-bottom: 30px; padding: 20px 26px; background-color: #f0f7ff; border-left: 5px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.65;">
+            <strong>Khai Nguyen 24/7 Industrial Repair Services</strong> provides rapid emergency troubleshooting and full overhaul for 
+            <strong>screw air compressors, industrial motors, VFD inverter drives, and factory pneumatic pipelines</strong> across Dong Nai, Binh Duong, and Ho Chi Minh City industrial parks.
+          </div>
 
-            {/* Xưởng sửa chữa đại tu */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
-              Xưởng Đại Tu & Sửa Chữa Máy Nén Khí Công Nghiệp
-            </h2>
-            <p>
-              Đối với các ca hư hỏng nặng như bó kẹt trục vít, hỏng vòng bi đầu nén, vỡ bánh răng truyền động hay cháy động cơ điện, 
-              Khải Nguyên trang bị đầy đủ máy móc chuyên dụng tại xưởng Biên Hòa để căn chỉnh khe hở trục vít micrometer chuẩn xác:
-            </p>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 16px; font-weight: 700;">
+            1. Core Emergency Repair Capabilities
+          </h2>
+          <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+            <li><strong>Screw Air-End Overhaul:</strong> Precision rotor gap alignment, bearing replacement, and dynamic vibration testing.</li>
+            <li><strong>High-Temperature & Shutdown Troubleshooting:</strong> Resolving oil overheating, thermal valve jamming, and radiator scaling.</li>
+            <li><strong>Motor Rewinding & Inverter Repair:</strong> High-efficiency motor bearing replacement and VFD frequency converter debugging.</li>
+            <li><strong>2-Hour Rapid On-Site Response:</strong> Immediate deployment of diagnostic engineers to prevent factory production downtime.</li>
+          </ul>
 
-            {/* Các sự cố thường gặp */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Các Lỗi Sự Cố Máy Nén Khí Khải Nguyên Khắc Phục Sửa Chữa
-            </h2>
-            <ul style="padding-left: 20px;">
-              <li><strong>Máy nén khí báo lỗi nhiệt độ cao (Over Temperature):</strong> Xử lý tắc két giải nhiệt, nghẹt lọc dầu, hỏng van hằng nhiệt.</li>
-              <li><strong>Máy nén khí bị keo dầu (Oil Varnish/Sludge):</strong> Súc rửa hệ thống bằng hóa chất chuyên dụng, thay dầu nhớt Fusheng chuẩn.</li>
-              <li><strong>Máy nén khí bị kêu to, rung lắc đầu nén:</strong> Thay bộ vòng bi SKF/FAG cao cấp, căn chỉnh khe hở rotor trục vít.</li>
-              <li><strong>Máy nén khí chạy không ra khí / tụt áp:</strong> Sửa van cổ hút (Unloader valve), van áp suất tối thiểu, lỏng dây curoa.</li>
-              <li><strong>Máy nén khí ra nhiều dầu theo đường khí nén:</strong> Thay bộ lọc tách dầu chính hãng, làm sạch đường thu hồi dầu (Scavenge line).</li>
-            </ul>
+          <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px;">
+            2. Request Emergency Support (24/7 Hotline)
+          </h2>
+          <div style="background-color: var(--bg-white); border: 2px solid var(--accent-color); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+            <p style="margin-bottom: 8px;"><strong>Emergency Hotline:</strong> <a href="tel:0909513637" style="color: var(--accent-color); font-weight: 700;">0909 513 637</a></p>
+            <p style="margin-bottom: 0;"><strong>Coverage:</strong> All Industrial Zones in Dong Nai, Binh Duong, Long An, and HCMC.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-            {/* Quy trình sửa chữa */}
-            <h2 style="font-size: 22px; color: var(--primary-color); margin-top: 40px; margin-bottom: 16px; font-weight: 700;">
-              Quy Trình 5 Bước Sửa Máy Công Nghiệp Chuẩn Chuyên Nghiệp
-            </h2>
-            <ol style="padding-left: 20px; line-height: 2;">
-              <li><strong>Bước 1: Tiếp nhận cuộc gọi & chẩn đoán sơ bộ:</strong> Kỹ sư lắng nghe hiện tượng báo lỗi qua điện thoại/Zalo.</li>
-              <li><strong>Bước 2: Có mặt tận nơi kiểm tra thực tế:</strong> Kỹ thuật viên di chuyển tới xưởng trong 2h tại Đồng Nai.</li>
-              <li><strong>Bước 3: Lập phương án & báo giá minh bạch:</strong> Đưa ra giải pháp tối ưu chi phí nhất cho doanh nghiệp.</li>
-              <li><strong>Bước 4: Tiến hành sửa chữa / thay thế phụ tùng:</strong> Xử lý nhanh gọn, đúng kỹ thuật.</li>
-              <li><strong>Bước 5: Chạy thử tải & nghiệm thu bảo hành:</strong> Đo dòng điện, áp suất, nhiệt độ đạt chuẩn mới bàn giao.</li>
-            </ol>
-
-            {/* CTA */}
-            <div style="background-color: #fff7ed; border: 1px solid #ffedd5; padding: 20px; border-radius: 8px; margin: 30px 0;">
-              <h3 style="margin: 0 0 8px; color: #c2410c; font-size: 18px;">Nhà Máy Của Bạn Đang Gặp Sự Cố Dừng Máy Dừng Sản Xuất?</h3>
-              <p style="margin: 0 0 12px;">
-                Gọi ngay kỹ sư Khải Nguyên để được tư vấn và cử kỹ thuật xuống hỗ trợ xử lý khẩn cấp 24/7:
-              </p>
-              <a href="tel:0909513637" style="display: inline-block; background-color: #ea580c; color: #fff; padding: 12px 24px; border-radius: 6px; font-weight: 700; text-decoration: none;">
-                HOTLINE: 0909 513 637
-              </a>
-            </div>
-
-          </article>
-        </div>
-      </section>
-
-      <CTABanner client:visible />
-    </div>
+    <CTABanner client:visible locale="en" />
+  </div>
 </Layout>
