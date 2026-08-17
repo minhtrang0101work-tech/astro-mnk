@@ -142,18 +142,30 @@ const localBusinessSchema = {
       )
     }
 
-    <!-- Stealth Google Translate Style Rules -->
+    <!-- Hide Google Translate Default Bar Completely -->
     <style is:inline>
+      .goog-te-banner-frame,
       .goog-te-banner-frame.skiptranslate,
+      iframe.goog-te-banner-frame,
       .goog-te-gadget-icon,
       .goog-te-gadget-simple,
-      .goog-te-banner-frame,
       #goog-gt-tt,
-      .goog-te-balloon-frame {
+      .goog-te-balloon-frame,
+      .VIpgJd-ZVi9od-OR95ae-PRBm6X,
+      .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+      .VIpgJd-ZVi9od-aZ2wEe-OiiCO,
+      .VIpgJd-ZVi9od-SmfZ-OueMb-IalUJb {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        position: absolute !important;
+        top: -9999px !important;
       }
       body {
         top: 0px !important;
+        position: static !important;
       }
       .goog-tooltip,
       .goog-tooltip:hover {
@@ -208,7 +220,7 @@ const localBusinessSchema = {
     <SearchOverlay client:idle />
     <StickyContactBar client:idle />
 
-    <!-- Google Translate Script -->
+    <!-- Google Translate Script with Auto Hide Observer -->
     <div id="google_translate_element" style="display:none;"></div>
     <script is:inline>
       function googleTranslateElementInit() {
@@ -217,6 +229,23 @@ const localBusinessSchema = {
           includedLanguages: 'vi,en,zh-CN',
           autoDisplay: false
         }, 'google_translate_element');
+      }
+
+      // Đảm bảo ẩn thanh banner Google Translate nếu trình duyệt tự động hiển thị
+      if (typeof window !== 'undefined') {
+        const hideGoogleBar = () => {
+          document.body.style.top = '0px';
+          document.body.style.position = 'static';
+          const frames = document.querySelectorAll('iframe.goog-te-banner-frame, .VIpgJd-ZVi9od-OR95ae-PRBm6X');
+          frames.forEach(f => {
+            if (f && f.style) {
+              f.style.display = 'none';
+              f.style.visibility = 'hidden';
+            }
+          });
+        };
+        window.addEventListener('load', hideGoogleBar);
+        setInterval(hideGoogleBar, 300);
       }
     </script>
     <script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
