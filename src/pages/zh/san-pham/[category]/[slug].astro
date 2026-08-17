@@ -23,16 +23,16 @@ const { product } = Astro.props;
 const locale = 'zh';
 const dict = await getDictionary(locale);
 
-let relatedProducts = await ProductService.getRelatedProducts(product.id, product.category, 3);
+let relatedProducts = await ProductService.getRelatedProducts(product.id, product.category, 3, locale);
 if (relatedProducts.length === 0) {
-  const featured = await ProductService.getFeaturedProducts(4);
+  const featured = await ProductService.getBestSellers(4, locale);
   relatedProducts = featured.filter(p => p.id !== product.id).slice(0, 3);
 }
 
 const baseUrl = 'https://maynenkhikhainguyen.com';
 const absoluteImageUrl = product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`;
 const cleanDescription = product.description ? product.description.replace(/<[^>]*>?/gm, '').trim() : '';
-const finalDescription = cleanDescription || `Chuyên cung cấp ${product.title} chính hãng, chất lượng cao, giá cạnh tranh nhất tại Khải Nguyên.`;
+const finalDescription = cleanDescription || `凯源专业提供 ${product.title} 原装正品配件，高品质保障，厂家直销价格，24/7 技术支持。`;
 
 const productSchema = {
   "@context": "https://schema.org/",
@@ -41,16 +41,16 @@ const productSchema = {
   "image": [absoluteImageUrl],
   "description": finalDescription,
   "sku": product.id,
-  "mpn": (product.specs && product.specs['Mã MPN'] !== 'Chưa cập nhật') ? product.specs['Mã MPN'] : undefined,
+  "mpn": (product.specs && product.specs['零件号 (MPN)'] !== '未更新') ? product.specs['零件号 (MPN)'] : undefined,
   "brand": {
     "@type": "Brand",
-    "name": (product.specs && product.specs['Thương hiệu']) || "Khải Nguyên"
+    "name": (product.specs && product.specs['品牌']) || "Khai Nguyen"
   },
   "offers": {
     "@type": "Offer",
-    "url": `${baseUrl}/san-pham/${category}/${product.slug}`,
+    "url": `${baseUrl}/zh/san-pham/${category}/${product.slug}`,
     "priceCurrency": "VND",
-    "price": (product.price && product.price !== 'Liên hệ báo giá') ? parseInt(product.price.replace(/[^0-9]/g, '') || "3000000", 10) : 3000000,
+    "price": (product.price && product.price !== '请联系获取报价') ? parseInt(product.price.replace(/[^0-9]/g, '') || "3000000", 10) : 3000000,
     "priceValidUntil": "2026-12-31",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
@@ -58,22 +58,22 @@ const productSchema = {
 };
 
 const breadcrumbItems = [
-  { label: dict.common.products, href: '/san-pham' },
-  { label: product.categoryName, href: `/san-pham/${product.category}` },
+  { label: dict.common.products, href: '/zh/san-pham' },
+  { label: product.categoryName, href: `/zh/san-pham/${product.category}` },
   { label: product.title }
 ];
 ---
 
 <Layout
-  title={`${product.title} | Phụ Tùng Máy Nén Khí Khải Nguyên`}
+  title={`${product.title} | 凯源工业空压机正品配件`}
   description={finalDescription.slice(0, 160)}
-  canonical={`${baseUrl}/san-pham/${category}/${product.slug}`}
+  canonical={`${baseUrl}/zh/san-pham/${category}/${product.slug}`}
   image={absoluteImageUrl}
   schema={productSchema}
-  locale="zh"
+  locale={locale}
 >
   <div class="product-detail-page-container">
-    <Breadcrumb title={product.title} items={breadcrumbItems} locale="zh" />
+    <Breadcrumb title={product.title} items={breadcrumbItems} locale={locale} />
 
     <section class="section-padding">
       <div class="container">
@@ -87,18 +87,18 @@ const breadcrumbItems = [
             <h2 style="font-size: 26px; color: var(--text-dark); margin-bottom: 12px; font-weight: 700;">{product.title}</h2>
             
             <p style="color: var(--text-color); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
-              Sản phẩm {product.title} là linh kiện phụ tùng thay thế chất lượng OEM, được Khải Nguyên phân phối và lắp đặt tận nơi tại các nhà máy ở Đồng Nai, Bình Dương, và TP.HCM.
+              {product.title} 为凯源机械直销分销的高品质原装 OEM 配件，为同奈、平阳及胡志明市各工业区工厂提供 2 小时上门送货与安装技术支持。
             </p>
 
             <div class="detail-price-box">
               <div>
-                <span class="price-label">Giá niêm yết:</span>
-                <span class="price-value">{product.price || 'Liên hệ báo giá'}</span>
+                <span class="price-label">参考价格:</span>
+                <span class="price-value">{product.price || '请联系获取报价'}</span>
               </div>
             </div>
 
             <div class="detail-actions">
-              <a href={`/lien-he?product=${encodeURIComponent(product.title)}`} class="btn btn-primary" style="padding: 15px 35px;" data-astro-prefetch="hover">
+              <a href={`/zh/lien-he?product=${encodeURIComponent(product.title)}`} class="btn btn-primary" style="padding: 15px 35px;" data-astro-prefetch="hover">
                 <i class="fab fa-telegram-plane" style="margin-right: 8px;"></i> {dict.productDetail.quoteBtn}
               </a>
               <a href="tel:0909513637" class="btn btn-outline-dark" style="padding: 15px 35px;">
@@ -107,25 +107,25 @@ const breadcrumbItems = [
             </div>
 
             <ul class="detail-bullets">
-              <li><i class="fas fa-certificate" style="color: #22c55e; font-size: 15px;"></i> Cam kết chất lượng chính hãng 100%</li>
-              <li><i class="fas fa-shield-alt" style="color: #22c55e; font-size: 15px;"></i> Bảo hành chính hãng uy tín từ 6 - 24 tháng</li>
-              <li><i class="fas fa-user-shield" style="color: #22c55e; font-size: 15px;"></i> Đội ngũ kỹ sư hỗ trợ khảo sát tận nơi miễn phí</li>
+              <li><i class="fas fa-certificate" style="color: #22c55e; font-size: 15px;"></i> 100% 原厂正品保障</li>
+              <li><i class="fas fa-shield-alt" style="color: #22c55e; font-size: 15px;"></i> 6 至 24 个月正品品质联保</li>
+              <li><i class="fas fa-user-shield" style="color: #22c55e; font-size: 15px;"></i> 资深工程师团队提供免费上门巡检与选型咨询</li>
             </ul>
           </div>
         </div>
 
         <div class="detail-grid detail-specs-section">
           <div>
-            <ProductDescription description={product.description} specs={product.specs} />
+            <ProductDescription description={product.description} specs={product.specs} locale={locale} />
           </div>
 
           <div class="detail-sidebar">
             <h3 class="sidebar-title">{dict.productDetail.whyTitle}</h3>
             <ul class="sidebar-reason-list">
-              <li><i class="fas fa-check-circle"></i> Linh kiện đúng chuẩn kích thước & áp suất kỹ thuật</li>
-              <li><i class="fas fa-check-circle"></i> Đội ngũ kỹ sư hơn 15 năm kinh nghiệm về khí nén</li>
-              <li><i class="fas fa-check-circle"></i> Hàng sẵn kho Biên Hòa, giao nhanh trong 2 giờ</li>
-              <li><i class="fas fa-check-circle"></i> Giá cả cạnh tranh tối ưu chi phí vận hành</li>
+              <li><i class="fas fa-check-circle"></i> 严格符合设备尺寸与耐压工程标准</li>
+              <li><i class="fas fa-check-circle"></i> 15 年以上螺杆空压机专业技术经验</li>
+              <li><i class="fas fa-check-circle"></i> 边和大型实体仓库，2 小时极速现货送达</li>
+              <li><i class="fas fa-check-circle"></i> 厂家直销高性价比，优化企业运维成本</li>
             </ul>
           </div>
         </div>
@@ -135,7 +135,7 @@ const breadcrumbItems = [
             <h3 class="specs-title">{dict.productDetail.relatedTitle}</h3>
             <div class="products-grid">
               {relatedProducts.map((related) => (
-                <ProductCard product={related} />
+                <ProductCard product={related} locale={locale} />
               ))}
             </div>
           </div>
@@ -143,6 +143,6 @@ const breadcrumbItems = [
       </div>
     </section>
 
-    <CTABanner client:visible locale="zh" />
+    <CTABanner client:visible locale={locale} />
   </div>
 </Layout>

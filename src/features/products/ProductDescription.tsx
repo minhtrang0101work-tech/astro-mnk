@@ -5,14 +5,22 @@ import { useState, useRef, useEffect } from 'react';
 interface ProductDescriptionProps {
   description: string;
   specs?: { [key: string]: string };
+  locale?: string;
 }
 
-export default function ProductDescription({ description, specs }: ProductDescriptionProps) {
+export default function ProductDescription({ description, specs, locale = 'vi' }: ProductDescriptionProps) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [showButton, setShowButton] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [maxHeight, setMaxHeight] = useState('none');
   const [isMobile, setIsMobile] = useState(false);
+
+  const isEn = locale === 'en';
+  const isZh = locale === 'zh';
+
+  const titleText = isEn ? 'Detailed Product Description' : isZh ? '产品详细说明与技术规格' : 'Mô tả chi tiết sản phẩm';
+  const expandText = isEn ? 'Read More Details' : isZh ? '展开查看更多' : 'Xem thêm chi tiết';
+  const collapseText = isEn ? 'Collapse Details' : isZh ? '收起内容' : 'Rút gọn nội dung';
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +58,7 @@ export default function ProductDescription({ description, specs }: ProductDescri
 
   return (
     <div>
-      <h3 className="specs-title">Mô tả chi tiết sản phẩm</h3>
+      <h3 className="specs-title">{titleText}</h3>
       <div className="product-description-wrapper">
         <div 
           ref={contentRef}
@@ -63,25 +71,6 @@ export default function ProductDescription({ description, specs }: ProductDescri
           }}
         >
           <div style={{ lineHeight: '1.8', marginBottom: '20px', fontSize: '15px' }} dangerouslySetInnerHTML={{ __html: description }} />
-          
-          {/* Tạm thời ẩn bảng thông số kỹ thuật theo yêu cầu khách hàng
-          specs && Object.keys(specs).length > 0 && (
-            <div style={{ marginTop: '25px' }}>
-              <h4 style={{ fontSize: '17px', color: 'var(--primary-color)', fontWeight: '700', marginBottom: '15px' }}>
-                Thông tin chi tiết
-              </h4>
-              <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px', fontSize: '14.5px' }}>
-                <tbody>
-                  {Object.entries(specs).map(([key, val], idx) => (
-                    <tr key={key} style={{ backgroundColor: idx % 2 === 0 ? 'rgba(0,0,0,0.02)' : 'transparent' }}>
-                      <td style={{ padding: '10px 15px', fontWeight: 'bold', borderBottom: '1px solid rgba(0,0,0,0.06)', width: '35%', color: 'var(--text-dark)' }}>{key}</td>
-                      <td style={{ padding: '10px 15px', borderBottom: '1px solid rgba(0,0,0,0.06)', color: 'var(--text-light)' }}>{val}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )*/}
         </div>
         
         {showButton && (
@@ -90,7 +79,6 @@ export default function ProductDescription({ description, specs }: ProductDescri
               className="desc-toggle-btn"
               onClick={() => {
                 if (!isCollapsed) {
-                  // Cuộn nhẹ lên đầu phần mô tả khi thu gọn để tránh bị lạc hướng
                   contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
                 setIsCollapsed(!isCollapsed);
@@ -98,11 +86,11 @@ export default function ProductDescription({ description, specs }: ProductDescri
             >
               {isCollapsed ? (
                 <>
-                  Xem thêm chi tiết <i className="fas fa-chevron-down"></i>
+                  {expandText} <i className="fas fa-chevron-down"></i>
                 </>
               ) : (
                 <>
-                  Rút gọn nội dung <i className="fas fa-chevron-up"></i>
+                  {collapseText} <i className="fas fa-chevron-up"></i>
                 </>
               )}
             </button>
