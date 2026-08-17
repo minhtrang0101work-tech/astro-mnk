@@ -316,12 +316,17 @@ export function autoTranslateTitle(title: string, locale: string): string {
   }
 
   // 3. Dọn dẹp từ dư tiếng Việt
-  if (isZh) {
+    if (isZh) {
     result = result.replace(/khí\s*nén/gi, '');
     result = result.replace(/tách/gi, '油气分离芯');
     result = result.replace(/chỉnh\s*áp/gi, '调压');
+    result = result.replace(/phớt\s*chặn/gi, '轴端骨架油封');
+    result = result.replace(/phớt\s*chắn/gi, '轴端骨架油封');
+    result = result.replace(/phớt/gi, '油封');
     result = result.replace(/van/gi, '阀');
     result = result.replace(/hồ/gi, '');
+    result = result.replace(/专用润滑油 轴端骨架油封/gi, '轴端骨架油封');
+    result = result.replace(/轴端骨架油封 专用润滑油/gi, '轴端骨架油封');
   }
 
   return result.replace(/\s+/g, ' ').trim();
