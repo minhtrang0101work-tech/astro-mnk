@@ -5,20 +5,37 @@ export default function LanguageSwitcher() {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    // Đọc cookie ngôn ngữ của trình duyệt
-    const match = document.cookie.match(/(^| )locale=([^;]+)/);
-    if (match && ['vi', 'en', 'zh'].includes(match[2])) {
-      setCurrentLocale(match[2] as 'vi' | 'en' | 'zh');
+    // Đọc cookie ngôn ngữ của trình duyệt (hỗ trợ cả locale và googtrans)
+    const matchLocale = document.cookie.match(/(^| )locale=([^;]+)/);
+    const matchGoog = document.cookie.match(/(^| )googtrans=([^;]+)/);
+
+    if (matchLocale && ['vi', 'en', 'zh'].includes(matchLocale[2])) {
+      setCurrentLocale(matchLocale[2] as 'vi' | 'en' | 'zh');
+    } else if (matchGoog) {
+      if (matchGoog[2].includes('zh')) setCurrentLocale('zh');
+      else if (matchGoog[2].includes('en')) setCurrentLocale('en');
+      else setCurrentLocale('vi');
     }
   }, []);
 
   const changeLocale = (locale: 'vi' | 'en' | 'zh') => {
     if (locale === currentLocale) return;
 
-    // Thiết lập cookie thời hạn 1 năm
+    // 1. Thiết lập cookie locale
+    const domain = window.location.hostname;
     document.cookie = `locale=${locale}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+
+    // 2. Thiết lập cookie googtrans cho bộ dịch tự động toàn trang
+    let googLang = '/vi/vi';
+    if (locale === 'en') googLang = '/vi/en';
+    if (locale === 'zh') googLang = '/vi/zh-CN';
+
+    document.cookie = `googtrans=${googLang}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+    document.cookie = `googtrans=${googLang}; path=/; domain=${domain}; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+
     setCurrentLocale(locale);
-    
+
+    // 3. Sử dụng startTransition và reload để áp dụng bản dịch ngay lập tức
     startTransition(() => {
       window.location.reload();
     });
