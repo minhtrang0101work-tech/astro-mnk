@@ -93,9 +93,8 @@ const locale = 'vi';
 
   return (
     <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(articleSchema)}
       />
       <Breadcrumb title={isZh ? '新闻与技术手册' : isEn ? 'News & Technical' : 'Tin Tức & Kỹ Thuật'} items={breadcrumbItems} />
 
@@ -141,7 +140,7 @@ const locale = 'vi';
                 </p>
               )}
               
-              <div dangerouslySetInnerHTML={{ __html: content }} />
+              <div set:html={content} />
             </div>
 
             {/* Author Biography Box for E-E-A-T */}

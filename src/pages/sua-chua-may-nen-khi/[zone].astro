@@ -100,9 +100,8 @@ const locale = 'vi';
 
 <Layout locale={locale}>
   <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(faqSchema)}
       />
       
       <Breadcrumb title={locale === 'vi' ? `Sửa Chữa Máy Nén Khí Tại ${info.locationVi}` : `Air Compressor Repair in ${info.locationEn}`} items={breadcrumbItems} />

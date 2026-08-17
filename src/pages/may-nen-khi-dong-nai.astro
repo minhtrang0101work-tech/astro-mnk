@@ -58,9 +58,8 @@ const locale = 'vi';
 
 <Layout locale={locale}>
   <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(localBusinessSchema)}
       />
       
       <Breadcrumb title={title} items={breadcrumbItems} />

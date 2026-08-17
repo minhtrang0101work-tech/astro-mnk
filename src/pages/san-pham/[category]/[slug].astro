@@ -181,13 +181,11 @@ const locale = 'vi';
 
 <Layout locale={locale}>
   <div className="product-detail-page-container">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(productSchema)}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(faqSchema)}
       />
       <Breadcrumb title="Thông tin chi tiết sản phẩm" items={breadcrumbItems} />
 
