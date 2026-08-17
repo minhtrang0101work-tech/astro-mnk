@@ -4,9 +4,10 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 interface HeaderProps {
   dict: any;
+  locale?: 'vi' | 'en' | 'zh';
 }
 
-export default function Header({ dict }: HeaderProps) {
+export default function Header({ dict, locale = 'vi' }: HeaderProps) {
   const [pathname, setPathname] = useState('/');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -21,6 +22,16 @@ export default function Header({ dict }: HeaderProps) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const getUrl = (path: string) => {
+    if (locale === 'en') {
+      return path === '/' ? '/en' : `/en${path}`;
+    }
+    if (locale === 'zh') {
+      return path === '/' ? '/zh' : `/zh${path}`;
+    }
+    return path;
+  };
 
   const dropdownLinkStyle = isMobile ? {
     color: 'var(--text-dark)',
@@ -38,8 +49,9 @@ export default function Header({ dict }: HeaderProps) {
   };
 
   const isActive = (path: string) => {
-    if (path === '/' && pathname === '/') return true;
-    if (path !== '/' && pathname.startsWith(path)) return true;
+    const localized = getUrl(path);
+    if (localized === '/' && (pathname === '/' || pathname === '')) return true;
+    if (localized !== '/' && pathname.startsWith(localized)) return true;
     return false;
   };
 
@@ -57,7 +69,7 @@ export default function Header({ dict }: HeaderProps) {
                 <i className="fas fa-phone-alt phone-ring"></i> {dict.common.hotline}: <span>0909 513 637</span>
               </a>
             </div>
-            <LanguageSwitcher />
+            <LanguageSwitcher currentLocale={locale} />
           </div>
         </div>
       </div>
@@ -65,7 +77,7 @@ export default function Header({ dict }: HeaderProps) {
       {/* Main Header */}
       <header className="main-header">
         <div className="container header-container">
-          <a href="/" className="logo" data-astro-prefetch="hover">
+          <a href={getUrl('/')} className="logo" data-astro-prefetch="hover">
             <img src="/assets/images/logo.png" alt="Khải Nguyên Logo" />
             <span className="logo-text">Máy nén khí <span>Khải Nguyên</span></span>
           </a>
@@ -80,14 +92,14 @@ export default function Header({ dict }: HeaderProps) {
 
           <ul className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
             <li className={`nav-item ${isActive('/') ? 'active' : ''}`}>
-              <a href="/" data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.home}</a>
+              <a href={getUrl('/')} data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.home}</a>
             </li>
             <li className={`nav-item ${isActive('/gioi-thieu') ? 'active' : ''}`}>
-              <a href="/gioi-thieu" data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.about}</a>
+              <a href={getUrl('/gioi-thieu')} data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.about}</a>
             </li>
             <li className={`nav-item dropdown ${isActive('/san-pham') ? 'active' : ''} ${isDropdownOpen ? 'active' : ''}`}>
               <a 
-                href="/san-pham" 
+                href={getUrl('/san-pham')} 
                 className="dropdown-trigger"
                 data-astro-prefetch="hover"
                 onClick={(e) => {
@@ -119,31 +131,31 @@ export default function Header({ dict }: HeaderProps) {
                 } : undefined}
               >
                 <ul className="dropdown-column" style={isMobile ? { display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' } : undefined}>
-                  <li><a href="/san-pham/binh-chua-va-dau-may-nen-khi" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.airTankBlock}</a></li>
-                  <li><a href="/san-pham/bo-loc-va-tach-khi-nen" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.filterSeparator}</a></li>
-                  <li><a href="/san-pham/cam-bien-do-luong-dieu-khien" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.sensorControl}</a></li>
-                  <li><a href="/san-pham/dau-may-va-phu-tung-boi-tron" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.lubricationOil}</a></li>
-                  <li><a href="/san-pham/he-thong-cac-loai-van-khi-nen" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.valvesSystem}</a></li>
+                  <li><a href={getUrl('/san-pham/binh-chua-va-dau-may-nen-khi')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.airTankBlock}</a></li>
+                  <li><a href={getUrl('/san-pham/bo-loc-va-tach-khi-nen')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.filterSeparator}</a></li>
+                  <li><a href={getUrl('/san-pham/cam-bien-do-luong-dieu-khien')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.sensorControl}</a></li>
+                  <li><a href={getUrl('/san-pham/dau-may-va-phu-tung-boi-tron')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.lubricationOil}</a></li>
+                  <li><a href={getUrl('/san-pham/he-thong-cac-loai-van-khi-nen')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.valvesSystem}</a></li>
                 </ul>
                 <ul className="dropdown-column" style={isMobile ? { display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' } : undefined}>
-                  <li><a href="/san-pham/he-thong-giai-nhiet-va-lam-mat" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.coolingSystem}</a></li>
-                  <li><a href="/san-pham/luc-nen-co-khi-dong-co" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.mechanicalEngine}</a></li>
-                  <li><a href="/san-pham/ong-dan-day-phun-khop-noi" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.hosesConnectors}</a></li>
-                  <li><a href="/san-pham/thiet-bi-xu-ly-nuoc-va-am" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.waterTreatment}</a></li>
-                  <li><a href="/san-pham/truyen-dong-va-linh-kien-khac" style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.transmissionOther}</a></li>
-                  <li><a href="/san-pham" style={isMobile ? { fontWeight: 700, color: 'var(--accent-color)', fontSize: '14.5px', padding: '6px 0', display: 'block' } : { fontWeight: 700, color: 'var(--accent-color)' }} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.common.allProducts} &raquo;</a></li>
+                  <li><a href={getUrl('/san-pham/he-thong-giai-nhiet-va-lam-mat')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.coolingSystem}</a></li>
+                  <li><a href={getUrl('/san-pham/luc-nen-co-khi-dong-co')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.mechanicalEngine}</a></li>
+                  <li><a href={getUrl('/san-pham/ong-dan-day-phun-khop-noi')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.hosesConnectors}</a></li>
+                  <li><a href={getUrl('/san-pham/thiet-bi-xu-ly-nuoc-va-am')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.waterTreatment}</a></li>
+                  <li><a href={getUrl('/san-pham/truyen-dong-va-linh-kien-khac')} style={dropdownLinkStyle} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.categories.transmissionOther}</a></li>
+                  <li><a href={getUrl('/san-pham')} style={isMobile ? { fontWeight: 700, color: 'var(--accent-color)', fontSize: '14.5px', padding: '6px 0', display: 'block' } : { fontWeight: 700, color: 'var(--accent-color)' }} onClick={() => setIsMobileMenuOpen(false)} data-astro-prefetch="hover">{dict.common.allProducts} &raquo;</a></li>
                 </ul>
               </div>
             </li>
             <li className={`nav-item ${isActive('/tin-tuc') ? 'active' : ''}`}>
-              <a href="/tin-tuc" data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.news}</a>
+              <a href={getUrl('/tin-tuc')} data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.news}</a>
             </li>
             <li className={`nav-item ${isActive('/lien-he') ? 'active' : ''}`}>
-              <a href="/lien-he" data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.contact}</a>
+              <a href={getUrl('/lien-he')} data-astro-prefetch="hover" onClick={() => setIsMobileMenuOpen(false)}>{dict.common.contact}</a>
             </li>
             <li className="nav-item mobile-only-lang" style={{ marginTop: '10px', paddingTop: '15px', borderTop: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <LanguageSwitcher />
+                <LanguageSwitcher currentLocale={locale} />
               </div>
               <div style={{ 
                 display: 'flex', 
@@ -168,7 +180,7 @@ export default function Header({ dict }: HeaderProps) {
             <button className="search-trigger" aria-label="Tìm kiếm" onClick={triggerSearch}>
               <i className="fas fa-search"></i>
             </button>
-            <a href="/lien-he" className="btn btn-primary" data-astro-prefetch="hover">{dict.header.requestQuote}</a>
+            <a href={getUrl('/lien-he')} className="btn btn-primary" data-astro-prefetch="hover">{dict.header.requestQuote}</a>
           </div>
         </div>
       </header>

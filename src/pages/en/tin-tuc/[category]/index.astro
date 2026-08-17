@@ -1,0 +1,70 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { NewsRepository } from '@/repositories/news.repository';
+import { NewsService } from '@/services/news.service';
+import Breadcrumb from '@/components/Breadcrumb';
+import NewsCard, { categoryMap } from '@/features/news/NewsCard';
+import NewsletterForm from '@/components/NewsletterForm';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+
+export async function getStaticPaths() {
+  const categories = ['bao-tri', 'cong-nghe', 'du-an', 'tu-van', 'tin-tuc', 'kien-thuc', 'ky-thuat'];
+  return categories.map(cat => ({
+    params: { category: cat }
+  }));
+}
+
+const { category } = Astro.params;
+const locale = 'en';
+const dict = await getDictionary(locale);
+
+const { news: articles } = await NewsService.getNews({ category });
+const catObj = categoryMap[category] || { vi: category, zh: category, en: category };
+const categoryName = catObj.vi;
+
+const breadcrumbItems = [
+  { label: dict.common.news, href: '/tin-tuc' },
+  { label: categoryName }
+];
+---
+
+<Layout
+  title={`${categoryName} | Tin Tức Khải Nguyên`}
+  description={`Tổng hợp tin tức, hướng dẫn kỹ thuật chuyên mục ${categoryName} máy nén khí Khải Nguyên.`}
+  canonical={`https://maynenkhikhainguyen.com/tin-tuc/${category}`}
+  locale="en"
+>
+  <Breadcrumb title={categoryName} items={breadcrumbItems} locale="en" />
+
+  <section class="section-padding">
+    <div class="container blog-layout">
+      <div class="blog-main">
+        <h2 class="section-title" style="margin-bottom: 30px; font-size: 24px;">CHUYÊN MỤC "{categoryName.toUpperCase()}"</h2>
+
+        {articles.length > 0 ? (
+          <div class="blog-grid">
+            {articles.map((article) => (
+              <NewsCard news={article} locale="en" />
+            ))}
+          </div>
+        ) : (
+          <div style="text-align: center; padding: 40px 0; color: var(--text-light);">
+            <p>Đang cập nhật bài viết cho chuyên mục này.</p>
+          </div>
+        )}
+      </div>
+
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h3>Đăng ký nhận tin</h3>
+          <div class="widget-newsletter" style="margin-top: 15px;">
+            <NewsletterForm dict={dict.footer} client:visible />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CTABanner client:visible locale="en" />
+</Layout>

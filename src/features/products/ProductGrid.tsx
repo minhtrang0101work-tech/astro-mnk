@@ -6,11 +6,16 @@ import { removeAccents } from '@/lib/utils';
 interface ProductGridProps {
   products: Product[];
   searchQuery?: string;
+  locale?: string;
 }
 
-export default function ProductGrid({ products: initialProducts, searchQuery: initialSearch }: ProductGridProps) {
+export default function ProductGrid({ products: initialProducts, searchQuery: initialSearch, locale = 'vi' }: ProductGridProps) {
   const [displayProducts, setDisplayProducts] = useState<Product[]>(initialProducts);
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
+
+  const isEn = locale === 'en';
+  const isZh = locale === 'zh';
+  const prefix = isEn ? '/en' : isZh ? '/zh' : '';
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -56,6 +61,14 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
   }, [initialProducts]);
 
   if (displayProducts.length === 0) {
+    const notFoundTitle = isEn ? 'No products found' : isZh ? '未找到相关产品' : 'Không tìm thấy sản phẩm';
+    const notFoundMsg = isEn 
+      ? `No products matching ${searchQuery ? `"${searchQuery}"` : 'your criteria'}.`
+      : isZh 
+      ? `没有找到匹配关键词 ${searchQuery ? `"${searchQuery}"` : ''} 的产品。`
+      : `Không tìm thấy sản phẩm nào khớp với từ khóa ${searchQuery ? `"${searchQuery}"` : 'yêu cầu'}.`;
+    const viewAllText = isEn ? 'View all products' : isZh ? '查看所有产品' : 'Xem tất cả sản phẩm';
+
     return (
       <div className="products-grid" style={{ display: 'block' }}>
         <div 
@@ -77,13 +90,13 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
             }}
           ></i>
           <h3 style={{ fontSize: '20px', marginBottom: '10px', color: 'var(--text-dark)' }}>
-            Không tìm thấy sản phẩm
+            {notFoundTitle}
           </h3>
           <p style={{ marginBottom: '20px', fontSize: '14.5px' }}>
-            Không tìm thấy sản phẩm nào khớp với từ khóa {searchQuery ? `"${searchQuery}"` : 'yêu cầu'}.
+            {notFoundMsg}
           </p>
-          <a href="/san-pham" className="btn btn-primary" style={{ padding: '10px 25px', fontSize: '14px', display: 'inline-block' }} data-astro-prefetch="hover">
-            Xem tất cả sản phẩm
+          <a href={`${prefix}/san-pham`} className="btn btn-primary" style={{ padding: '10px 25px', fontSize: '14px', display: 'inline-block' }} data-astro-prefetch="hover">
+            {viewAllText}
           </a>
         </div>
       </div>
@@ -93,7 +106,7 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
   return (
     <div className="products-grid">
       {displayProducts.map(product => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} locale={locale} />
       ))}
     </div>
   );

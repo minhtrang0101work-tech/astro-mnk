@@ -1,0 +1,49 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CategoryRepository } from '@/repositories/category.repository';
+import { ProductService } from '@/services/product.service';
+import Breadcrumb from '@/components/Breadcrumb';
+import ProductGrid from '@/features/products/ProductGrid';
+import ProductSidebar from '@/features/products/ProductSidebar';
+import ProductSort from '@/features/products/ProductSort';
+import Pagination from '@/components/Pagination';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+
+const locale = 'zh';
+const dict = await getDictionary(locale);
+
+const categories = await CategoryRepository.getAllCategories();
+const { products, total } = await ProductService.getProducts();
+
+const breadcrumbItems = [
+  { label: dict.common.products }
+];
+---
+
+<Layout
+  title="Sản Phẩm & Phụ Tùng Máy Nén Khí | Khải Nguyên"
+  description="Cung cấp phụ tùng máy nén khí trục vít, piston, dầu máy, lọc dầu, lọc gió chính hãng tại Biên Hòa, Đồng Nai, Bình Dương, Long An, HCM."
+  canonical="https://maynenkhikhainguyen.com/zh/san-pham"
+  locale="zh"
+>
+  <Breadcrumb title={dict.products.title} items={breadcrumbItems} locale="zh" />
+
+  <section class="section-padding">
+    <div class="container product-page-layout">
+      <ProductSidebar categories={categories} locale="zh" client:load />
+
+      <div class="products-main">
+        <div class="product-listing-header">
+          <h2>{dict.common.allProducts} <span>({total} {dict.products.count})</span></h2>
+          <ProductSort locale="zh" client:load />
+        </div>
+
+        <ProductGrid products={products} client:load />
+        <Pagination total={total} limit={12} currentPage={1} baseUrl="/san-pham" />
+      </div>
+    </div>
+  </section>
+
+  <CTABanner client:visible locale="zh" />
+</Layout>

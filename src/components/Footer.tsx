@@ -1,10 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface FooterProps {
   dict: any;
+  locale?: 'vi' | 'en' | 'zh';
 }
 
-export default function Footer({ dict }: FooterProps) {
+export default function Footer({ dict, locale = 'vi' }: FooterProps) {
   const currentYear = new Date().getFullYear();
+
+  const getUrl = (path: string) => {
+    if (locale === 'en') {
+      return path === '/' ? '/en' : `/en${path}`;
+    }
+    if (locale === 'zh') {
+      return path === '/' ? '/zh' : `/zh${path}`;
+    }
+    return path;
+  };
+
+  const isEn = locale === 'en';
+  const isZh = locale === 'zh';
+
+  const keyServicesTitle = isEn ? 'Key Industrial Services' : isZh ? '重点工业服务' : 'Dịch Vụ Trọng Điểm';
 
   return (
     <footer className="footer">
@@ -27,14 +43,14 @@ export default function Footer({ dict }: FooterProps) {
 
         {/* Column 2: Key SEO Services */}
         <div className="footer-col">
-          <h3>Dịch Vụ Trọng Điểm</h3>
+          <h3>{keyServicesTitle}</h3>
           <ul className="footer-links">
-            <li><a href="/may-nen-khi-dong-nai" data-astro-prefetch="hover">Cửa Hàng Máy Nén Khí Đồng Nai</a></li>
-            <li><a href="/linh-kien-may-nen-khi-dong-nai" data-astro-prefetch="hover">Linh Kiện Máy Nén Khí Đồng Nai</a></li>
-            <li><a href="/linh-kien-may-nen-khi" data-astro-prefetch="hover">Phụ Tùng Máy Nén Khí Trục Vít</a></li>
-            <li><a href="/san-pham/may-nen-khi-cao-ap" data-astro-prefetch="hover">Máy Nén Khí Cao Áp 30-40 Bar</a></li>
-            <li><a href="/sua-may-cong-nghiep" data-astro-prefetch="hover">Sửa Máy Công Nghiệp 24/7</a></li>
-            <li><a href="/bao-tri-may-cong-nghiep" data-astro-prefetch="hover">Bảo Trì Máy Công Nghiệp</a></li>
+            <li><a href={getUrl('/may-nen-khi-dong-nai')} data-astro-prefetch="hover">{isEn ? 'Dong Nai Air Compressor Store' : isZh ? '同奈空压机销售中心' : 'Cửa Hàng Máy Nén Khí Đồng Nai'}</a></li>
+            <li><a href={getUrl('/linh-kien-may-nen-khi-dong-nai')} data-astro-prefetch="hover">{isEn ? 'Dong Nai Air Compressor Spare Parts' : isZh ? '同奈空压机配件中心' : 'Linh Kiện Máy Nén Khí Đồng Nai'}</a></li>
+            <li><a href={getUrl('/linh-kien-may-nen-khi')} data-astro-prefetch="hover">{isEn ? 'Screw Compressor Spare Parts' : isZh ? '螺杆式空压机配件' : 'Phụ Tùng Máy Nén Khí Trục Vít'}</a></li>
+            <li><a href={getUrl('/san-pham/may-nen-khi-cao-ap')} data-astro-prefetch="hover">{isEn ? 'High Pressure Compressors 30-40 Bar' : isZh ? '高压空压机 30-40 Bar' : 'Máy Nén Khí Cao Áp 30-40 Bar'}</a></li>
+            <li><a href={getUrl('/sua-may-cong-nghiep')} data-astro-prefetch="hover">{isEn ? '24/7 Industrial Machine Repair' : isZh ? '24/7 工业设备维修' : 'Sửa Máy Công Nghiệp 24/7'}</a></li>
+            <li><a href={getUrl('/bao-tri-may-cong-nghiep')} data-astro-prefetch="hover">{isEn ? 'Industrial Maintenance Services' : isZh ? '工业设备定期保养' : 'Bảo Trì Máy Công Nghiệp'}</a></li>
           </ul>
         </div>
 
@@ -42,9 +58,9 @@ export default function Footer({ dict }: FooterProps) {
         <div className="footer-col">
           <h3>{dict.footer.services}</h3>
           <ul className="footer-links">
-            <li><a href="/san-pham" data-astro-prefetch="hover">{dict.footer.partsLink}</a></li>
-            <li><a href="/sua-chua-may-nen-khi" data-astro-prefetch="hover">{dict.footer.repairLink}</a></li>
-            <li><a href="/tu-van-may-nen-khi" data-astro-prefetch="hover">{dict.footer.consultingLink}</a></li>
+            <li><a href={getUrl('/san-pham')} data-astro-prefetch="hover">{dict.footer.partsLink}</a></li>
+            <li><a href={getUrl('/sua-chua-may-nen-khi')} data-astro-prefetch="hover">{dict.footer.repairLink}</a></li>
+            <li><a href={getUrl('/tu-van-may-nen-khi')} data-astro-prefetch="hover">{dict.footer.consultingLink}</a></li>
           </ul>
         </div>
 
@@ -82,9 +98,9 @@ export default function Footer({ dict }: FooterProps) {
         <div className="container footer-bottom-container">
           <p>&copy; {currentYear} {dict.footer.allRightsReserved}</p>
           <div className="footer-bottom-links">
-            <a href="/chinh-sach-bao-mat">{dict.policies.privacy}</a>
-            <a href="/bao-hanh-va-sua-chua">{dict.policies.warranty}</a>
-            <a href="/chinh-sach-ban-buon">{dict.policies.wholesale}</a>
+            <a href={getUrl('/chinh-sach-bao-mat')}>{dict.policies.privacy}</a>
+            <a href={getUrl('/bao-hanh-va-sua-chua')}>{dict.policies.warranty}</a>
+            <a href={getUrl('/chinh-sach-ban-buon')}>{dict.policies.wholesale}</a>
           </div>
         </div>
       </div>

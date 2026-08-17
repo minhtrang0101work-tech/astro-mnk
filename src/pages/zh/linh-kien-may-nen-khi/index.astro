@@ -1,0 +1,173 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import { getLocale, getDictionary } from '@/lib/i18n';
+
+
+
+
+
+const { zone } = Astro.params;
+const locale = 'zh';
+
+  
+  const dict = await getDictionary(locale);
+
+  const title = locale === 'vi' ? 'Linh Kiện & Phụ Tùng Máy Nén Khí' : locale === 'zh' ? '空压机零配件与耗材' : 'Air Compressor Parts & Components';
+  const intro = locale === 'vi' 
+    ? 'Khải Nguyên chuyên cung cấp và phân phối các loại linh kiện, phụ tùng máy nén khí trục vít chính hãng cho các nhà máy tại các Khu công nghiệp khu vực miền Nam. Chúng tôi cam kết chất lượng sản phẩm vượt trội, bảo hành uy tín và hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ.'
+    : locale === 'zh'
+    ? '凯源专业为 miền Nam 地区各工业区的工厂提供和分销正品螺杆式空压机零配件及耗材。我们承诺产品质量优异、保修信誉高，并在 2 小时内支持快速送达。'
+    : 'Khai Nguyen specializes in supplying and distributing genuine air compressor parts and components for factories in industrial parks across Southern Vietnam. We guarantee high-quality products, reliable warranty, and 2-hour fast delivery support.';
+
+  const breadcrumbItems = [
+    { label: title }
+  ];
+
+  
+---
+
+<Layout locale="zh">
+  <div>
+      <Breadcrumb title={title} items={breadcrumbItems} />
+
+      <section class="section-padding">
+        <div class="container" style="max-width: 900px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+            
+            {/* Last Updated */}
+            <div style="font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 6px;">
+              <i class="far fa-calendar-alt"></i>
+              <span>{locale === 'vi' ? 'Cập nhật lần cuối: 2026-08-05' : locale === 'zh' ? '最后更新: 2026-08-05' : 'Last updated: 2026-08-05'}</span>
+              <span style="margin: 0 8px; color: #ccc;">|</span>
+              <i class="far fa-user"></i>
+              <span>{locale === 'vi' ? 'Tác giả: Khải Nguyên Tech Team' : locale === 'zh' ? '作者: 凯源技术团队' : 'Author: Khai Nguyen Tech Team'}</span>
+            </div>
+
+            {/* Answer Box */}
+            <div style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px; padding: 18px 24px; background-color: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.6;">
+              {intro}
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 35px 0;">
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-color);">
+                <h3 style="margin: 0 0 10px; font-size: 17px; color: var(--primary-color); font-weight: 700;">
+                  🚚 {locale === 'vi' ? 'Giao Hàng Hỏa Tốc' : locale === 'zh' ? '快速送达' : 'Express Delivery'}
+                </h3>
+                <p style="margin: 0; font-size: 14.5px;">
+                  {locale === 'vi' 
+                    ? 'Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ đến các Khu công nghiệp chính tại Đồng Nai, Bình Dương, HCMC để giảm thiểu thời gian chờ dừng máy của nhà xưởng.'
+                    : locale === 'zh'
+                    ? '支持在 2 小时内快速将货物送达同奈、平阳和胡志明市的主要工业区，减少工厂停机等待时间。'
+                    : 'We support express delivery within 2 hours to key Industrial Parks in Dong Nai, Binh Duong, and HCMC to minimize factory downtime.'}
+                </p>
+              </div>
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-color);">
+                <h3 style="margin: 0 0 10px; font-size: 17px; color: var(--accent-color); font-weight: 700;">
+                  🛡️ {locale === 'vi' ? 'Bảo Hành Uy Tín' : locale === 'zh' ? '正品保修' : 'Genuine Warranty'}
+                </h3>
+                <p style="margin: 0; font-size: 14.5px;">
+                  {locale === 'vi'
+                    ? 'Phụ tùng chính hãng được bảo hành từ 3 đến 12 tháng tùy loại (lọc tách, lọc dầu, lọc gió bảo hành 2.000h - 4.000h chạy máy). Hỗ trợ đổi trả 1-đổi-1 nếu phát sinh lỗi nhà sản xuất.'
+                    : locale === 'zh'
+                    ? '正品配件保修期为 3 至 12 个月（油分、油滤、空滤保修 2000 - 4000 运行小时）。如出现制造商缺陷，支持 1 比 1 退换货。'
+                    : 'Genuine parts are warrantied for 3 to 12 months (oil separators, oil filters, and air filters warrantied for 2,000h - 4,000h of operation). Supports 1-to-1 replacement for manufacturing defects.'}
+                </p>
+              </div>
+            </div>
+
+            <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-weight: 700;">
+              {locale === 'vi' ? 'Danh mục linh kiện phụ tùng phân phối chính' : locale === 'zh' ? '主要分销空压机零配件' : 'Main Distribution of Air Compressor Parts'}
+            </h2>
+            <p>
+              {locale === 'vi' 
+                ? 'Khải Nguyên cung cấp toàn bộ linh kiện thay thế định kỳ và sửa chữa lớn cho các dòng máy nén khí trục vít phổ biến hiện nay như Kobelco, Hitachi, Fusheng, Atlas Copco, Ingersoll Rand, Elgi, Alup, Kaeser:'
+                : locale === 'zh'
+                ? '凯源提供当前主流螺杆式空压机（如神钢、日立、复盛、阿特拉斯、英格索兰、艾高、艾力普、凯撒等）的全系列定期更换配件和大修零配件：'
+                : 'Khai Nguyen provides a full range of routine replacement parts and major repair components for popular screw air compressors today, such as Kobelco, Hitachi, Fusheng, Atlas Copco, Ingersoll Rand, Elgi, Alup, and Kaeser:'}
+            </p>
+            <ul>
+              <li><strong>{locale === 'vi' ? 'Bộ lọc khí nén:' : locale === 'zh' ? '过滤器耗材:' : 'Compressor Filters:'}</strong> <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" data-astro-prefetch="hover">{locale === 'vi' ? 'Lọc tách dầu' : locale === 'zh' ? '油水分离器 (油分)' : 'Oil Separators'}</a>, <a href="/san-pham/bo-loc-va-tach-khi-nen/loi-loc" data-astro-prefetch="hover">{locale === 'vi' ? 'Lọc dầu, lọc gió' : locale === 'zh' ? '油滤、空滤' : 'Oil & Air Filters'}</a>, <a href="/san-pham/bo-loc-va-tach-khi-nen/bo-loc-duong-ong-khi-nen" data-astro-prefetch="hover">{locale === 'vi' ? 'Bộ lọc đường ống' : locale === 'zh' ? '管道精密过滤器' : 'Line Filters'}</a>.</li>
+              <li><strong>{locale === 'vi' ? 'Dầu bôi trơn máy nén khí:' : locale === 'zh' ? '空压机润滑油:' : 'Compressor Lubricants:'}</strong> <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" data-astro-prefetch="hover">{locale === 'vi' ? 'Dầu nhớt Fusheng' : locale === 'zh' ? '复盛专用润滑油' : 'Fusheng Lubricant'}</a>, dầu nhớt làm mát chịu nhiệt cao cấp cho máy nén khí trục vít.</li>
+              <li><strong>{locale === 'vi' ? 'Hệ thống van khí nén:' : locale === 'zh' ? '空压机阀门系统:' : 'Compressor Valves:'}</strong> Van hút cổ hút, van áp suất tối thiểu, van an toàn, van một chiều, van tiết lưu.</li>
+              <li><strong>{locale === 'vi' ? 'Cảm biến và Điều khiển:' : locale === 'zh' ? '传感器与控制器:' : 'Sensors & Controllers:'}</strong> Cảm biến áp suất, cảm biến nhiệt độ, công tắc áp suất, màn hình điều khiển PLC.</li>
+              <li><strong>{locale === 'vi' ? 'Hệ thống trao đổi nhiệt:' : locale === 'zh' ? '冷却与散热系统:' : 'Cooling Radiators:'}</strong> Két làm mát dầu, két làm mát khí, quạt giải nhiệt công nghiệp.</li>
+            </ul>
+
+            {/* Geographical Navigation Grid */}
+            <div style="margin-top: 50px; padding-top: 30px; border-top: 1px dashed #ddd;">
+              <h3 style="font-size: 18px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; text-align: center;">
+                📍 {locale === 'vi' ? 'HỆ THỐNG PHÂN PHỐI LINH KIỆN TẠI CÁC KHU VỰC MIỀN NAM' : locale === 'zh' ? 'miền Nam 地区零配件分销系统' : 'SOUTHERN VIETNAM DISTRIBUTION ZONES'}
+              </h3>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 20px;">
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    🏭 {locale === 'vi' ? 'Theo Khu Công Nghiệp' : 'By Industrial Park'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/linh-kien-may-nen-khi/kcn-amata" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Amata</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-bien-hoa-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-bien-hoa-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-nhon-trach-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-nhon-trach-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-vsip-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-vsip-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-song-than" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Sóng Thần</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-giang-dien" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Giang Điền</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Long Thành</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-my-phuoc" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Mỹ Phước</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phan-thiet" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phan Thiết</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phu-my" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phú Mỹ</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-dong-xuyen" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Đông Xuyên</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-trang-bang" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Trảng Bàng</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phuoc-dong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phước Đông</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-thuan-dao" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Thuận Đạo</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    📍 {locale === 'vi' ? 'Theo Quận / Huyện' : 'By District'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/linh-kien-may-nen-khi/bien-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Biên Hòa</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/nhon-trach" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Nhơn Trạch</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/trang-bom" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Trảng Bom</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Long Thành</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/di-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Dĩ An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/thuan-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thuận An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/thu-dau-mot" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thủ Dầu Một</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/duc-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Đức Hòa</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/quan-12" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận 12 (TP. HCM)</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-tan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận Bình Tân (TP. HCM)</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    🗺️ {locale === 'vi' ? 'Theo Tỉnh / Thành' : 'By Province'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/linh-kien-may-nen-khi/dong-nai" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Đồng Nai</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-duong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Dương</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/ho-chi-minh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Hồ Chí Minh</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/long-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Long An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-thuan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Thuận</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/ba-ria-vung-tau" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bà Rịa - Vũng Tàu</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/tay-ninh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Tây Ninh</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </article>
+        </div>
+      </section>
+
+      <CTABanner client:visible locale="zh" />
+    </div>
+</Layout>

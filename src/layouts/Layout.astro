@@ -27,6 +27,24 @@ const {
 const dict = await getDictionary(locale);
 const baseUrl = 'https://maynenkhikhainguyen.com';
 
+// Calculate clean hreflang alternates
+const currentPathname = Astro.url.pathname;
+let basePath = currentPathname;
+if (basePath.startsWith('/en/')) {
+  basePath = basePath.replace(/^\/en/, '');
+} else if (basePath === '/en') {
+  basePath = '/';
+} else if (basePath.startsWith('/zh/')) {
+  basePath = basePath.replace(/^\/zh/, '');
+} else if (basePath === '/zh') {
+  basePath = '/';
+}
+
+const cleanPath = basePath === '/' ? '' : basePath;
+const canonicalVi = `${baseUrl}${cleanPath}`;
+const canonicalEn = `${baseUrl}/en${cleanPath}`;
+const canonicalZh = `${baseUrl}/zh${cleanPath}`;
+
 const localBusinessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -77,9 +95,15 @@ const localBusinessSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title.includes('Khải Nguyên') ? title : `${title} | Máy nén khí Khải Nguyên`}</title>
+    <title>{title.includes('Khải Nguyên') || title.includes('Khai Nguyen') || title.includes('凯源') ? title : `${title} | Máy nén khí Khải Nguyên`}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+
+    <!-- Multi-language Hreflang Tags (Google SEO Official Spec) -->
+    <link rel="alternate" hreflang="vi" href={canonicalVi} />
+    <link rel="alternate" hreflang="en" href={canonicalEn} />
+    <link rel="alternate" hreflang="zh" href={canonicalZh} />
+    <link rel="alternate" hreflang="x-default" href={canonicalVi} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -87,6 +111,7 @@ const localBusinessSchema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
+    <meta property="og:locale" content={locale === 'vi' ? 'vi_VN' : locale === 'zh' ? 'zh_CN' : 'en_US'} />
 
     <!-- Geo Meta Tags -->
     <meta name="geo.region" content="VN" />
@@ -141,45 +166,6 @@ const localBusinessSchema = {
         />
       )
     }
-
-    <!-- Hide Google Translate Default Bar Completely -->
-    <style is:inline>
-      .goog-te-banner-frame,
-      .goog-te-banner-frame.skiptranslate,
-      iframe.goog-te-banner-frame,
-      .goog-te-gadget-icon,
-      .goog-te-gadget-simple,
-      #goog-gt-tt,
-      .goog-te-balloon-frame,
-      .VIpgJd-ZVi9od-OR95ae-PRBm6X,
-      .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
-      .VIpgJd-ZVi9od-aZ2wEe-OiiCO,
-      .VIpgJd-ZVi9od-SmfZ-OueMb-IalUJb {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        position: absolute !important;
-        top: -9999px !important;
-      }
-      body {
-        top: 0px !important;
-        position: static !important;
-      }
-      .goog-tooltip,
-      .goog-tooltip:hover {
-        display: none !important;
-      }
-      .goog-text-highlight {
-        background-color: transparent !important;
-        box-shadow: none !important;
-      }
-      font {
-        background-color: transparent !important;
-        box-shadow: none !important;
-      }
-    </style>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -206,48 +192,18 @@ const localBusinessSchema = {
       gtag('config', 'G-5GGLHPWXGX');
     </script>
 
-    <!-- Header Island: client:load for immediate interactive mobile menu & search -->
-    <Header client:load dict={dict} />
+    <!-- Header Island: client:load for immediate interactive mobile menu, language switch & search -->
+    <Header client:load dict={dict} locale={locale} />
 
     <main>
       <slot />
     </main>
 
     <!-- Footer: Static Server-Rendered Component -->
-    <Footer dict={dict} />
+    <Footer dict={dict} locale={locale} />
 
     <!-- Interactive Overlays: client:idle to defer hydration after main content loads -->
-    <SearchOverlay client:idle />
-    <StickyContactBar client:idle />
-
-    <!-- Google Translate Script with Auto Hide Observer -->
-    <div id="google_translate_element" style="display:none;"></div>
-    <script is:inline>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'vi',
-          includedLanguages: 'vi,en,zh-CN',
-          autoDisplay: false
-        }, 'google_translate_element');
-      }
-
-      // Đảm bảo ẩn thanh banner Google Translate nếu trình duyệt tự động hiển thị
-      if (typeof window !== 'undefined') {
-        const hideGoogleBar = () => {
-          document.body.style.top = '0px';
-          document.body.style.position = 'static';
-          const frames = document.querySelectorAll('iframe.goog-te-banner-frame, .VIpgJd-ZVi9od-OR95ae-PRBm6X');
-          frames.forEach(f => {
-            if (f && f.style) {
-              f.style.display = 'none';
-              f.style.visibility = 'hidden';
-            }
-          });
-        };
-        window.addEventListener('load', hideGoogleBar);
-        setInterval(hideGoogleBar, 300);
-      }
-    </script>
-    <script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <SearchOverlay client:idle locale={locale} />
+    <StickyContactBar client:idle locale={locale} />
   </body>
 </html>

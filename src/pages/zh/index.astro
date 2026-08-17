@@ -1,0 +1,549 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { ProductService } from '@/services/product.service';
+import { NewsService } from '@/services/news.service';
+import ProductCard from '@/features/products/ProductCard';
+import NewsCard from '@/features/news/NewsCard';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+
+// Static Site Generation: Fetch data in frontmatter during build time
+const locale = 'zh';
+const dict = await getDictionary(locale);
+
+// Parallel data fetching for maximum build performance
+const [featuredProducts, latestNews] = await Promise.all([
+  ProductService.getBestSellers(12),
+  NewsService.getLatestNews(3),
+]);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name:
+        locale === 'vi'
+          ? 'Khải Nguyên cung cấp dịch vụ máy nén khí trục vít tại những tỉnh thành nào?'
+          : locale === 'zh'
+            ? '凯源在哪些省份提供螺杆式空压机服务？'
+            : 'Which provinces does Khai Nguyen provide air compressor services in?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          locale === 'vi'
+            ? 'Máy nén khí Khải Nguyên cung cấp dịch vụ sửa chữa khẩn cấp, bảo dưỡng định kỳ và phân phối phụ tùng trục vít tận nơi tại tất cả các khu công nghiệp thuộc tỉnh Đồng Nai (Biên Hòa, Nhơn Trạch, Long Thành, Amata...), Bình Dương (VSIP, Mỹ Phước, Sóng Thần...), TP. Hồ Chí Minh, và Long An.'
+            : locale === 'zh'
+              ? '凯源空压机在同奈省（边和、仁泽、隆成、安美达等）、平阳省（VSIP、美福、神浪等）、胡志明市和隆安省的所有工业区提供上门紧急维修、定期保养和配件送货服务。'
+              : 'Khai Nguyen Air Compressor provides emergency repair, regular maintenance, and spare parts delivery on-site at all industrial zones in Dong Nai (Bien Hoa, Nhon Trach, Long Thanh, Amata...), Binh Duong (VSIP, My Phuoc, Song Than...), Ho Chi Minh City, and Long An.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name:
+        locale === 'vi'
+          ? 'Những hãng máy nén khí nào được Khải Nguyên nhận sửa chữa và bảo dưỡng?'
+          : locale === 'zh'
+            ? '凯源维修和保养哪些品牌的空压机？'
+            : 'Which air compressor brands does Khai Nguyen repair and maintain?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          locale === 'vi'
+            ? 'Chúng tôi nhận sửa chữa, đại tu đầu nén và bảo trì định kỳ cho các hãng máy nén khí trục vít phổ biến như Atlas Copco, Hitachi, Kobelco, Ingersoll Rand, Sullair, Fusheng, Mitsui Seiki, Elgi, Alup...'
+            : locale === 'zh'
+              ? '我们维修、大修主机头并保养各大品牌的常用螺杆式空压机：阿特拉斯·科普柯、日立、神钢、英格索兰、寿力、复盛、三井、艾高、阿鲁普等。'
+              : 'We repair, overhaul air ends, and maintain popular screw air compressors from major brands: Atlas Copco, Hitachi, Kobelco, Ingersoll Rand, Sullair, Fusheng, Mitsui Seiki, Elgi, Alup...',
+      },
+    },
+    {
+      '@type': 'Question',
+      name:
+        locale === 'vi'
+          ? 'Thời gian kỹ thuật viên Khải Nguyên có mặt khi máy nén khí gặp sự cố là bao lâu?'
+          : locale === 'zh'
+            ? '空压机发生紧急故障时，凯源技术人员多久能到达现场？'
+            : 'How long does it take for Khai Nguyen technicians to arrive during a compressor emergency?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          locale === 'vi'
+            ? 'Đối với các sự cố dừng máy khẩn cấp tại các KCN khu vực Đồng Nai, Bình Dương và TP.HCM, kỹ thuật viên của chúng tôi cam kết có mặt tận nhà xưởng trong vòng từ 2 đến 4 giờ kể từ khi nhận được yêu cầu để tiến hành kiểm tra khắc phục.'
+            : locale === 'zh'
+              ? '对于同奈、平阳和胡志明市工业区的紧急停机故障，我们的技术人员承诺在 2 至 4 小时内到达工厂现场进行排查并修复。'
+              : 'For sudden shutdown emergencies in industrial zones of Dong Nai, Binh Duong, and HCMC, our technicians commit to arriving on-site within 2 to 4 hours to troubleshoot and resolve the issue.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name:
+        locale === 'vi'
+          ? 'Quy trình nhận báo giá phụ tùng và dịch vụ tại Khải Nguyên như thế nào?'
+          : locale === 'zh'
+            ? '在凯源获取配件和服务的报价流程是怎样的？'
+            : 'What is the process for getting a quote for parts and services from Khai Nguyen?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text:
+          locale === 'vi'
+            ? 'Quý khách hàng chỉ cần chụp ảnh model máy nén khí hoặc mã phụ tùng cũ gửi qua Hotline/Zalo 0909 513 637 hoặc Email khainguyen209@gmail.com. Khải Nguyên sẽ khảo sát thực tế (miễn phí) và gửi báo giá chi tiết trong vòng 15 phút.'
+            : locale === 'zh'
+              ? '您只需将空压机型号或旧配件编码的图片通过热线/Zalo 0909 513 637或邮箱 khainguyen209@gmail.com 发送给我们。我们将在15分钟内进行免费实际考察并发送详细报价单。'
+              : 'Simply send photos of the compressor model or old part numbers via Hotline/Zalo 0909 513 637 or Email khainguyen209@gmail.com. We will perform a free site survey and send a detailed quotation within 15 minutes.',
+      },
+    },
+  ],
+};
+---
+
+<Layout
+  title="Máy nén khí Khải Nguyên - Phụ tùng và Sửa chữa chuyên nghiệp"
+  description="Chuyên cung cấp phụ tùng máy nén khí trục vít, piston, dầu máy, lọc dầu, lọc gió chính hãng tại Biên Hòa, Đồng Nai, Bình Dương, HCM."
+  locale="zh"
+  schema={faqSchema}
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-subtitle">Khai Nguyen Air Compressor</span>
+        <h1>{dict.home.heroTitle}</h1>
+        <p class="hero-desc">
+          {dict.home.heroSubtitle}
+        </p>
+        <div class="hero-buttons">
+          <a
+            href="/san-pham"
+            class="btn btn-primary"
+            data-astro-prefetch="hover"
+          >
+            {dict.common.allProducts.toUpperCase()}
+          </a>
+          <a
+            href="/lien-he"
+            class="btn btn-outline"
+            data-astro-prefetch="hover"
+          >
+            {dict.common.contact.toUpperCase()}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Ticker Banner -->
+  <div class="info-ticker-banner">
+    <div class="info-ticker-track">
+      <!-- Group 1 -->
+      <div class="info-ticker-group">
+        <div class="info-ticker-item">
+          <i class="fas fa-phone-alt"></i>
+          <a href="tel:0909513637">0909 513 637</a>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:khainguyen209@gmail.com">KHAINGUYEN209@GMAIL.COM</a>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>BIÊN HÒA, ĐỒNG NAI</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-clock"></i>
+          <span>THỨ 2 - THỨ 7: 8:00 - 17:00</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>LIÊN HỆ BÁO GIÁ NGAY</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+      </div>
+
+      <!-- Group 2 (Duplicate for infinite seamless scroll) -->
+      <div class="info-ticker-group">
+        <div class="info-ticker-item">
+          <i class="fas fa-phone-alt"></i>
+          <a href="tel:0909513637">0909 513 637</a>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:khainguyen209@gmail.com">KHAINGUYEN209@GMAIL.COM</a>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>BIÊN HÒA, ĐỒNG NAI</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-clock"></i>
+          <span>THỨ 2 - THỨ 7: 8:00 - 17:00</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+
+        <div class="info-ticker-item">
+          <i class="fas fa-file-invoice-dollar"></i>
+          <span>LIÊN HỆ BÁO GIÁ NGAY</span>
+        </div>
+        <span class="info-ticker-separator">|</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Products Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 40px;">
+        <span class="section-subtitle">Khai Nguyen OEM Parts</span>
+        <h2 class="section-title">{dict.home.featuredProductsTitle}</h2>
+        <p
+          style="max-width: 600px; margin: 0 auto; color: var(--text-light); font-size: 14.5px;"
+        >
+          {dict.home.featuredProductsDesc}
+        </p>
+      </div>
+      <div class="home-products-grid">
+        {
+          featuredProducts.map((product) => (
+            <ProductCard product={product} />
+          ))
+        }
+      </div>
+      <div class="text-center" style="margin-top: 40px;">
+        <a
+          href="/san-pham"
+          class="btn btn-outline-dark"
+          data-astro-prefetch="hover"
+        >
+          {dict.common.allProducts.toUpperCase()} &raquo;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Intro Section -->
+  <section class="section-padding">
+    <div class="container about-intro-grid">
+      <div class="about-intro-image">
+        <img
+          src="/assets/images/about_engineer.jpg"
+          alt="Kỹ sư Máy nén khí Khải Nguyên"
+          style="width: 100%; height: auto; border-radius: 4px;"
+          loading="lazy"
+        />
+        <div class="experience-badge">
+          <div class="years">15+</div>
+          <div class="text">{dict.home.stats.experience}</div>
+        </div>
+      </div>
+      <div>
+        <span class="section-subtitle">{dict.common.about}</span>
+        <h2 class="section-title">{dict.home.introTitle.toUpperCase()}</h2>
+        <p class="about-intro-desc">
+          {dict.home.introText1}
+        </p>
+        <p class="about-intro-desc" style="margin-top: 10px;">
+          {dict.home.introText2}
+        </p>
+        <ul class="about-intro-bullets">
+          <li>{dict.home.features.supportTitle}</li>
+          <li>{dict.home.features.partsTitle}</li>
+          <li>{dict.home.features.savingTitle}</li>
+        </ul>
+        <a
+          href="/gioi-thieu"
+          class="btn btn-outline-dark"
+          data-astro-prefetch="hover"
+        >
+          {dict.common.viewMore.toUpperCase()} &raquo;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Categories Section -->
+  <section class="section-padding bg-light-sec">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 50px;">
+        <span class="section-subtitle"
+          >{dict.footer.services} &amp; {dict.common.products}</span
+        >
+        <h2 class="section-title">{dict.home.categoriesTitle.toUpperCase()}</h2>
+        <p
+          style="max-width: 650px; margin: 15px auto 0; color: var(--text-light); font-size: 14.5px; line-height: 1.6;"
+        >
+          {dict.home.categoriesSubtitle}
+        </p>
+      </div>
+
+      <div class="category-grid">
+        <!-- Cat 1 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/air_tank.jpg"
+              alt={dict.home.featuredCats.cat1Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat1Title}</h3>
+            <p>{dict.home.featuredCats.cat1Desc}</p>
+            <a
+              href="/san-pham/binh-chua-va-dau-may-nen-khi"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cat 2 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/line_filter.jpg"
+              alt={dict.home.featuredCats.cat2Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat2Title}</h3>
+            <p>{dict.home.featuredCats.cat2Desc}</p>
+            <a
+              href="/san-pham/bo-loc-va-tach-khi-nen"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cat 3 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/sensors_control.jpg"
+              alt={dict.home.featuredCats.cat3Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat3Title}</h3>
+            <p>{dict.home.featuredCats.cat3Desc}</p>
+            <a
+              href="/san-pham/cam-bien-do-luong-dieu-khien"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cat 4 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/compressor_oil.jpg"
+              alt={dict.home.featuredCats.cat4Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat4Title}</h3>
+            <p>{dict.home.featuredCats.cat4Desc}</p>
+            <a
+              href="/san-pham/dau-may-va-phu-tung-boi-tron"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cat 5 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/pneumatic_valves.jpg"
+              alt={dict.home.featuredCats.cat5Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat5Title}</h3>
+            <p>{dict.home.featuredCats.cat5Desc}</p>
+            <a
+              href="/san-pham/he-thong-cac-loai-van-khi-nen"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cat 6 -->
+        <div class="category-card">
+          <div class="category-img-container">
+            <img
+              src="/assets/images/air_dryer.jpg"
+              alt={dict.home.featuredCats.cat6Title}
+              loading="lazy"
+            />
+          </div>
+          <div class="category-body">
+            <h3>{dict.home.featuredCats.cat6Title}</h3>
+            <p>{dict.home.featuredCats.cat6Desc}</p>
+            <a
+              href="/san-pham/thiet-bi-xu-ly-nuoc-va-am"
+              class="category-link"
+              data-astro-prefetch="hover"
+            >
+              {dict.common.viewMore} <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  <section class="section-padding bg-light-sec">
+    <div class="container">
+      <div class="text-center projects-header">
+        <span class="section-subtitle">{dict.home.stats.projects}</span>
+        <h2 class="section-title">{dict.home.featuredProjectsTitle}</h2>
+        <p style="color: var(--text-light); font-size: 14.5px;">
+          {dict.home.featuredProjectsDesc}
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <img
+            src="/assets/images/hero_bg.jpg"
+            alt="Project 1"
+            loading="lazy"
+          />
+          <div class="project-overlay">
+            <h3>{dict.home.project1Title}</h3>
+            <p>{dict.home.project1Desc}</p>
+          </div>
+        </div>
+        <div class="project-card">
+          <img
+            src="/assets/images/about_engineer.jpg"
+            alt="Project 2"
+            loading="lazy"
+          />
+          <div class="project-overlay">
+            <h3>{dict.home.project2Title}</h3>
+            <p>{dict.home.project2Desc}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="projects-metrics">
+        <div class="metric-item">
+          <div class="metric-number">250+</div>
+          <div class="metric-label">{dict.home.stats.projects}</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-number">1,000+</div>
+          <div class="metric-label">{dict.home.stats.clients}</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-number">24/7</div>
+          <div class="metric-label">{dict.home.stats.support}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="news-header">
+        <div>
+          <span class="section-subtitle">{dict.common.news}</span>
+          <h2 class="section-title">{dict.news.title.toUpperCase()}</h2>
+        </div>
+        <a
+          href="/tin-tuc"
+          class="btn btn-outline-dark"
+          data-astro-prefetch="hover"
+        >
+          {dict.common.viewMore}
+        </a>
+      </div>
+
+      <div class="news-grid">
+        {latestNews.map((news) => <NewsCard news={news} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section with Schema Markup -->
+  <section
+    class="section-padding bg-light-sec"
+    style="border-top: 1px solid #eaeaea;"
+  >
+    <div class="container" style="max-width: 1200px; margin: 0 auto;">
+      <div class="text-center" style="margin-bottom: 40px;">
+        <span class="section-subtitle">FAQ</span>
+        <h2 class="section-title">
+          {
+            locale === 'vi'
+              ? 'CÂU HỎI THƯỜNG GẶP'
+              : locale === 'zh'
+                ? '常见问题解答'
+                : 'FREQUENTLY ASKED QUESTIONS'
+          }
+        </h2>
+      </div>
+      <div class="faq-grid">
+        {
+          faqSchema.mainEntity.map((item) => (
+            <div
+              class="faq-card"
+              style="background-color: white; padding: 24px; border-radius: var(--radius-sm); box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #f0f0f0;"
+            >
+              <h3
+                style="margin: 0 0 10px 0; font-size: 16.5px; color: var(--text-dark); font-weight: 700; display: flex; gap: 10px;"
+              >
+                <span style="color: var(--primary-color);">Q:</span>
+                <span>{item.name}</span>
+              </h3>
+              <p
+                style="margin: 0; padding-left: 25px; font-size: 14.5px; color: var(--text-color); line-height: 1.6;"
+              >
+                {item.acceptedAnswer.text}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner Section -->
+  <CTABanner client:visible locale="zh" />
+</Layout>

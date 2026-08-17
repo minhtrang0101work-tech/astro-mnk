@@ -1,0 +1,113 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb';
+import ContactForm from '@/features/contact/ContactForm';
+import { getDictionary } from '@/lib/i18n';
+import { PageService } from '@/services/page.service';
+
+const locale = 'zh';
+const dict = await getDictionary(locale);
+const meta = await PageService.getPageMetadata('contact');
+
+const breadcrumbItems = [{ label: dict.common.contact }];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical="https://maynenkhikhainguyen.com/zh/lien-he"
+  locale="zh"
+>
+  <Breadcrumb title={dict.contact.title} items={breadcrumbItems} locale="zh" />
+
+  <!-- Contact Form & Info -->
+  <section class="section-padding">
+    <div class="container">
+      <div style="max-width: 800px; margin-bottom: 50px;">
+        <span class="section-subtitle">{dict.common.contact}</span>
+        <h2 class="section-title" style="font-size: 32px;">
+          Hỗ Trợ Kỹ Thuật & Giải Pháp Khí Nén Toàn Diện
+        </h2>
+        <p style="color: var(--text-light); font-size: 15px;">
+          Đội ngũ kỹ sư của Khải Nguyên luôn sẵn sàng lắng nghe và cung cấp những giải pháp tối ưu nhất cho hệ thống khí nén công nghiệp của bạn.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left: Contact info cards -->
+        <div class="contact-cards-container">
+          <div class="contact-detail-card">
+            <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="contact-card-content">
+              <h3>{dict.common.hotline} 24/7</h3>
+              <p>Tư vấn kỹ thuật và xử lý sự cố khẩn cấp</p>
+              <div class="contact-card-content highlight-text">0909 513 637</div>
+            </div>
+          </div>
+
+          <div class="contact-detail-card">
+            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-card-content">
+              <h3>{dict.common.email}</h3>
+              <p>Nhận báo giá và tài liệu kỹ thuật</p>
+              <div class="contact-card-content highlight-text" style="font-size: 16px; margin-top: 10px;">
+                khainguyen209@gmail.com
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-detail-card">
+            <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+            <div class="contact-card-content">
+              <h3>Giờ làm việc</h3>
+              <p>Hỗ trợ trực tuyến & khảo sát nhà xưởng</p>
+              <p style="font-weight: 700; color: var(--text-dark); margin-top: 5px;">
+                Thứ 2 - Thứ 7: 08:00 - 17:30
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact form (Island) -->
+        <div class="contact-form-box">
+          <h2>{dict.contact.formTitle}</h2>
+          <p style="margin-bottom: 20px; color: var(--text-light); font-size: 14.5px;">
+            {dict.contact.formSubtitle}
+          </p>
+          <ContactForm client:visible dict={dict.contact} />
+        </div>
+      </div>
+
+      <!-- Map section -->
+      <div class="map-section">
+        <h3 class="specs-title" style="margin-bottom: 15px;">Vị Trí Của Chúng Tôi</h3>
+        <p style="color: var(--text-light); font-size: 14.5px; margin-bottom: 25px; line-height: 1.6;">
+          Bản đồ tương tác dưới đây hiển thị vị trí văn phòng của chúng tôi. Bạn có thể nhấp vào nút chỉ đường để Google Maps tự động xác định lộ trình tốt nhất.
+        </p>
+        <div class="map-container" style="overflow: hidden; position: relative; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+          <iframe
+            title="Bản đồ vị trí Khải Nguyên"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3917.352581019129!2d106.8739836!3d10.9367167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174dfac6cfe4743%3A0x1058f9328496fd15!2zTcOheSBuw6luIGtow60gS2jhuqNpIE5ndXnDqm4gLSBT4butYSBjaOG7r2EgJiBQaOG7pSB0w7luZyBtw6F5IG7DqW4ga2jDrSB0cuG7pWMgdsOtdA!5e0!3m2!1svi!2svn!4v1722880000000!5m2!1svi!2svn"
+            width="100%"
+            height="100%"
+            style="border: 0;"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <a 
+            href="https://maps.app.goo.gl/zewZCeEwq8KnPSMk6" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+            style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 25px; border-radius: 30px; font-weight: 600;"
+          >
+            <i class="fas fa-location-arrow"></i> Chỉ đường từ vị trí của bạn
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

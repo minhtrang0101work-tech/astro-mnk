@@ -1,0 +1,67 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { CategoryRepository } from '@/repositories/category.repository';
+import { ProductService } from '@/services/product.service';
+import Breadcrumb from '@/components/Breadcrumb';
+import ProductGrid from '@/features/products/ProductGrid';
+import ProductSidebar from '@/features/products/ProductSidebar';
+import ProductSort from '@/features/products/ProductSort';
+import Pagination from '@/components/Pagination';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+
+export async function getStaticPaths() {
+  const categories = await CategoryRepository.getAllCategories();
+  return categories.map(cat => ({
+    params: { category: cat.slug },
+    props: { category: cat }
+  }));
+}
+
+const { category: categorySlug } = Astro.params;
+const { category: currentCategory } = Astro.props;
+
+const locale = 'zh';
+const dict = await getDictionary(locale);
+
+const categories = await CategoryRepository.getAllCategories();
+const { products, total } = await ProductService.getProducts({ categories: [categorySlug] });
+
+const pageTitle = `${currentCategory?.name || 'Sản phẩm'} | Máy Nén Khí Khải Nguyên`;
+const breadcrumbItems = [
+  { label: dict.common.products, href: '/san-pham' },
+  { label: currentCategory?.name || categorySlug }
+];
+---
+
+<Layout
+  title={pageTitle}
+  description={`Danh mục ${currentCategory?.name || categorySlug} chất lượng cao, phân phối và lắp đặt tại Biên Hòa, Đồng Nai, Bình Dương, Long An.`}
+  canonical={`https://maynenkhikhainguyen.com/san-pham/${categorySlug}`}
+  locale="zh"
+>
+  <Breadcrumb title={currentCategory?.name || 'Danh mục sản phẩm'} items={breadcrumbItems} locale="zh" />
+
+  <section class="section-padding">
+    <div class="container product-page-layout">
+      <ProductSidebar 
+        categories={categories} 
+        locale="zh" 
+        selectedCategories={[categorySlug]} 
+        client:load 
+      />
+
+      <div class="products-main">
+        <div class="product-listing-header">
+          <h2>{currentCategory?.name} <span>({total} {dict.products.count})</span></h2>
+          <ProductSort locale="zh" client:load />
+        </div>
+
+        <ProductGrid products={products} client:load />
+        <Pagination total={total} limit={12} currentPage={1} baseUrl={`/san-pham/${categorySlug}`} />
+      </div>
+    </div>
+  </section>
+
+  <CTABanner client:visible locale="zh" />
+</Layout>

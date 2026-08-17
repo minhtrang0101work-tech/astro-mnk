@@ -1,0 +1,242 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import { getLocale } from '@/lib/i18n';
+
+
+
+
+
+const { zone } = Astro.params;
+const locale = 'en';
+
+  
+  const isEn = locale === 'en';
+  const isZh = locale === 'zh';
+
+  const breadcrumbItems = [
+    { label: isEn ? 'Warranty & Repair' : isZh ? '保修与维修' : 'Bảo hành & Sửa chữa' }
+  ];
+
+  
+---
+
+<Layout locale="en">
+  <div>
+      <Breadcrumb 
+        title={isEn ? 'Warranty & Repair Policy' : isZh ? 'Chính Sách Bảo Hành & Sửa Chữa' : 'Chính Sách Bảo Hành & Sửa Chữa'} 
+        items={breadcrumbItems} 
+      />
+
+      <section class="section-padding">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
+          {isEn ? (
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
+                To ensure absolute peace of mind and reliability in your factory operations, Khai Nguyen commits to a genuine warranty policy and 24/7 emergency repair support for all equipment and spare parts supplied by us.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                I. Cases covered under free warranty
+              </h2>
+              <p style="margin-bottom: 10px;">
+                Products will be covered for free troubleshooting or replacement with new spare parts if they meet the following standards:
+              </p>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>Products with technical defects or failures originating from the manufacturer.</li>
+                <li>Products still within the warranty period calculated from the delivery date or as printed on the Warranty Card/Invoice.</li>
+                <li>Accompanied by a genuine warranty card issued by Khai Nguyen or corresponding delivery note/invoice.</li>
+                <li>The warranty label or seal on the product (air end, oil filter, cooler...) remains intact, untorn, and unaltered.</li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                II. Cases excluded from free warranty
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>Products with expired warranty periods or missing Warranty Cards.</li>
+                <li>Failures caused by improper technical operations compared to operational manuals (e.g., using incorrect compressor oil causing air end burnouts, running overload, system overheating, etc.).</li>
+                <li>Damage due to external physical impacts: drops, hard impacts causing dents, scratches, or rusting due to damp environments or chemical corrosion.</li>
+                <li>Damage caused by insects, rodents chewing electric cables, or due to natural disasters or fires.</li>
+                <li>Dealers or customers disassembling, repairing the air end, or altering system configurations without the approval/guidance of Khai Nguyen engineers.</li>
+              </ul>
+              <p style="font-style: italic; margin-bottom: 25px;">
+                * For products out of warranty, Khai Nguyen provides paid maintenance and replacement services at the most favorable prices.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                III. Routine Maintenance Program
+              </h2>
+              <p style="margin-bottom: 20px;">
+                According to our client care policy, our system automatically tracks your machine running hours and sends regular maintenance notifications (at 2,000, 4,000, and 8,000 hours) via Zalo or Hotline to ensure your system always operates efficiently.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                IV. Location and Scope of Warranty
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px;">
+                <li>
+                  <strong>On-site Warranty:</strong> Applies to industrial screw air compressor systems installed in factories across Dong Nai, Binh Duong, Long An, and Ho Chi Minh City. Engineers will arrive within 2 hours of receiving incident reports.
+                </li>
+                <li>
+                  <strong>Workshop Warranty:</strong> For small spare parts (oil filters, air filters, valves...), please bring or ship them directly to our workshop in Bien Hoa, Dong Nai.
+                </li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                V. Return & Exchange Policy
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li><strong>Exchange immediately on delivery:</strong> Return or replace 100% if the delivered parts do not match specifications, part numbers, or dimensions compared to the purchase order.</li>
+                <li><strong>Exchange period:</strong> Within 7 days from signing the delivery note (parts must remain in original packaging, unused, and scratch-free).</li>
+              </ul>
+
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-top: 4px solid var(--accent-color); margin-top: 30px;">
+                <strong>FOR ALL WARRANTY & EMERGENCY REPAIR REQUESTS, PLEASE CONTACT:</strong><br />
+                📞 <strong>24/7 Hotline:</strong> 0909 513 637<br />
+                ✉️ <strong>Support Email:</strong> khainguyen209@gmail.com<br />
+                📍 <strong>Receiving Address:</strong> 762a Hamlet 25, Long Binh Ward, Bien Hoa, Dong Nai.
+              </div>
+            </article>
+          ) : isZh ? (
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
+                为了在您工厂运营期间提供绝对的安心与信赖，凯源承诺对我们提供的所有设备和零配件实施正品保修政策，并提供24/7全天候紧急维修支持。
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                一、 免费保修范围
+              </h2>
+              <p style="margin-bottom: 10px;">
+                如果产品符合以下标准，我们将提供免费保修故障排除或更换新配件：
+              </p>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>产品存在制造工艺缺陷或由制造商引起的故障。</li>
+                <li>产品仍处于保修期内（自验收交付之日起计算，或根据保修卡/发票上记载的日期）。</li>
+                <li>随附凯源开具的正品保修卡或相应的交付单/发票。</li>
+                <li>产品上的保修标签或封条（主机机头、油滤、散热器等）完好无损，未撕毁且未被改动。</li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                二、 非免费保修范围
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>产品已超出保修期或保修卡遗失。</li>
+                <li>未按操作手册指导不当操作引起的故障（如使用不匹配的空压机油导致机头烧死、过载运行、系统超温等）。</li>
+                <li>因外部物理撞击导致的损坏：跌落、强烈撞击导致变形、划伤，或因潮湿环境或化学品腐蚀引起的生锈。</li>
+                <li>昆虫、鼠咬电缆造成的损坏，或由于自然灾害、火灾引起的损坏。</li>
+                <li>分销商或客户未经凯源工程师书面许可/指导，自行拆卸、维修主机机头或改动系统配置。</li>
+              </ul>
+              <p style="font-style: italic; margin-bottom: 25px;">
+                * 对于保修期外的产品，凯源将以最优惠的价格提供有偿维护及零配件更换服务。
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                三、 定期保养服务程序
+              </h2>
+              <p style="margin-bottom: 20px;">
+                根据我们的客户关怀政策，我们的系统会自动记录您设备的运行时间，并定期通过Zalo或服务热线发送定期保养提醒（在设备运行2000小时、4000小时和8000小时），以确保您的压缩空气系统始终高效运行。
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                四、 保修地点与范围
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px;">
+                <li>
+                  <strong>现场保修 (On-site):</strong> 适用于安装在同奈省、平阳省、隆安省和胡志明市工厂内的工业螺杆式空压机系统。工程师将在接到报修后2小时内到达现场。
+                </li>
+                <li>
+                  <strong>车间保修:</strong> 对于小型零配件（油滤、空滤、阀门等），请直接送达或快递寄送至我们位于同奈省边和市的车间。
+                </li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                五、 退换货政策
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li><strong>交货时立即更换:</strong> 如果交付的配件与采购订单相比规格不符、件号错误或参数有偏差，100%退换货。</li>
+                <li><strong>退换货期限:</strong> 自签署交付单之日起7天内（配件必须保持原包装完好、未使用且无划痕）。</li>
+              </ul>
+
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-top: 4px solid var(--accent-color); margin-top: 30px;">
+                <strong>所有保修和紧急报修请求，请联系：</strong><br />
+                📞 <strong>24/7 热线:</strong> 0909 513 637<br />
+                ✉️ <strong>服务邮箱:</strong> khainguyen209@gmail.com<br />
+                📍 <strong>寄送地址:</strong> 越南同奈省边和市龙平坊25区762a.
+              </div>
+            </article>
+          ) : (
+            <article class="policy-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+              <p style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px;">
+                Để mang lại sự yên tâm và tin cậy tuyệt đối trong suốt quá trình vận hành nhà xưởng, Khải Nguyên cam kết chính sách bảo hành chính hãng và hỗ trợ sửa chữa khẩn cấp 24/7 đối với mọi thiết bị và linh kiện do chúng tôi cung cấp.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                I. Trường hợp được bảo hành miễn phí
+              </h2>
+              <p style="margin-bottom: 10px;">
+                Sản phẩm sẽ được bảo hành khắc phục lỗi hoặc thay thế linh kiện mới miễn phí nếu đáp ứng các tiêu chuẩn sau:
+              </p>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>Sản phẩm gặp trục trặc kỹ thuật hoặc sự cố phát sinh do lỗi của nhà sản xuất.</li>
+                <li>Sản phẩm còn nằm trong thời hạn bảo hành được tính từ ngày nghiệm thu bàn giao hoặc ghi trên Phiếu bảo hành/Hóa đơn.</li>
+                <li>Có phiếu bảo hành chính hãng của Khải Nguyên hoặc hóa đơn/biên bản bàn giao đi kèm.</li>
+                <li>Tem bảo hành hoặc tem niêm phong trên sản phẩm (đầu nén, lọc dầu, két giải nhiệt...) còn nguyên vẹn, không bị rách hay sửa đổi.</li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                II. Các trường hợp từ chối bảo hành miễn phí
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>Sản phẩm đã quá hạn bảo hành hoặc bị mất Phiếu bảo hành.</li>
+                <li>Sản phẩm bị hư hại do sử dụng sai kỹ thuật so với hướng dẫn vận hành (như sử dụng sai loại dầu máy nén khí làm cháy đầu nén, vận hành quá tải, hệ thống quá nhiệt độ cho phép...).</li>
+                <li>Hư hỏng do tác động vật lý bên ngoài: làm rơi, va đập mạnh làm móp méo, trầy xước, hoen rỉ do môi trường ẩm ướt hoặc hóa chất ăn mòn.</li>
+                <li>Sản phẩm có dấu hiệu bị côn trùng, chuột bọ xâm nhập cắn phá dây cáp điện hoặc do thiên tai, hỏa hoạn.</li>
+                <li>Đại lý hoặc khách hàng tự ý tháo dỡ, sửa chữa đầu nén hoặc thay đổi cấu trúc hệ thống mà không có sự đồng ý hoặc hướng dẫn của kỹ sư Khải Nguyên.</li>
+              </ul>
+              <p style="font-style: italic; margin-bottom: 25px;">
+                * Đối với các sản phẩm hết hạn bảo hành, Khải Nguyên cung cấp dịch vụ sửa chữa và thay thế phụ tùng tính phí với mức giá ưu đãi tốt nhất cho quý đối tác.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                III. Quy trình bảo dưỡng định kỳ
+              </h2>
+              <p style="margin-bottom: 20px;">
+                Theo chính sách chăm sóc khách hàng, hệ thống quản lý của chúng tôi sẽ tự động lưu lịch sử chạy máy của bạn và gửi thông báo nhắc nhở lịch bảo dưỡng định kỳ (sau 2.000 giờ, 4.000 giờ, 8.000 giờ) qua tin nhắn Zalo hoặc Hotline để đảm bảo hệ thống khí nén luôn hoạt động hiệu quả, tránh dừng máy đột xuất.
+              </p>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                IV. Địa điểm và Phạm vi Bảo hành
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px;">
+                <li>
+                  <strong>Bảo hành tận nơi (On-site):</strong> Áp dụng đối với hệ thống máy nén khí trục vít công nghiệp lắp đặt tại các nhà máy thuộc khu vực tỉnh Đồng Nai, Bình Dương, Long An và TP. Hồ Chí Minh. Đội ngũ kỹ sư sẽ có mặt trong vòng 2 giờ kể từ khi tiếp nhận thông tin sự cố.
+                </li>
+                <li>
+                  <strong>Bảo hành tại xưởng Khải Nguyên:</strong> Đối với linh kiện phụ tùng nhỏ lẻ (lọc dầu, lọc gió, van...), quý khách hàng vui lòng mang trực tiếp hoặc gửi chuyển phát nhanh về xưởng của chúng tôi tại Biên Hòa, Đồng Nai.
+                </li>
+              </ul>
+
+              <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 30px; margin-bottom: 15px; font-weight: 700;">
+                V. Chính sách đổi trả hàng hóa
+              </h2>
+              <ul style="padding-left: 20px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li><strong>Đổi trả ngay khi giao hàng:</strong> Hoàn trả hoặc đổi mới 100% nếu linh kiện phụ tùng bàn giao không đúng quy cách, sai mã hàng hoặc sai lệch thông số kỹ thuật so với đơn đặt hàng.</li>
+                <li><strong>Thời hạn đổi trả linh kiện:</strong> Trong vòng 7 ngày kể từ khi ký biên bản giao nhận (Yêu cầu linh kiện phải còn nguyên bao bì, chưa qua sử dụng và không bị trầy xước).</li>
+              </ul>
+
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-top: 4px solid var(--accent-color); margin-top: 30px;">
+                <strong>MỌI YÊU CẦU BẢO HÀNH & SỬA CHỮA KHẨN CẤP VUI LÒNG LIÊN HỆ:</strong><br />
+                📞 <strong>Hotline 24/7:</strong> 0909 513 637<br />
+                ✉️ <strong>Email hỗ trợ:</strong> khainguyen209@gmail.com<br />
+                📍 <strong>Địa chỉ tiếp nhận:</strong> 762a tổ 25, khu phố 5, Phường Long Bình, Biên Hòa, Đồng Nai.
+              </div>
+            </article>
+          )}
+        </div>
+      </section>
+
+      <CTABanner client:visible locale="en" />
+    </div>
+</Layout>

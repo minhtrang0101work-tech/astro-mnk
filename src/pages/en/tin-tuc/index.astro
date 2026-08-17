@@ -1,0 +1,50 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { NewsService } from '@/services/news.service';
+import Breadcrumb from '@/components/Breadcrumb';
+import NewsCard from '@/features/news/NewsCard';
+import NewsletterForm from '@/components/NewsletterForm';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+
+const locale = 'en';
+const dict = await getDictionary(locale);
+
+const { news: articles } = await NewsService.getNews();
+
+const breadcrumbItems = [
+  { label: dict.common.news }
+];
+---
+
+<Layout
+  title="Tin Tức & Kỹ Thuật Máy Nén Khí | Khải Nguyên"
+  description="Cập nhật tin tức, hướng dẫn bảo dưỡng, quy trình sửa chữa và cẩm nang kỹ thuật máy nén khí trục vít công nghiệp."
+  canonical="https://maynenkhikhainguyen.com/en/tin-tuc"
+  locale="en"
+>
+  <Breadcrumb title={dict.news.title} items={breadcrumbItems} locale="en" />
+
+  <section class="section-padding">
+    <div class="container blog-layout">
+      <div class="blog-main">
+        <div class="blog-grid">
+          {articles.map((article) => (
+            <NewsCard news={article} locale="en" />
+          ))}
+        </div>
+      </div>
+
+      <aside class="blog-sidebar">
+        <div class="sidebar-widget">
+          <h3>Đăng ký nhận tin</h3>
+          <div class="widget-newsletter" style="margin-top: 15px;">
+            <NewsletterForm dict={dict.footer} client:visible />
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CTABanner client:visible locale="en" />
+</Layout>

@@ -18,6 +18,7 @@ export const categoryMap: { [key: string]: { vi: string; zh: string; en: string 
 export default function NewsCard({ news, locale = 'vi' }: NewsCardProps) {
   const isZh = locale === 'zh';
   const isEn = locale === 'en';
+  const prefix = isEn ? '/en' : isZh ? '/zh' : '';
 
   const catObj = categoryMap[news.category] || { vi: news.category, zh: news.category, en: news.category };
   const categoryName = (isZh ? catObj.zh : isEn ? catObj.en : catObj.vi).toUpperCase();
@@ -26,16 +27,19 @@ export default function NewsCard({ news, locale = 'vi' }: NewsCardProps) {
   const description = isZh ? (news.descriptionZh || news.description) : isEn ? (news.descriptionEn || news.description) : news.description;
   const readMoreText = isZh ? '阅读全文' : isEn ? 'Read more' : 'Đọc thêm';
 
+  const detailUrl = `${prefix}/tin-tuc/${news.category}/${news.slug}`;
+  const categoryUrl = `${prefix}/tin-tuc/${news.category}`;
+
   return (
     <article className="news-card">
       <div className="news-img-container">
-        <a href={`/tin-tuc/${news.category}/${news.slug}`} data-astro-prefetch="hover">
+        <a href={detailUrl} data-astro-prefetch="hover">
           <img src={news.image} alt={title} loading="lazy" decoding="async" />
         </a>
       </div>
       <div className="news-body">
         <div className="news-meta" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <a href={`/tin-tuc/${news.category}`} className="news-category" style={{ fontWeight: 700 }} data-astro-prefetch="hover">
+          <a href={categoryUrl} className="news-category" style={{ fontWeight: 700 }} data-astro-prefetch="hover">
             {categoryName}
           </a>
           <span className="news-date">
@@ -43,11 +47,11 @@ export default function NewsCard({ news, locale = 'vi' }: NewsCardProps) {
           </span>
         </div>
         <h3>
-          <a href={`/tin-tuc/${news.category}/${news.slug}`} data-astro-prefetch="hover">{title}</a>
+          <a href={detailUrl} data-astro-prefetch="hover">{title}</a>
         </h3>
         <p>{description}</p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
-          <a href={`/tin-tuc/${news.category}/${news.slug}`} className="news-readmore" data-astro-prefetch="hover">
+          <a href={detailUrl} className="news-readmore" data-astro-prefetch="hover">
             {readMoreText} <i className="fas fa-arrow-right" style={{ marginLeft: '5px' }}></i>
           </a>
           <button style={{ background: 'none', border: 'none', color: 'var(--text-light)', cursor: 'pointer', fontSize: '14px' }} aria-label="Bookmark">

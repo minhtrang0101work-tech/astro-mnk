@@ -7,6 +7,14 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://maynenkhikhainguyen.com',
   output: 'static', // 100% Static Site Generation (SSG) tối ưu cho Cloudflare Pages
+  i18n: {
+    defaultLocale: 'vi',
+    locales: ['vi', 'en', 'zh'],
+    routing: {
+      prefixDefaultLocale: false, // Tiếng Việt giữ nguyên / , chỉ en và zh mới có prefix /en, /zh
+      redirectToDefaultLocale: false,
+    },
+  },
   integrations: [
     react(),
     sitemap({

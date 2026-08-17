@@ -1,0 +1,320 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import { getDictionary } from '@/lib/i18n';
+import { PageService } from '@/services/page.service';
+
+const locale = 'zh';
+const dict = await getDictionary(locale);
+const meta = await PageService.getPageMetadata('about');
+
+const breadcrumbItems = [{ label: dict.common.about }];
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical="https://maynenkhikhainguyen.com/zh/gioi-thieu"
+  locale="zh"
+>
+  <Breadcrumb title={dict.about.title} items={breadcrumbItems} locale="zh" />
+
+  <!-- Company Intro Section -->
+  <section class="section-padding">
+    <div class="container about-intro-grid">
+      <div>
+        <span class="section-subtitle">{dict.common.about}</span>
+        <h2 class="section-title" style="font-size: 28px;">
+          {dict.home.introTitle}
+        </h2>
+        <p class="about-intro-desc" style="line-height: 1.8;">
+          {dict.home.introText1} {dict.home.introText2}
+        </p>
+
+        <div class="about-metrics-grid" style="margin-top: 25px;">
+          <div
+            class="metric-item"
+            style="text-align: left; border-left: 4px solid var(--accent-color); padding-left: 20px;"
+          >
+            <div
+              class="metric-number"
+              style="font-size: 32px; color: var(--text-dark);"
+            >
+              15+ Năm
+            </div>
+            <div
+              class="metric-label"
+              style="font-size: 12px; color: var(--text-light); font-weight: 700; text-transform: uppercase; margin-top: 5px;"
+            >
+              {dict.home.stats.experience}
+            </div>
+          </div>
+          <div
+            class="metric-item"
+            style="text-align: left; border-left: 4px solid var(--accent-color); padding-left: 20px;"
+          >
+            <div
+              class="metric-number"
+              style="font-size: 32px; color: var(--text-dark);"
+            >
+              Biên Hòa
+            </div>
+            <div
+              class="metric-label"
+              style="font-size: 12px; color: var(--text-light); font-weight: 700; text-transform: uppercase; margin-top: 5px;"
+            >
+              Trụ sở chính
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-intro-image">
+        <img
+          src="/assets/images/about_engineer.jpg"
+          alt="Đội ngũ kỹ sư Khải Nguyên"
+          style="width: 100%; height: auto; border-radius: 4px;"
+          loading="lazy"
+        />
+        <div
+          class="experience-badge"
+          style="bottom: 20px; right: auto; left: 20px; background-color: var(--primary-color);"
+        >
+          <div
+            class="text"
+            style="color: var(--bg-white); font-size: 13px; font-weight: 600;"
+          >
+            {dict.common.hotline}
+          </div>
+          <div class="years" style="font-size: 26px;">0909 513 637</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision and Mission Details -->
+  <section class="section-padding bg-light-sec">
+    <div class="container">
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;"
+      >
+        <div
+          style="background-color: var(--bg-white); padding: 30px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);"
+        >
+          <h3
+            style="font-size: 20px; color: var(--primary-color); font-weight: 700; margin-bottom: 15px;"
+          >
+            🎯 {dict.about.vision}
+          </h3>
+          <p style="font-size: 14.5px; line-height: 1.7; color: var(--text-color);">
+            {dict.about.visionText}
+          </p>
+        </div>
+        <div
+          style="background-color: var(--bg-white); padding: 30px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);"
+        >
+          <h3
+            style="font-size: 20px; color: var(--primary-color); font-weight: 700; margin-bottom: 15px;"
+          >
+            💎 {dict.about.values}
+          </h3>
+          <p style="font-size: 14.5px; line-height: 1.7; color: var(--text-color);">
+            {dict.about.valuesText}
+          </p>
+        </div>
+        <div
+          style="background-color: var(--bg-white); padding: 30px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);"
+        >
+          <h3
+            style="font-size: 20px; color: var(--primary-color); font-weight: 700; margin-bottom: 15px;"
+          >
+            ⏳ {dict.about.history}
+          </h3>
+          <p style="font-size: 14.5px; line-height: 1.7; color: var(--text-color);">
+            {dict.about.historyText}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Dark Box -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="why-us-box">
+        <h2>Vì Sao Nên Chọn Máy Nén Khí Khải Nguyên?</h2>
+        <p
+          style="grid-column: 1 / -1; opacity: 0.8; font-size: 14.5px; margin-bottom: 30px;"
+        >
+          Tối ưu hóa năng suất hoạt động của doanh nghiệp bằng uy tín kỹ thuật vững chắc.
+        </p>
+
+        <div class="why-item">
+          <div
+            style="font-size: 48px; font-weight: 800; color: var(--accent-color); margin-bottom: 10px; font-family: var(--font-display);"
+          >
+            15+
+          </div>
+          <h3
+            style="font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;"
+          >
+            {dict.home.stats.experience}
+          </h3>
+          <p>Thấu hiểu mọi hệ thống khí nén công nghiệp.</p>
+        </div>
+        <div class="why-item">
+          <div
+            style="font-size: 48px; font-weight: 800; color: var(--accent-color); margin-bottom: 10px; font-family: var(--font-display);"
+          >
+            24/7
+          </div>
+          <h3
+            style="font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;"
+          >
+            {dict.home.stats.support}
+          </h3>
+          <p>Có mặt nhanh chóng tại Đồng Nai & phía Nam.</p>
+        </div>
+        <div class="why-item">
+          <div
+            style="font-size: 48px; font-weight: 800; color: var(--accent-color); margin-bottom: 10px; font-family: var(--font-display);"
+          >
+            100%
+          </div>
+          <h3
+            style="font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;"
+          >
+            Chính Hãng
+          </h3>
+          <p>Cam kết chất lượng thiết bị và linh kiện.</p>
+        </div>
+        <div class="why-item">
+          <div
+            style="font-size: 48px; font-weight: 800; color: var(--accent-color); margin-bottom: 10px; font-family: var(--font-display);"
+          >
+            Min
+          </div>
+          <h3
+            style="font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;"
+          >
+            Giá Cạnh Tranh
+          </h3>
+          <p>Tối ưu chi phí đầu tư cho doanh nghiệp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commitments and Contact -->
+  <section class="section-padding bg-light-sec">
+    <div class="container about-commitment-grid">
+      <div>
+        <span class="section-subtitle">{dict.about.values}</span>
+        <h2 class="section-title">Cam Kết Của Chúng Tôi</h2>
+        <p class="about-intro-desc" style="margin-bottom: 25px;">
+          Tại Máy Nén Khí Khải Nguyên, chúng tôi không chỉ cung cấp máy móc, mà mang đến sự an tâm tuyệt đối cho khách hàng. Chúng tôi cam kết về chất lượng sản phẩm, dịch vụ hậu mãi chu đáo và luôn sẵn sàng đồng hành cùng sự phát triển bền vững của quý doanh nghiệp.
+        </p>
+
+        <div style="display: flex; flexDirection: column; gap: 12px;">
+          <div
+            style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-white);"
+          >
+            <i
+              class="fas fa-check-circle"
+              style="color: #10b981; font-size: 18px;"></i>
+            <span style="font-weight: 700; color: var(--text-dark);"
+              >Chất lượng hàng đầu</span
+            >
+          </div>
+          <div
+            style="display: flex; align-items: center; gap: 15px; padding: 15px 20px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-white);"
+          >
+            <i class="fas fa-handshake" style="color: #10b981; font-size: 18px;"
+            ></i>
+            <span style="font-weight: 700; color: var(--text-dark);"
+              >Đối tác tin cậy lâu dài</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Contact card -->
+      <div
+        style="border: 2px solid var(--accent-color); border-radius: var(--radius-sm); padding: 40px; background-color: var(--bg-white); box-shadow: var(--shadow-sm); align-self: center;"
+      >
+        <h3
+          style="font-size: 20px; font-weight: 700; color: var(--text-dark); margin-bottom: 30px;"
+        >
+          {dict.contact.info}
+        </h3>
+
+        <div style="display: flex; flex-direction: column; gap: 25px;">
+          <!-- Hotline -->
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <div
+              style="width: 45px; height: 45px; background-color: var(--accent-light); color: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;"
+            >
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div>
+              <div
+                style="font-size: 12px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;"
+              >
+                {dict.common.hotline}
+              </div>
+              <a
+                href="tel:0909513637"
+                style="font-size: 18px; font-weight: 700; color: var(--text-dark);"
+                >0909 513 637</a
+              >
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div style="display: flex; gap: 20px; align-items: center;">
+            <div
+              style="width: 45px; height: 45px; background-color: var(--accent-light); color: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;"
+            >
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <div
+                style="font-size: 12px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;"
+              >
+                {dict.common.email}
+              </div>
+              <a
+                href="mailto:khainguyen209@gmail.com"
+                style="font-size: 16px; font-weight: 700; color: var(--text-dark);"
+                >khainguyen209@gmail.com</a
+              >
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div
+              style="width: 45px; height: 45px; background-color: var(--accent-light); color: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; margin-top: 5px;"
+            >
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div>
+              <div
+                style="font-size: 12px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;"
+              >
+                {dict.common.address}
+              </div>
+              <p
+                style="font-size: 14.5px; font-weight: 700; color: var(--text-dark); line-height: 1.5;"
+              >
+                762a Tổ 25, Khu Phố 5, Phường Long Bình, Biên Hòa, Đồng Nai
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTABanner client:visible locale="zh" />
+</Layout>

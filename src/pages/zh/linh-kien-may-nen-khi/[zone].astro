@@ -1,0 +1,666 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import RandomProducts from '@/components/RandomProducts';
+import { getLocale, getDictionary } from '@/lib/i18n';
+import { ProductRepository } from '@/repositories/product.repository';
+
+interface ZonePageProps {
+  params: Promise<{ zone: string }>;
+}
+
+
+interface ZoneDetails {
+  nameVi: string;
+  nameEn: string;
+  nameZh: string;
+  locationVi: string;
+  locationEn: string;
+  locationZh: string;
+  introVi: string;
+  introEn: string;
+  introZh: string;
+}
+
+const zoneInfoMap: { [key: string]: ZoneDetails } = {
+  "kcn-amata": {
+    "nameVi": "Khu công nghiệp Amata (Biên Hòa, Đồng Nai)",
+    "nameEn": "Amata Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "安美达工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Amata (Biên Hòa, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Amata Industrial Park (Bien Hoa, Dong Nai).",
+    "introZh": "凯源专业为安美达工业区 (同奈省边和市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-bien-hoa-1": {
+    "nameVi": "Khu công nghiệp Biên Hòa 1 (Biên Hòa, Đồng Nai)",
+    "nameEn": "Bien Hoa 1 Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "边和第一工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Biên Hòa 1 (Biên Hòa, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Bien Hoa 1 Industrial Park (Bien Hoa, Dong Nai).",
+    "introZh": "凯源专业为边和第一工业区 (同奈省边和市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-bien-hoa-2": {
+    "nameVi": "Khu công nghiệp Biên Hòa 2 (Biên Hòa, Đồng Nai)",
+    "nameEn": "Bien Hoa 2 Industrial Park (Bien Hoa, Dong Nai)",
+    "nameZh": "边和第二工业区 (同奈省边和市)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Biên Hòa 2 (Biên Hòa, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Bien Hoa 2 Industrial Park (Bien Hoa, Dong Nai).",
+    "introZh": "凯源专业为边和第二工业区 (同奈省边和市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-nhon-trach": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Nhơn Trạch (Nhơn Trạch, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Nhon Trach Industrial Park (Nhon Trach, Dong Nai).",
+    "introZh": "凯源专业为仁泽工业区 (同奈省仁泽县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-nhon-trach-1": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch 1 (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach 1 Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽第一工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Nhơn Trạch 1 (Nhơn Trạch, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Nhon Trach 1 Industrial Park (Nhon Trach, Dong Nai).",
+    "introZh": "凯源专业为仁泽第一工业区 (同奈省仁泽县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-nhon-trach-2": {
+    "nameVi": "Khu công nghiệp Nhơn Trạch 2 (Nhơn Trạch, Đồng Nai)",
+    "nameEn": "Nhon Trach 2 Industrial Park (Nhon Trach, Dong Nai)",
+    "nameZh": "仁泽第二工业区 (同奈省仁泽县)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Nhơn Trạch 2 (Nhơn Trạch, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Nhon Trach 2 Industrial Park (Nhon Trach, Dong Nai).",
+    "introZh": "凯源专业为仁泽第二工业区 (同奈省仁泽县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-vsip": {
+    "nameVi": "Khu công nghiệp VSIP (Thuận An, Bình Dương)",
+    "nameEn": "VSIP Industrial Park (Thuan An, Binh Duong)",
+    "nameZh": "新加坡工业区 (平阳省顺安市)",
+    "locationVi": "Thuận An, Bình Dương",
+    "locationEn": "Thuan An, Binh Duong",
+    "locationZh": "平阳省顺安市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp VSIP (Thuận An, Bình Dương).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in VSIP Industrial Park (Thuan An, Binh Duong).",
+    "introZh": "凯源专业为新加坡工业区 (平阳省顺安市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-vsip-1": {
+    "nameVi": "Khu công nghiệp VSIP 1 (Thuận An, Bình Dương)",
+    "nameEn": "VSIP 1 Industrial Park (Thuan An, Binh Duong)",
+    "nameZh": "新加坡第一工业区 (平阳省顺安市)",
+    "locationVi": "Thuận An, Bình Dương",
+    "locationEn": "Thuan An, Binh Duong",
+    "locationZh": "平阳省顺安市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp VSIP 1 (Thuận An, Bình Dương).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in VSIP 1 Industrial Park (Thuan An, Binh Duong).",
+    "introZh": "凯源专业为新加坡第一工业区 (平阳省顺安市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-vsip-2": {
+    "nameVi": "Khu công nghiệp VSIP 2 (Thủ Dầu Một, Bình Dương)",
+    "nameEn": "VSIP 2 Industrial Park (Thu Dau Mot, Binh Duong)",
+    "nameZh": "新加坡第二工业区 (平阳省土龙木市)",
+    "locationVi": "Thủ Dầu Một, Bình Dương",
+    "locationEn": "Thu Dau Mot, Binh Duong",
+    "locationZh": "平阳省土龙木市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp VSIP 2 (Thủ Dầu Một, Bình Dương).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in VSIP 2 Industrial Park (Thu Dau Mot, Binh Duong).",
+    "introZh": "凯源专业为新加坡第二工业区 (平阳省土龙木市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-song-than": {
+    "nameVi": "Khu công nghiệp Sóng Thần (Dĩ An, Bình Dương)",
+    "nameEn": "Song Than Industrial Park (Di An, Binh Duong)",
+    "nameZh": "神浪工业区 (平阳省安市)",
+    "locationVi": "Dĩ An, Bình Dương",
+    "locationEn": "Di An, Binh Duong",
+    "locationZh": "平阳省安市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Sóng Thần (Dĩ An, Bình Dương).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Song Than Industrial Park (Di An, Binh Duong).",
+    "introZh": "凯源专业为神浪工业区 (平阳省安市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-giang-dien": {
+    "nameVi": "Khu công nghiệp Giang Điền (Trảng Bom, Đồng Nai)",
+    "nameEn": "Giang Dien Industrial Park (Trang Bom, Dong Nai)",
+    "nameZh": "江田工业区 (同奈省壮奔县)",
+    "locationVi": "Trảng Bom, Đồng Nai",
+    "locationEn": "Trang Bom, Dong Nai",
+    "locationZh": "同奈省壮奔县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Giang Điền (Trảng Bom, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Giang Dien Industrial Park (Trang Bom, Dong Nai).",
+    "introZh": "凯源专业为江田工业区 (同奈省壮奔县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-long-thanh": {
+    "nameVi": "Khu công nghiệp Long Thành (Long Thành, Đồng Nai)",
+    "nameEn": "Long Thanh Industrial Park (Long Thanh, Dong Nai)",
+    "nameZh": "隆成工业区 (同奈省隆成县)",
+    "locationVi": "Long Thành, Đồng Nai",
+    "locationEn": "Long Thanh, Dong Nai",
+    "locationZh": "同奈省隆成县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Long Thành (Long Thành, Đồng Nai).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Long Thanh Industrial Park (Long Thanh, Dong Nai).",
+    "introZh": "凯源专业为隆成工业区 (同奈省隆成县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-my-phuoc": {
+    "nameVi": "Khu công nghiệp Mỹ Phước (Bến Cát, Bình Dương)",
+    "nameEn": "My Phuoc Industrial Park (Ben Cat, Binh Duong)",
+    "nameZh": "美福工业区 (平阳省槟吉市)",
+    "locationVi": "Bến Cát, Bình Dương",
+    "locationEn": "Ben Cat, Binh Duong",
+    "locationZh": "平阳省槟吉市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Mỹ Phước (Bến Cát, Bình Dương).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in My Phuoc Industrial Park (Ben Cat, Binh Duong).",
+    "introZh": "凯源专业为美福工业区 (平阳省槟吉市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-phan-thiet": {
+    "nameVi": "Khu công nghiệp Phan Thiết (Phan Thiết, Bình Thuận)",
+    "nameEn": "Phan Thiet Industrial Park (Phan Thiet, Binh Thuan)",
+    "nameZh": "潘切工业区 (平顺省潘切市)",
+    "locationVi": "Phan Thiết, Bình Thuận",
+    "locationEn": "Phan Thiet, Binh Thuan",
+    "locationZh": "平顺省潘切市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng nhanh trong ngày cho các nhà máy tại Khu công nghiệp Phan Thiết (Phan Thiết, Bình Thuận).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with same-day express delivery for factories in Phan Thiet Industrial Park (Phan Thiet, Binh Thuan).",
+    "introZh": "凯源专业为潘切工业区 (平顺省潘切市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在当天快速送达。"
+  },
+  "kcn-phu-my": {
+    "nameVi": "Khu công nghiệp Phú Mỹ (Phú Mỹ, Bà Rịa - Vũng Tàu)",
+    "nameEn": "Phu My Industrial Park (Phu My, Ba Ria - Vung Tau)",
+    "nameZh": "富美工业区 (巴地头顿省富美市)",
+    "locationVi": "Phú Mỹ, Bà Rịa - Vũng Tàu",
+    "locationEn": "Phu My, Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省富美市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Phú Mỹ (Phú Mỹ, Bà Rịa - Vũng Tàu).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Phu My Industrial Park (Phu My, Ba Ria - Vung Tau).",
+    "introZh": "凯源专业为富美工业区 (巴地头顿省富美市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-dong-xuyen": {
+    "nameVi": "Khu công nghiệp Đông Xuyên (Vũng Tàu, Bà Rịa - Vũng Tàu)",
+    "nameEn": "Dong Xuyen Industrial Park (Vung Tau, Ba Ria - Vung Tau)",
+    "nameZh": "东川工业区 (巴地头顿省头顿市)",
+    "locationVi": "Vũng Tàu, Bà Rịa - Vũng Tàu",
+    "locationEn": "Vung Tau, Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省头顿市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Đông Xuyên (Vũng Tàu, Bà Rịa - Vũng Tàu).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Dong Xuyen Industrial Park (Vung Tau, Ba Ria - Vung Tau).",
+    "introZh": "凯源专业为东川工业区 (巴地头顿省头顿市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-trang-bang": {
+    "nameVi": "Khu công nghiệp Trảng Bàng (Trảng Bàng, Tây Ninh)",
+    "nameEn": "Trang Bang Industrial Park (Trang Bang, Tay Ninh)",
+    "nameZh": "壮庞工业区 (西宁省壮庞市)",
+    "locationVi": "Trảng Bàng, Tây Ninh",
+    "locationEn": "Trang Bang, Tay Ninh",
+    "locationZh": "西宁省壮庞市",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Trảng Bàng (Trảng Bàng, Tây Ninh).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Trang Bang Industrial Park (Trang Bang, Tay Ninh).",
+    "introZh": "凯源专业为壮庞工业区 (西宁省壮庞市) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-phuoc-dong": {
+    "nameVi": "Khu công nghiệp Phước Đông (Gò Dầu, Tây Ninh)",
+    "nameEn": "Phuoc Dong Industrial Park (Go Dau, Tay Ninh)",
+    "nameZh": "福东工业区 (西宁省鹅油县)",
+    "locationVi": "Gò Dầu, Tây Ninh",
+    "locationEn": "Go Dau, Tay Ninh",
+    "locationZh": "西宁省鹅油县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Phước Đông (Gò Dầu, Tây Ninh).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Phuoc Dong Industrial Park (Go Dau, Tay Ninh).",
+    "introZh": "凯源专业为福东工业区 (西宁省鹅油县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "kcn-thuan-dao": {
+    "nameVi": "Khu công nghiệp Thuận Đạo (Bến Lức, Long An)",
+    "nameEn": "Thuan Dao Industrial Park (Ben Luc, Long An)",
+    "nameZh": "顺道工业区 (隆安省滨力县)",
+    "locationVi": "Bến Lức, Long An",
+    "locationEn": "Ben Luc, Long An",
+    "locationZh": "隆安省滨力县",
+    "introVi": "Khải Nguyên chuyên cung cấp và phân phối phụ tùng linh kiện máy nén khí trục vít chính hãng: lọc tách dầu, lọc gió, lọc dầu, nhớt Fusheng giao hàng hỏa tốc trong 2 giờ cho các nhà máy tại Khu công nghiệp Thuận Đạo (Bến Lức, Long An).",
+    "introEn": "Khai Nguyen specializes in distributing genuine air compressor parts (oil separators, air filters, oil filters, Fusheng lubricants) with 2-hour express delivery for factories in Thuan Dao Industrial Park (Ben Luc, Long An).",
+    "introZh": "凯源专业为顺道工业区 (隆安省滨力县) 的工厂分销正品空压机配件（油分、空滤、油滤、复盛专用油），并在 2 小时内快速送达。"
+  },
+  "bien-hoa": {
+    "nameVi": "Thành phố Biên Hòa (Đồng Nai)",
+    "nameEn": "Bien Hoa City (Dong Nai)",
+    "nameZh": "边和市 (同奈省)",
+    "locationVi": "Biên Hòa, Đồng Nai",
+    "locationEn": "Bien Hoa, Dong Nai",
+    "locationZh": "同奈省边和市",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Thành phố Biên Hòa (Đồng Nai). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Bien Hoa City (Dong Nai). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为同奈省边和市的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "nhon-trach": {
+    "nameVi": "Huyện Nhơn Trạch (Đồng Nai)",
+    "nameEn": "Nhon Trach District (Dong Nai)",
+    "nameZh": "仁泽县 (同奈省)",
+    "locationVi": "Nhơn Trạch, Đồng Nai",
+    "locationEn": "Nhon Trach, Dong Nai",
+    "locationZh": "同奈省仁泽县",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Huyện Nhơn Trạch (Đồng Nai). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Nhon Trach District (Dong Nai). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为同奈省仁泽县的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "trang-bom": {
+    "nameVi": "Huyện Trảng Bom (Đồng Nai)",
+    "nameEn": "Trang Bom District (Dong Nai)",
+    "nameZh": "壮奔县 (同奈省)",
+    "locationVi": "Trảng Bom, Đồng Nai",
+    "locationEn": "Trang Bom, Dong Nai",
+    "locationZh": "同奈省壮奔县",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Huyện Trảng Bom (Đồng Nai). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Trang Bom District (Dong Nai). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为同奈省壮奔县的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "long-thanh": {
+    "nameVi": "Huyện Long Thành (Đồng Nai)",
+    "nameEn": "Long Thanh District (Dong Nai)",
+    "nameZh": "隆成县 (同奈省)",
+    "locationVi": "Long Thành, Đồng Nai",
+    "locationEn": "Long Thanh, Dong Nai",
+    "locationZh": "同奈省隆成县",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Huyện Long Thành (Đồng Nai). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Long Thanh District (Dong Nai). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为同奈省隆成县的生产车间分销 and 提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "di-an": {
+    "nameVi": "Thành phố Dĩ An (Bình Dương)",
+    "nameEn": "Di An City (Binh Duong)",
+    "nameZh": "安市 (平阳省)",
+    "locationVi": "Dĩ An, Bình Dương",
+    "locationEn": "Di An, Binh Duong",
+    "locationZh": "平阳省安市",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Thành phố Dĩ An (Bình Dương). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Di An City (Binh Duong). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为平阳省安市的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "thuan-an": {
+    "nameVi": "Thành phố Thuận An (Bình Dương)",
+    "nameEn": "Thuan An City (Binh Duong)",
+    "nameZh": "顺安市 (平阳省)",
+    "locationVi": "Thuận An, Bình Dương",
+    "locationEn": "Thuan An, Binh Duong",
+    "locationZh": "平阳省顺安市",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Thành phố Thuận An (Bình Dương). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Thuan An City (Binh Duong). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为平阳省顺安市的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "thu-dau-mot": {
+    "nameVi": "Thành phố Thủ Dầu Một (Bình Dương)",
+    "nameEn": "Thu Dau Mot City (Binh Duong)",
+    "nameZh": "土龙木市 (平阳省)",
+    "locationVi": "Thủ Dầu Một, Bình Dương",
+    "locationEn": "Thu Dau Mot, Binh Duong",
+    "locationZh": "平阳省土龙木市",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Thành phố Thủ Dầu Một (Bình Dương). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Thu Dau Mot City (Binh Duong). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为平阳省土龙木市的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "duc-hoa": {
+    "nameVi": "Huyện Đức Hòa (Long An)",
+    "nameEn": "Duc Hoa District (Long An)",
+    "nameZh": "德和县 (隆安省)",
+    "locationVi": "Đức Hòa, Long An",
+    "locationEn": "Duc Hoa, Long An",
+    "locationZh": "隆安省德和县",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Huyện Đức Hòa (Long An). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Duc Hoa District (Long An). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为隆安省德和县的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "quan-12": {
+    "nameVi": "Quận 12 (Thành phố Hồ Chí Minh)",
+    "nameEn": "District 12 (Ho Chi Minh City)",
+    "nameZh": "第十二郡 (胡志明市)",
+    "locationVi": "Quận 12, Hồ Chí Minh",
+    "locationEn": "District 12, Ho Chi Minh City",
+    "locationZh": "胡志明市第十二郡",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Quận 12 (Thành phố Hồ Chí Minh). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in District 12 (Ho Chi Minh City). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为胡志明市第十二郡的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "binh-tan": {
+    "nameVi": "Quận Bình Tân (Thành phố Hồ Chí Minh)",
+    "nameEn": "Binh Tan District (Ho Chi Minh City)",
+    "nameZh": "平新郡 (胡志明市)",
+    "locationVi": "Bình Tân, Hồ Chí Minh",
+    "locationEn": "Binh Tan District, Ho Chi Minh City",
+    "locationZh": "胡志明市平新郡",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng tại khu vực Quận Bình Tân (Thành phố Hồ Chí Minh). Hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ cho các xưởng sản xuất, doanh nghiệp trên địa bàn.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts in Binh Tan District (Ho Chi Minh City). Supporting 2-hour express delivery for local production workshops.",
+    "introZh": "凯源为胡志明市平新郡的生产车间分销和提供正品空压机配件。支持 2 小时内快速送达。"
+  },
+  "dong-nai": {
+    "nameVi": "Tỉnh Đồng Nai",
+    "nameEn": "Dong Nai Province",
+    "nameZh": "同奈省",
+    "locationVi": "Đồng Nai",
+    "locationEn": "Dong Nai",
+    "locationZh": "同奈省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Đồng Nai. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Dong Nai Province. Supporting 2-hour express delivery for factories and industrial workshops.",
+    "introZh": "凯源在同奈省全境分销和提供正品空压机配件。支持 2 小时内快速送达各工厂车间。"
+  },
+  "binh-duong": {
+    "nameVi": "Tỉnh Bình Dương",
+    "nameEn": "Binh Duong Province",
+    "nameZh": "平阳省",
+    "locationVi": "Bình Dương",
+    "locationEn": "Binh Duong",
+    "locationZh": "平阳省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Bình Dương. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Binh Duong Province. Supporting 2-hour express delivery for factories and industrial workshops.",
+    "introZh": "凯源在平阳省全境分销和提供正品空压机配件。支持 2 小时内快速送达各工厂车间。"
+  },
+  "ho-chi-minh": {
+    "nameVi": "Thành phố Hồ Chí Minh",
+    "nameEn": "Ho Chi Minh City",
+    "nameZh": "胡志明市",
+    "locationVi": "Hồ Chí Minh",
+    "locationEn": "Ho Chi Minh",
+    "locationZh": "胡志明市",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Thành phố Hồ Chí Minh. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Ho Chi Minh City. Supporting 2-hour express delivery for factories and industrial workshops.",
+    "introZh": "凯源在胡志明市全境分销和提供正品空压机配件。支持 2 小时内快速送达各工厂车间。"
+  },
+  "long-an": {
+    "nameVi": "Tỉnh Long An",
+    "nameEn": "Long An Province",
+    "nameZh": "隆安省",
+    "locationVi": "Long An",
+    "locationEn": "Long An",
+    "locationZh": "隆安省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Long An. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 đến 4 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Long An Province. Supporting 2 to 4 hours express delivery for factories and industrial workshops.",
+    "introZh": "凯源在隆安省全境分销和提供正品空压机配件。支持 2 至 4 小时内快速送达各工厂车间。"
+  },
+  "binh-thuan": {
+    "nameVi": "Tỉnh Bình Thuận",
+    "nameEn": "Binh Thuan Province",
+    "nameZh": "平顺省",
+    "locationVi": "Bình Thuận",
+    "locationEn": "Binh Thuan",
+    "locationZh": "平顺省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Bình Thuận. Cam kết giao hàng nhanh trong ngày cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Binh Thuan Province. Supporting same-day delivery for factories and industrial workshops.",
+    "introZh": "凯源在平顺省全境分销和提供正品空压机配件。支持当天快速送达各工厂车间。"
+  },
+  "ba-ria-vung-tau": {
+    "nameVi": "Tỉnh Bà Rịa - Vũng Tàu",
+    "nameEn": "Ba Ria - Vung Tau Province",
+    "nameZh": "巴地头顿省",
+    "locationVi": "Bà Rịa - Vũng Tàu",
+    "locationEn": "Ba Ria - Vung Tau",
+    "locationZh": "巴地头顿省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Bà Rịa - Vũng Tàu. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Ba Ria - Vung Tau Province. Supporting 2-hour express delivery for factories and industrial workshops.",
+    "introZh": "凯源在巴地头顿省全境分销和提供正品空压机配件。支持 2 小时内快速送达各工厂车间。"
+  },
+  "tay-ninh": {
+    "nameVi": "Tỉnh Tây Ninh",
+    "nameEn": "Tay Ninh Province",
+    "nameZh": "西宁省",
+    "locationVi": "Tây Ninh",
+    "locationEn": "Tay Ninh",
+    "locationZh": "西宁省",
+    "introVi": "Khải Nguyên chuyên phân phối và cung cấp linh kiện phụ tùng máy nén khí trục vít chính hãng trên địa bàn toàn Tỉnh Tây Ninh. Cam kết giao hàng hỏa tốc tận xưởng trong vòng 2 giờ cho các doanh nghiệp, nhà máy sản xuất.",
+    "introEn": "Khai Nguyen distributes and supplies genuine air compressor parts across Tay Ninh Province. Supporting 2-hour express delivery for factories and industrial workshops.",
+    "introZh": "凯源在西宁省全境分销和提供正品空压机配件。支持 2 小时内快速送达各工厂车间。"
+  }
+};
+
+
+
+export async function getStaticPaths() {
+  const zones = [
+    'kcn-amata', 'kcn-bien-hoa-1', 'kcn-bien-hoa-2', 'kcn-nhon-trach', 'kcn-nhon-trach-1', 'kcn-nhon-trach-2',
+    'kcn-vsip', 'kcn-vsip-1', 'kcn-vsip-2', 'kcn-song-than', 'kcn-giang-dien', 'kcn-long-thanh', 'kcn-my-phuoc',
+    'kcn-phan-thiet', 'kcn-phu-my', 'kcn-dong-xuyen', 'kcn-trang-bang', 'kcn-phuoc-dong', 'kcn-thuan-dao',
+    'bien-hoa', 'nhon-trach', 'trang-bom', 'long-thanh', 'di-an', 'thuan-an', 'thu-dau-mot', 'duc-hoa',
+    'quan-12', 'binh-tan', 'dong-nai', 'binh-duong', 'ho-chi-minh', 'long-an', 'binh-thuan', 'ba-ria-vung-tau', 'tay-ninh'
+  ];
+  return zones.map(zone => ({ params: { zone } }));
+}
+
+const { zone } = Astro.params;
+const locale = 'zh';
+
+  
+  
+  const dict = await getDictionary(locale);
+  const details = zoneInfoMap[zone] || zoneInfoMap['kcn-amata'];
+  
+  // Read products from repository for display
+  const allProducts = await ProductRepository.getAllProducts();
+  // Filter for parts-related categories to make the base array highly relevant
+  const partsProducts = allProducts.filter(p => 
+    p.category === 'bo-loc-va-tach-khi-nen' || 
+    p.category === 'dau-may-va-phu-tung-boi-tron' || 
+    p.category === 'he-thong-cac-loai-van-khi-nen' ||
+    p.category === 'luc-nen-co-khi-dong-co'
+  );
+
+  const breadcrumbItems = [
+    { label: locale === 'vi' ? 'Linh kiện máy nén khí' : 'Parts', href: '/linh-kien-may-nen-khi' },
+    { label: details.nameVi }
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": locale === 'vi' 
+          ? `Thời gian giao phụ tùng máy nén khí đến ${details.locationVi} là bao lâu?` 
+          : `How long does it take to deliver compressor parts to ${details.locationVi}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": locale === 'vi' 
+            ? `Khải Nguyên hỗ trợ giao hàng hỏa tốc trong vòng 2 giờ tận nơi nhà xưởng tại ${details.nameVi} đối với các phụ tùng tiêu hao định kỳ có sẵn như lọc tách dầu, lọc dầu, lọc gió và dầu làm mát máy nén khí.` 
+            : `Khai Nguyen supports express delivery within 2 hours to factories in ${details.nameVi} for standard parts in stock, including oil separators, oil filters, air filters, and lubricants.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": locale === 'vi' 
+          ? `Phụ tùng mua tại Khải Nguyên có được bảo hành không?` 
+          : `Do compressor parts purchased from Khai Nguyen have a warranty?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": locale === 'vi' 
+            ? `Tất cả linh kiện và phụ tùng phân phối bởi Khải Nguyên đều cam kết chính hãng 100% và bảo hành đầy đủ từ 3 đến 12 tháng (tương đương 2.000 đến 4.000 giờ chạy máy). Lỗi 1 đổi 1 ngay lập tức nếu do nhà sản xuất.` 
+            : `All components and parts distributed by Khai Nguyen are guaranteed 100% genuine with a 3 to 12-month warranty (equivalent to 2,000 to 4,000 running hours). Immediate 1-to-1 replacement for manufacturing defects.`
+        }
+      }
+    ]
+  };
+
+  
+---
+
+<Layout locale="zh">
+  <div>
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(faqSchema)}
+      />
+      <Breadcrumb title={locale === 'vi' ? `Cung Cấp Linh Kiện Tại ${details.locationVi}` : `Parts Supply in ${details.locationVi}`} items={breadcrumbItems} />
+
+      <section class="section-padding">
+        <div class="container" style="max-width: 900px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+            
+            {/* AEO Freshness Signals */}
+            <div style="font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 6px;">
+              <i class="far fa-calendar-alt"></i>
+              <span>{locale === 'vi' ? 'Cập nhật lần cuối: 2026-08-05' : 'Last updated: 2026-08-05'}</span>
+              <span style="margin: 0 8px; color: #ccc;">|</span>
+              <i class="far fa-user"></i>
+              <span>{locale === 'vi' ? 'Đơn vị phân phối: Máy nén khí Khải Nguyên' : 'Distributor: Khai Nguyen Air Compressor'}</span>
+            </div>
+
+            {/* Introductory Box */}
+            <div style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px; padding: 18px 24px; background-color: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.6;">
+              {details.introVi}
+            </div>
+
+            <p>
+              {locale === 'vi' 
+                ? `Nhằm hỗ trợ tốt nhất cho hoạt động vận hành liên tục của các nhà máy tại ${details.nameVi}, Khải Nguyên cung cấp kho phụ tùng đa dạng, đầy đủ kích thước và thông số kỹ thuật tương thích hoàn toàn với hệ thống máy nén khí trục vít của bạn.`
+                : `To best support the continuous operation of factories in ${details.nameVi}, Khai Nguyen offers a diverse inventory of spare parts, fully compatible with your air compressor systems.`}
+            </p>
+
+            {/* Grid Gallery displaying real B2B photos of our works */}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 35px 0;">
+              <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);">
+                <img src="/assets/images/giao-nhanh-dau-loc-may-nen-khi.jpg" alt="Vận chuyển linh kiện máy nén khí hỏa tốc" style="width: 100%; height: 140px; object-fit: cover; display: block;" />
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; text-align: center;">
+                  {locale === 'vi' ? 'Giao hỏa tốc phụ tùng tận nơi' : 'Express parts delivery'}
+                </div>
+              </div>
+              <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);">
+                <img src="/assets/images/ve-sinh-ket-giai-nhiet-he-thong-loc.jpg" alt="Bầu tách dầu trục vít và phụ tùng làm mát" style="width: 100%; height: 140px; object-fit: cover; display: block;" />
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; text-align: center;">
+                  {locale === 'vi' ? 'Bộ tách dầu & làm mát chất lượng' : 'Separator & cooling system'}
+                </div>
+              </div>
+              <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);">
+                <img src="/assets/images/sua-dau-nen-may-nen-khi.jpg" alt="Trục vít và linh kiện đầu nén máy nén khí" style="width: 100%; height: 140px; object-fit: cover; display: block;" />
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; text-align: center;">
+                  {locale === 'vi' ? 'Cụm đầu nén chính hãng' : 'Genuine air-end assemblies'}
+                </div>
+              </div>
+              <div style="position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);">
+                <img src="/assets/images/truc-vit-dau-nen-chinh-hang.jpg" alt="Cặp rotor trục vít chính hãng thay thế" style="width: 100%; height: 140px; object-fit: cover; display: block;" />
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 11px; text-align: center;">
+                  {locale === 'vi' ? 'Trục vít rotor gia công chuẩn xác' : 'Precision rotor screw pairing'}
+                </div>
+              </div>
+            </div>
+
+            <h2 style="font-size: 19px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-weight: 700;">
+              {locale === 'vi' ? 'Các dòng linh kiện phụ tùng cung ứng chủ lực:' : 'Key parts and components supplied:'}
+            </h2>
+            
+            {/* Structured Internal Links */}
+            <div style="padding: 20px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--bg-light); margin-bottom: 30px;">
+              <ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+                <li>
+                  <a href="/san-pham/bo-loc-va-tach-khi-nen/loc-tach-dau" style="font-weight: 600; color: var(--primary-color);" data-astro-prefetch="hover">
+                    {locale === 'vi' ? 'Lọc tách dầu trục vít:' : 'Screw Oil Separator Filters:'}
+                  </a>{' '}
+                  {locale === 'vi' ? 'Đầy đủ kích thước cho máy từ 10HP đến 200HP của Kobelco, Hitachi, Fusheng.' : 'Full sizes for 10HP to 200HP compressors from Kobelco, Hitachi, Fusheng.'}
+                </li>
+                <li>
+                  <a href="/san-pham/bo-loc-va-tach-khi-nen/loi-loc" style="font-weight: 600; color: var(--primary-color);" data-astro-prefetch="hover">
+                    {locale === 'vi' ? 'Lõi lọc dầu & Lọc gió sơ cấp:' : 'Oil & Air Filters:'}
+                  </a>{' '}
+                  {locale === 'vi' ? 'Giúp bảo vệ trục nén và động cơ khỏi bụi bẩn, giảm mài mòn rotor.' : 'Protecting screw rotor and air-end assembly from dust and wearing.'}
+                </li>
+                <li>
+                  <a href="/san-pham/dau-may-va-phu-tung-boi-tron/dau-fusheng" style="font-weight: 600; color: var(--primary-color);" data-astro-prefetch="hover">
+                    {locale === 'vi' ? 'Dầu máy nén khí Fusheng chính hãng:' : 'Genuine Fusheng Lubricants:'}
+                  </a>{' '}
+                  {locale === 'vi' ? 'Dầu làm mát chịu nhiệt chuyên dụng giúp nâng cao hiệu suất máy nén khí trục vít.' : 'Cooling and high-temperature resistant oil to enhance compressor efficiency.'}
+                </li>
+                <li>
+                  <a href="/san-pham/bo-loc-va-tach-khi-nen/bo-loc-duong-ong-khi-nen" style="font-weight: 600; color: var(--primary-color);" data-astro-prefetch="hover">
+                    {locale === 'vi' ? 'Bộ lọc đường ống khí nén:' : 'Compressed Line Filters:'}
+                  </a>{' '}
+                  {locale === 'vi' ? 'Lọc sạch hơi nước, hạt dầu và hạt bụi rắn trong đường ống dẫn khí nén nhà máy.' : 'Cleaning air stream from water vapor, oil mist, and dust in factory lines.'}
+                </li>
+              </ul>
+            </div>
+
+            {/* Client-Side Shuffling Products Section */}
+            <RandomProducts products={partsProducts} locale="zh" />
+
+            {/* Local Linking Grid Menu at the bottom */}
+            <div style="margin-top: 55px; padding-top: 30px; border-top: 1px dashed #ddd;">
+              <h3 style="font-size: 16.5px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; text-align: center;">
+                📍 {locale === 'vi' ? 'HỆ THỐNG PHÂN PHỐI PHỤ TÙNG TẠI CÁC KHU VỰC MIỀN NAM' : 'REGIONAL COMPRESSOR PARTS DISTRIBUTION ZONES'}
+              </h3>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 15px;">
+                <div>
+                  <h4 style="font-size: 13.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; font-weight: 700;">
+                    🏭 {locale === 'vi' ? 'Theo Khu Công Nghiệp' : 'By Industrial Park'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; font-size: 13px;">
+                    <li><a href="/linh-kien-may-nen-khi/kcn-amata" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Amata</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-bien-hoa-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-bien-hoa-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-nhon-trach-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-nhon-trach-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-vsip-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 1</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-vsip-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 2</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-song-than" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Sóng Thần</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-giang-dien" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Giang Điền</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Long Thành</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-my-phuoc" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Mỹ Phước</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phan-thiet" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phan Thiết</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phu-my" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phú Mỹ</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-dong-xuyen" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Đông Xuyên</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-trang-bang" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Trảng Bàng</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-phuoc-dong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phước Đông</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/kcn-thuan-dao" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Thuận Đạo</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 13.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; font-weight: 700;">
+                    📍 {locale === 'vi' ? 'Theo Quận / Huyện' : 'By District'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; font-size: 13px;">
+                    <li><a href="/linh-kien-may-nen-khi/bien-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Biên Hòa</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/nhon-trach" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Nhơn Trạch</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/trang-bom" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Trảng Bom</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Long Thành</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/di-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Dĩ An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/thuan-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thuận An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/thu-dau-mot" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thủ Dầu Một</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/duc-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Đức Hòa</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/quan-12" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận 12 (TP. HCM)</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-tan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận Bình Tân (TP. HCM)</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 13.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 6px; margin-bottom: 10px; font-weight: 700;">
+                    🗺️ {locale === 'vi' ? 'Theo Tỉnh / Thành' : 'By Province'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; font-size: 13px;">
+                    <li><a href="/linh-kien-may-nen-khi/dong-nai" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Đồng Nai</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-duong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Dương</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/ho-chi-minh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Hồ Chí Minh</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/long-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Long An</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/binh-thuan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Thuận</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/ba-ria-vung-tau" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bà Rịa - Vũng Tàu</a></li>
+                    <li><a href="/linh-kien-may-nen-khi/tay-ninh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Tây Ninh</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </article>
+        </div>
+      </section>
+
+      <CTABanner client:visible locale="zh" />
+    </div>
+</Layout>

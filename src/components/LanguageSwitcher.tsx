@@ -1,49 +1,68 @@
 import { useEffect, useState, useTransition } from 'react';
 
-export default function LanguageSwitcher() {
-  const [currentLocale, setCurrentLocale] = useState<'vi' | 'en' | 'zh'>('vi');
+interface LanguageSwitcherProps {
+  currentLocale?: 'vi' | 'en' | 'zh';
+}
+
+export default function LanguageSwitcher({ currentLocale: propLocale }: LanguageSwitcherProps) {
+  const [currentLocale, setCurrentLocale] = useState<'vi' | 'en' | 'zh'>(propLocale || 'vi');
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    // Đọc cookie ngôn ngữ của trình duyệt (hỗ trợ cả locale và googtrans)
-    const matchLocale = document.cookie.match(/(^| )locale=([^;]+)/);
-    const matchGoog = document.cookie.match(/(^| )googtrans=([^;]+)/);
-
-    if (matchLocale && ['vi', 'en', 'zh'].includes(matchLocale[2])) {
-      setCurrentLocale(matchLocale[2] as 'vi' | 'en' | 'zh');
-    } else if (matchGoog) {
-      if (matchGoog[2].includes('zh')) setCurrentLocale('zh');
-      else if (matchGoog[2].includes('en')) setCurrentLocale('en');
-      else setCurrentLocale('vi');
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      if (pathname.startsWith('/en/') || pathname === '/en') {
+        setCurrentLocale('en');
+      } else if (pathname.startsWith('/zh/') || pathname === '/zh') {
+        setCurrentLocale('zh');
+      } else {
+        setCurrentLocale('vi');
+      }
     }
-  }, []);
+  }, [propLocale]);
 
-  const changeLocale = (locale: 'vi' | 'en' | 'zh') => {
-    if (locale === currentLocale) return;
+  const switchLanguage = (targetLocale: 'vi' | 'en' | 'zh') => {
+    if (targetLocale === currentLocale || typeof window === 'undefined') return;
 
-    // 1. Thiết lập cookie locale
-    const domain = window.location.hostname;
-    document.cookie = `locale=${locale}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+    const pathname = window.location.pathname;
+    const search = window.location.search;
+    const hash = window.location.hash;
 
-    // 2. Thiết lập cookie googtrans cho bộ dịch tự động toàn trang
-    let googLang = '/vi/vi';
-    if (locale === 'en') googLang = '/vi/en';
-    if (locale === 'zh') googLang = '/vi/zh-CN';
+    // Remove existing locale prefix to get the clean base path
+    let basePath = pathname;
+    if (basePath.startsWith('/en/')) {
+      basePath = basePath.replace(/^\/en/, '');
+    } else if (basePath === '/en') {
+      basePath = '/';
+    } else if (basePath.startsWith('/zh/')) {
+      basePath = basePath.replace(/^\/zh/, '');
+    } else if (basePath === '/zh') {
+      basePath = '/';
+    }
 
-    document.cookie = `googtrans=${googLang}; path=/; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
-    document.cookie = `googtrans=${googLang}; path=/; domain=${domain}; max-age=${365 * 24 * 60 * 60}; SameSite=Lax`;
+    if (!basePath.startsWith('/')) {
+      basePath = '/' + basePath;
+    }
 
-    setCurrentLocale(locale);
+    let targetUrl = '';
+    if (targetLocale === 'vi') {
+      targetUrl = basePath;
+    } else if (targetLocale === 'en') {
+      targetUrl = basePath === '/' ? '/en' : `/en${basePath}`;
+    } else if (targetLocale === 'zh') {
+      targetUrl = basePath === '/' ? '/zh' : `/zh${basePath}`;
+    }
 
-    // 3. Sử dụng startTransition và reload để áp dụng bản dịch ngay lập tức
+    targetUrl += search + hash;
+
     startTransition(() => {
-      window.location.reload();
+      window.location.href = targetUrl;
     });
   };
 
   return (
     <>
-      {/* Hiệu ứng thanh tiến trình ở trên cùng khi đang tải ngôn ngữ */}
+      {/* Hiệu ứng loading nhẹ nhàng khi chuyển trang */}
       {isPending && (
         <div style={{
           position: 'fixed',
@@ -69,7 +88,7 @@ export default function LanguageSwitcher() {
       <div className="language-selector" style={{ display: 'flex', gap: '8px', alignItems: 'center', opacity: isPending ? 0.7 : 1, transition: 'opacity 0.2s' }}>
         {/* Tiếng Việt */}
         <button 
-          onClick={() => changeLocale('vi')} 
+          onClick={() => switchLanguage('vi')} 
           disabled={isPending}
           style={{
             background: currentLocale === 'vi' ? 'rgba(225, 92, 30, 0.08)' : 'transparent',
@@ -98,7 +117,7 @@ export default function LanguageSwitcher() {
 
         {/* English */}
         <button 
-          onClick={() => changeLocale('en')} 
+          onClick={() => switchLanguage('en')} 
           disabled={isPending}
           style={{
             background: currentLocale === 'en' ? 'rgba(225, 92, 30, 0.08)' : 'transparent',
@@ -127,7 +146,7 @@ export default function LanguageSwitcher() {
 
         {/* Chinese */}
         <button 
-          onClick={() => changeLocale('zh')} 
+          onClick={() => switchLanguage('zh')} 
           disabled={isPending}
           style={{
             background: currentLocale === 'zh' ? 'rgba(225, 92, 30, 0.08)' : 'transparent',

@@ -1,0 +1,238 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import { getLocale, getDictionary } from '@/lib/i18n';
+
+
+
+
+
+const { zone } = Astro.params;
+const locale = 'en';
+
+  
+  const dict = await getDictionary(locale);
+
+  const breadcrumbItems = [
+    { label: dict.footer.repairLink }
+  ];
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": locale === 'vi' ? "Máy nén khí bị sự cố thì sau bao lâu kỹ thuật viên Khải Nguyên có mặt?" : locale === 'zh' ? "空压机故障后，凯源技术人员多久能到现场？" : "How long does it take for Khai Nguyen technicians to arrive after a compressor failure?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": locale === 'vi' ? "Kỹ thuật viên của Khải Nguyên sẽ có mặt tận nơi tại nhà xưởng của bạn trong vòng từ 2 đến 4 giờ tại khu vực Đồng Nai, Bình Dương, TP.HCM và Long An kể từ khi nhận được yêu cầu xử lý sự cố khẩn cấp." : locale === 'zh' ? "自收到紧急故障处理请求起，凯源的技术人员将在 2 至 4 小时内到达同奈、平阳、胡志明市和隆安等地区的工厂现场。" : "Khai Nguyen technicians will arrive on-site at your factory within 2 to 4 hours in Dong Nai, Binh Duong, HCMC, and Long An areas after receiving an emergency request."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": locale === 'vi' ? "Chi phí khảo sát và chẩn đoán sự cố máy nén khí là bao nhiêu?" : locale === 'zh' ? "空压机故障检测和诊断费用是多少？" : "How much does air compressor inspection and diagnosis cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": locale === 'vi' ? "Khải Nguyên miễn phí hoàn toàn chi phí khảo sát thực tế và chẩn đoán sự cố máy nén khí trục vít tận nơi cho tất cả doanh nghiệp tại khu vực Đồng Nai, Bình Dương, TP.HCM." : locale === 'zh' ? "凯源为同奈、平阳、胡志明市等地区的所有企业免费提供上门实际检测和螺杆式空压机故障诊断服务。" : "Khai Nguyen offers completely free on-site inspections and diagnostics of screw air compressors for all businesses in Dong Nai, Binh Duong, and HCMC."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": locale === 'vi' ? "Các phụ tùng thay thế khi sửa chữa máy nén khí được bảo hành bao lâu?" : locale === 'zh' ? "空压机维修更换的配件保修期是多久？" : "How long is the warranty for replacement parts during compressor repair?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": locale === 'vi' ? "Các phụ tùng thay thế như lọc tách dầu, lọc dầu, lọc gió được bảo hành từ 3 đến 6 tháng (tương đương 2.000 - 4.000 giờ chạy máy). Các dịch vụ đại tu đầu nén hoặc thay két làm mát được bảo hành từ 12 đến 24 tháng." : locale === 'zh' ? "油分、油滤、空滤等更换配件保修期为 3 至 6 个月（相当于 2000 - 4000 小时运行时间）。主机头大修或更换冷却器保修期为 12 至 24 个月。" : "Replacement parts such as oil separators, oil filters, and air filters are warrantied for 3 to 6 months (equivalent to 2,000 - 4,000 running hours). Major air end overhauls or cooling radiator replacements are warrantied for 12 to 24 months."
+        }
+      }
+    ]
+  };
+
+  
+---
+
+<Layout locale="en">
+  <div>
+      <script type="application/ld+json" is:inline
+        set:html={JSON.stringify(faqSchema)}
+      />
+      <Breadcrumb title={dict.repair.title} items={breadcrumbItems} />
+
+      <section class="section-padding">
+        <div class="container" style="max-width: 900px; margin: 0 auto;">
+          <article class="service-detail-content" style="font-size: 15.5px; line-height: 1.8; color: var(--text-color);">
+            
+            {/* AEO Freshness Signal */}
+            <div style="font-size: 13.5px; color: var(--text-light); margin-bottom: 20px; display: flex; align-items: center; gap: 6px;">
+              <i class="far fa-calendar-alt"></i>
+              <span>{locale === 'vi' ? 'Cập nhật lần cuối: 2026-08-01' : locale === 'zh' ? '最后更新: 2026-08-01' : 'Last updated: 2026-08-01'}</span>
+              <span style="margin: 0 8px; color: #ccc;">|</span>
+              <i class="far fa-user"></i>
+              <span>{locale === 'vi' ? 'Tác giả: Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên' : locale === 'zh' ? '作者: 凯源空压机单位工程师' : 'Author: Engineer from Khai Nguyen Air Compressor'}</span>
+            </div>
+
+            {/* AEO Answer Block */}
+            <div style="font-weight: 600; font-size: 17px; color: var(--text-dark); margin-bottom: 25px; padding: 18px 24px; background-color: var(--bg-light); border-left: 4px solid var(--primary-color); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; line-height: 1.6;">
+              {dict.repair.intro}
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 35px 0;">
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-color);">
+                <h3 style="margin: 0 0 10px; font-size: 17px; color: var(--primary-color); font-weight: 700;">🛠️ {dict.repair.emergency}</h3>
+                <p style="margin: 0; font-size: 14.5px;">{dict.repair.emergencyDesc}</p>
+              </div>
+              <div style="background-color: var(--bg-light); padding: 20px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-color);">
+                <h3 style="margin: 0 0 10px; font-size: 17px; color: var(--accent-color); font-weight: 700;">⚙️ {dict.repair.genuine}</h3>
+                <p style="margin: 0; font-size: 14.5px;">{dict.repair.genuineDesc}</p>
+              </div>
+            </div>
+
+            <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-weight: 700;">
+              {locale === 'vi' ? '1. Các dịch vụ sửa chữa máy nén khí tại Khải Nguyên' : locale === 'zh' ? '1. 凯源空压机维修服务项目' : '1. Air Compressor Repair Services at Khai Nguyen'}
+            </h2>
+            <p style="margin-bottom: 15px;">
+              {locale === 'vi' 
+                ? 'Chúng tôi nhận sửa chữa, bảo dưỡng toàn diện tất cả các dòng máy nén khí trục vít có dầu và không dầu từ các thương hiệu lớn như: Hitachi, Kobelco, Atlas Copco, Ingersoll Rand, Fusheng, Sullair, Mitsui Seiki, Elgi, Alup...'
+                : locale === 'zh'
+                ? '我们承接日立、神钢、阿特拉斯·科普柯、英格索兰、复盛、寿力、三井、艾高、阿鲁普等各大品牌有油和无油螺杆式空压机的全面维修 and 保养服务。'
+                : 'We repair and maintain all oil-injected and oil-free screw air compressors from major brands: Hitachi, Kobelco, Atlas Copco, Ingersoll Rand, Fusheng, Sullair, Mitsui Seiki, Elgi, Alup...'}
+            </p>
+            <ul style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 8px;">
+              <li>
+                <strong>{locale === 'vi' ? 'Đại tu và trung tu đầu nén:' : locale === 'zh' ? '主机头大修与中修：' : 'Air End Overhaul & Mid-life Service:'}</strong> {locale === 'vi' ? 'Thay thế vòng bi định vị trục vít chính xác, thay phớt chặn dầu chịu nhiệt cao, cân chỉnh khe hở trục vít đầu nén, xử lý mài mòn, chống rung lắc và tiếng ồn lớn.' : locale === 'zh' ? '精密更换轴承、高温油封，精密调校阴阳转子间隙，处理磨损、振动及噪音大等问题。' : 'Replacing precision bearings, high-temperature oil seals, adjusting screw clearance, treating wear, vibration, and excessive noise.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Khắc phục lỗi nhiệt độ cao:' : locale === 'zh' ? '排气温度过高故障排查：' : 'High Temperature Troubleshooting:'}</strong> {locale === 'vi' ? 'Lỗi phổ biến nhất gây dừng máy đột ngột vào mùa nóng. Xử lý nghẹt két giải nhiệt, nghẹt van hằng nhiệt, thay thế dầu máy chịu nhiệt kém chất lượng.' : locale === 'zh' ? '夏季常见停机故障。清洗堵塞的冷却器、检修温控阀、更换耐高温不佳的润滑油。' : 'Most common fault causing sudden stops in summer. Unclogging radiator coolers, repairing thermostatic valves, and replacing low-quality lubricants.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Sửa chữa lỗi keo dầu đầu nén:' : locale === 'zh' ? '主机结胶卡死清洗：' : 'Cleaning Varnished Air Ends:'}</strong> {locale === 'vi' ? 'Vệ sinh làm sạch cặn dầu bám két vào cặp trục vít gây bó cứng đầu nén không quay được, súc rửa toàn bộ hệ thống đường ống dẫn dầu.' : locale === 'zh' ? '清洗因润滑油结胶导致卡死的阴阳螺杆，疏通油路管道。' : 'Cleaning oil varnishes that seize the screw rotors, flushing and cleaning the entire lubrication pipeline.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Sửa chữa hệ thống điện & Bo mạch:' : locale === 'zh' ? '电气系统与微电脑控制器维修：' : 'Electrical System & LCD Controller Repair:'}</strong> {locale === 'vi' ? 'Sửa chữa lỗi bo mạch điều khiển LCD, lỗi mất kết nối cảm biến áp suất, cảm biến nhiệt độ, xử lý rơ le, khởi động từ tủ điện.' : locale === 'zh' ? '维修LCD液晶控制器面板故障、压力及温度传感器失灵、更换接触器与继电器等电气元件。' : 'Repairing LCD control panels, pressure/temperature sensors, contactors, and relays.'}
+              </li>
+            </ul>
+
+            <h2 style="font-size: 20px; color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-weight: 700;">
+              {locale === 'vi' ? '2. Quy trình sửa chữa chuyên nghiệp tiêu chuẩn' : locale === 'zh' ? '2. 标准专业维修流程' : '2. Standard Professional Repair Process'}
+            </h2>
+            <p style="margin-bottom: 20px;">
+              {locale === 'vi' 
+                ? 'Để đảm bảo thiết bị hoạt động ổn định lâu dài sau sửa chữa, Khải Nguyên áp dụng quy trình kiểm tra và bảo dưỡng nghiêm ngặt:'
+                : locale === 'zh'
+                ? '为了确保空压机维修后能够长期稳定运行，凯源严格执行标准化检测与维护流程：'
+                : 'To ensure long-term stable operation after repair, Khai Nguyen strictly implements standard inspection and service flows:'}
+            </p>
+            <ol style="padding-left: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 12px;">
+              <li>
+                <strong>{locale === 'vi' ? 'Bước 1: Tiếp nhận & Hỗ trợ kỹ thuật từ xa:' : locale === 'zh' ? '第一步：接报与远程技术指导：' : 'Step 1: Receipt & Remote Technical Guidance:'}</strong> {locale === 'vi' ? 'Lắng nghe mô tả sự cố của khách hàng, hướng dẫn các biện pháp cô lập an toàn tủ điện và máy nén khí.' : locale === 'zh' ? '听取客户的故障描述，指导断电及空压机安全隔离措施。' : 'Listening to fault descriptions, guiding clients on power isolation and safety checks.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Bước 2: Khảo sát & Chẩn đoán tại xưởng:' : locale === 'zh' ? '第二步：现场检测与诊断：' : 'Step 2: On-site Inspection & Diagnosis:'}</strong> {locale === 'vi' ? 'Kỹ sư mang thiết bị đo đạc dòng điện, áp suất, nhiệt độ đến tận nhà xưởng để tìm nguyên nhân gốc rễ.' : locale === 'zh' ? '工程师携带专业测量仪器前往现场测定电流、压力、温度以定位根本原因。' : 'Engineers bring professional diagnostic tools to measure current, pressure, and temperature to find root causes.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Bước 3: Lập phương án & Báo giá:' : locale === 'zh' ? '第三步：制定方案与报价：' : 'Step 3: Solution Design & Quoting:'}</strong> {locale === 'vi' ? 'Đưa ra giải pháp sửa chữa chi tiết tối ưu chi phí cùng bảng báo giá vật tư linh kiện thay thế kèm theo thời gian bảo hành.' : locale === 'zh' ? '制定高性价比的维修方案，提供包含保修期的配件与人工明细报价单。' : 'Providing cost-effective repair solutions and quote details with warranty terms.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Bước 4: Thực hiện sửa chữa lắp đặt:' : locale === 'zh' ? '第四步：实施维修与装配：' : 'Step 4: Executing Repairs & Assembly:'}</strong> {locale === 'vi' ? 'Tiến hành tháo dỡ, sửa chữa và thay thế linh kiện bởi kỹ sư lành nghề hơn 15 năm kinh nghiệm.' : locale === 'zh' ? '由拥有15年以上实操经验 of 资深工程师进行拆装、更换配件及技术修复。' : 'Dismantling, repairing, and replacing components by senior engineers with 15+ years experience.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Bước 5: Chạy thử & Bàn giao nghiệm thu:' : locale === 'zh' ? '第五步：开机调试与交付验收：' : 'Step 5: Test Run & Commissioning Handover:'}</strong> {locale === 'vi' ? 'Chạy thử máy đủ tải liên tục ở áp lực tối đa, kiểm tra rò rỉ khí/dầu, đo nhiệt độ đầu nén hoạt động ổn định trước khi bàn giao.' : locale === 'zh' ? '满载试运行、检测气体与油路泄漏、确认排气温度正常后签字移交。' : 'Running the machine under full load, checking for oil/air leaks, ensuring stable temperature before signing handover.'}
+              </li>
+            </ol>
+
+            {/* AEO FAQ Section */}
+            <div style="margin-top: 50px; padding-top: 30px; border-top: 1px solid #eee;">
+              <h2 style="font-size: 22px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700;">
+                {locale === 'vi' ? 'Câu hỏi thường gặp về dịch vụ sửa chữa' : locale === 'zh' ? '常见问题解答 (FAQ)' : 'Frequently Asked Questions'}
+              </h2>
+              <div style="display: flex; flex-direction: column; gap: 20px;">
+                {faqSchema.mainEntity.map((item, index) => (
+                  <div style="background-color: #fafafa; padding: 18px; border-radius: var(--radius-sm); border: 1px solid #f0f0f0;">
+                    <h3 style="margin: 0 0 8px 0; font-size: 16px; color: var(--text-dark); font-weight: 700;">
+                      Q: {item.name}
+                    </h3>
+                    <p style="margin: 0; font-size: 14.5px; color: var(--text-color); line-height: 1.6;">
+                      A: {item.acceptedAnswer.text}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Geographic links menu */}
+            <div style="margin-top: 60px; padding-top: 40px; border-top: 2px solid var(--primary-color);">
+              <h3 style="font-size: 18px; color: var(--primary-color); margin-bottom: 20px; font-weight: 700; text-align: center;">
+                {locale === 'vi' ? 'HỆ THỐNG DỊCH VỤ KỸ THUẬT MÁY NÉN KHÍ MIỀN NAM' : 'SOUTHERN VIETNAM COMPRESSOR TECHNICAL SERVICE SYSTEM'}
+              </h3>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 20px;">
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    🏭 {locale === 'vi' ? 'Theo Khu Công Nghiệp (KCN)' : 'By Industrial Park'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/kcn-amata" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Amata</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-bien-hoa-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Biên Hòa 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-nhon-trach-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Nhơn Trạch 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-1" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 1</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-vsip-2" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN VSIP 2</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-song-than" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Sóng Thần</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-giang-dien" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Giang Điền</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Long Thành</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-my-phuoc" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Mỹ Phước</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phan-thiet" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phan Thiết</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phu-my" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phú Mỹ</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-dong-xuyen" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Đông Xuyên</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-trang-bang" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Trảng Bàng</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-phuoc-dong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Phước Đông</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/kcn-thuan-dao" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ KCN Thuận Đạo</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    📍 {locale === 'vi' ? 'Theo Quận / Huyện' : 'By District'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/bien-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Biên Hòa</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/nhon-trach" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Nhơn Trạch</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/trang-bom" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Trảng Bom</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/long-thanh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Long Thành</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/di-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Dĩ An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/thuan-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thuận An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/thu-dau-mot" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Thủ Dầu Một</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/duc-hoa" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Huyện Đức Hòa</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/quan-12" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận 12 (TP. HCM)</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-tan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Quận Bình Tân (TP. HCM)</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 style="font-size: 14.5px; color: var(--text-dark); border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 12px; font-weight: 700;">
+                    🗺️ {locale === 'vi' ? 'Theo Tỉnh / Thành' : 'By Province'}
+                  </h4>
+                  <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13.5px;">
+                    <li><a href="/sua-chua-may-nen-khi/dong-nai" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Đồng Nai</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-duong" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Dương</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/ho-chi-minh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Thành phố Hồ Chí Minh</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/long-an" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Long An</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/binh-thuan" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bình Thuận</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/ba-ria-vung-tau" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Bà Rịa - Vũng Tàu</a></li>
+                    <li><a href="/sua-chua-may-nen-khi/tay-ninh" style="color: var(--text-color); text-decoration: none;" data-astro-prefetch="hover">→ Tỉnh Tây Ninh</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </article>
+        </div>
+      </section>
+
+      <CTABanner client:visible locale="en" />
+    </div>
+</Layout>
