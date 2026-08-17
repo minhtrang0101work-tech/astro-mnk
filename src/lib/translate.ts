@@ -25,6 +25,62 @@ export const categoryTranslationMap: { [slug: string]: { en: string; zh: string 
   'van-dien-tu': { en: 'Solenoid Valves', zh: '电磁阀' },
 };
 
+// Bảng tra cứu tên sản phẩm chính xác tuyệt đối
+export const exactTitleMap: { [key: string]: { en: string; zh: string } } = {
+  'tách dầu fusheng sa 75': { en: 'Fusheng SA 75 Air-Oil Separator', zh: '复盛 (Fusheng) SA 75 油气分离芯' },
+  'tách dầu fusheng': { en: 'Fusheng Air-Oil Separator', zh: '复盛 (Fusheng) 油气分离芯' },
+  'tách nhớt fusheng': { en: 'Fusheng Air-Oil Separator', zh: '复盛 (Fusheng) 油气分离芯' },
+  'van điều áp khí nén': { en: 'Precision Pneumatic Pressure Regulator', zh: '精密气动调压阀 (减压阀)' },
+  'van chỉnh áp khí nén': { en: 'Pneumatic Pressure Regulating Valve', zh: '气动调压减压阀' },
+  'van chỉnh áp': { en: 'Pressure Regulating Valve', zh: '气动调压阀' },
+  'chỉnh áp khí nén': { en: 'Pneumatic Pressure Regulator', zh: '气动调压器' },
+  'trục khuỷu': { en: 'Crankshaft Assembly', zh: '空压机精密锻造曲轴' },
+  'trục khuỷu máy nén khí': { en: 'Air Compressor Crankshaft', zh: '空压机曲轴总成' },
+  'tay biên': { en: 'Connecting Rod', zh: '连杆组件' },
+  'đồng hồ máy nén khí': { en: 'Air Compressor Pressure Gauge', zh: '空压机高精度防震压力表' },
+  'đồng hồ đo áp suất máy nén khí': { en: 'Air Compressor Pressure Gauge', zh: '空压机高精度压力表' },
+  'đồng hồ đo áp suất': { en: 'Pressure Gauge', zh: '高精度压力表' },
+  'đồng hồ áp suất': { en: 'Pressure Gauge', zh: '防震压力表' },
+  'đồng hồ áp': { en: 'Pressure Gauge', zh: '压力表' },
+  'đồng hồ': { en: 'Pressure Gauge', zh: '压力表' },
+  'phớt chặn dầu': { en: 'Shaft Oil Seal', zh: '轴端骨架油封' },
+  'phớt chắn dầu': { en: 'Shaft Oil Seal', zh: '轴端骨架油封' },
+  'phớt chặn': { en: 'Oil Seal', zh: '骨架油封' },
+  'phớt chắn': { en: 'Oil Seal', zh: '骨架油封' },
+  'phớt': { en: 'Oil Seal', zh: '油封' },
+  'phao xả nước tự động': { en: 'Float Auto Drain Valve', zh: '浮球式自动排水阀' },
+  'phao xả nước': { en: 'Float Drain Valve', zh: '浮球排水阀' },
+  'ống pu cuộn': { en: 'PU Pneumatic Hose Coil', zh: 'PU气动软管卷 (聚氨酯管)' },
+  'ống hút gió máy nén khí': { en: 'Air Compressor Intake Hose', zh: '空压机进气软管' },
+  'mô tơ máy nén khí': { en: 'Air Compressor Drive Motor', zh: '空压机三相异步驱动电机' },
+  'mô tơ': { en: 'Electric Motor', zh: '驱动电机' },
+  'màn hình điều khiển': { en: 'PLC Controller Display Panel', zh: 'PLC微电脑控制器显示屏 (控制面板)' },
+  'hạt hút ẩm': { en: 'Desiccant Alumina Beads', zh: '高效活性氧化铝吸附干燥颗粒 (吸附剂)' },
+  'đầu nối': { en: 'Pneumatic Quick Coupler & Fittings', zh: '气动快速接头 (铜接头/快插接头)' },
+  'đầu máy nén khí': { en: 'Air Compressor Pump Block Head', zh: '空压机机头主机总成' },
+  'đầu bơm mỡ': { en: 'Grease Gun Coupler Nozzle', zh: '高压黄油枪注油嘴' },
+  'dây phun khí': { en: 'High-Pressure Air Spray Hose', zh: '高压气动喷气软管 (风带)' },
+  'dây dẫn mỡ': { en: 'High-Pressure Grease Hose', zh: '高压注脂软管 (黄油管)' },
+  'dàn trao đổi nhiệt': { en: 'Heat Exchanger Cooler Matrix', zh: '铝制换热器 (油气冷却器)' },
+  'công tắc áp suất': { en: 'Pressure Switch Controller', zh: '压力开关控制器' },
+  'cốc xả nước tự động': { en: 'Auto Drain Filter Bowl', zh: '自动排水器水杯' },
+  'cốc lọc đường ống': { en: 'Inline Filter Housing Bowl', zh: '管道过滤器滤杯外壳' },
+  'cổ hút máy nén khí': { en: 'Air Compressor Intake Valve Assembly', zh: '螺杆空压机进气阀总成' },
+  'bộ xả nước tự động': { en: 'Automatic Drain Valve Assembly', zh: '自动排水器总成' },
+  'bộ tách nước khí nén': { en: 'Compressed Air Moisture Separator', zh: '压缩空气气水分离器' },
+  'bộ lọc đường ống khí nén': { en: 'Inline Compressed Air Filter System', zh: '压缩空气精密管道过滤器组' },
+  'bình khí nén inox': { en: 'Stainless Steel Air Receiver Tank', zh: '304不锈钢高压储气罐' },
+  'bình khí nén': { en: 'Compressed Air Receiver Tank', zh: '工业高压压缩空气储气罐' },
+  'dầu fusheng': { en: 'Genuine Fusheng Lubricant Oil', zh: '正品复盛 (Fusheng) 专用机油' },
+  'quạt giải nhiệt': { en: 'Cooling Fan Assembly', zh: '散热冷却风扇' },
+  'bạc đạn đầu nén': { en: 'Air-End Heavy Duty Bearings', zh: '主机转子重载轴承' },
+  'xi lanh máy nén khí piston': { en: 'Piston Compressor Cylinder', zh: '活塞式空压机气缸' },
+  'ròng rọc hơi': { en: 'Automatic Air Hose Reel', zh: '自动回卷气管卷轴 (气鼓)' },
+  'ron đầu nén': { en: 'Air-End Gasket Set', zh: '压缩机头密封垫片包' },
+  'dây đai truyền động': { en: 'Drive Belt', zh: '传动皮带' },
+  'dây curoa': { en: 'Industrial Drive V-Belt', zh: '工业三角传动皮带' }
+};
+
 // Từ điển thuật ngữ công nghiệp chi tiết
 export const fullIndustrialDict = [
   // 1. Bình & Bể chứa
@@ -81,6 +137,12 @@ export const fullIndustrialDict = [
   { vi: 'rơle nhiệt', en: 'Thermal Overload Relay', zh: '热过载继电器' },
   { vi: 'rơ le', en: 'Pressure Switch / Relay', zh: '压力继电器' },
   { vi: 'rơle', en: 'Pressure Switch / Relay', zh: '压力继电器' },
+  { vi: 'van điều áp khí nén', en: 'Precision Pneumatic Pressure Regulator', zh: '精密气动调压阀 (减压阀)' },
+  { vi: 'van chỉnh áp khí nén', en: 'Pneumatic Pressure Regulating Valve', zh: '气动调压减压阀' },
+  { vi: 'van điều áp', en: 'Pressure Regulating Valve', zh: '精密调压阀' },
+  { vi: 'van chỉnh áp', en: 'Pressure Regulating Valve', zh: '调压减压阀' },
+  { vi: 'chỉnh áp khí nén', en: 'Pneumatic Pressure Regulator', zh: '气动调压器' },
+  { vi: 'chỉnh áp', en: 'Pressure Regulator', zh: '调压器' },
   { vi: 'van an toàn xả áp', en: 'Safety Relief Valve', zh: '安全泄放阀' },
   { vi: 'van an toàn', en: 'Safety Valve', zh: '安全阀' },
   { vi: 'van xả nước tự động', en: 'Auto Drain Valve', zh: '自动排水阀' },
@@ -95,7 +157,6 @@ export const fullIndustrialDict = [
   { vi: 'cổ hút máy nén khí', en: 'Air Compressor Intake Valve Assembly', zh: '螺杆空压机进气阀总成' },
   { vi: 'cổ hút', en: 'Air Intake Valve', zh: '进气阀总成' },
   { vi: 'van áp suất tối thiểu', en: 'Minimum Pressure Valve', zh: '最小压力维持阀 (MPV)' },
-  { vi: 'van điều áp', en: 'Pressure Regulating Valve', zh: '精密气动调压阀' },
   { vi: 'van tiết lưu', en: 'Throttle Valve', zh: '节流阀' },
   { vi: 'van xả tải', en: 'Blowdown Valve', zh: '放空阀' },
   { vi: 'van', en: 'Valve', zh: '阀门' },
@@ -110,7 +171,7 @@ export const fullIndustrialDict = [
   { vi: 'đầu nén', en: 'Air-End Block', zh: '压缩机头' },
   { vi: 'đầu bơm mỡ', en: 'Grease Gun Coupler Nozzle', zh: '高压黄油枪注油嘴' },
   { vi: 'đầu nối nhanh', en: 'Quick Coupler Fitting', zh: '气动快速接头' },
-  { vi: 'đầu nối', en: 'Pneumatic Fittings / Connector', zh: '气动接头' },
+  { vi: 'đầu nối', en: 'Pneumatic Fittings / Connector', zh: '气动快速接头' },
   { vi: 'đầu bơm', en: 'Pump Head', zh: '泵头' },
   { vi: 'đầu', en: 'Head / Block', zh: '机头/接头' },
 
@@ -134,7 +195,10 @@ export const fullIndustrialDict = [
   { vi: 'cuộn dây hơi', en: 'Air Hose Reel', zh: '自动卷气管器' },
   { vi: 'dây hơi', en: 'Air Hose', zh: '气动软管' },
 
-  // 6. Phớt, Gioăng, Ron, Bạc đạn, Xi lanh
+  // 6. Phớt, Gioăng, Ron, Bạc đạn, Xi lanh, Trục khuỷu
+  { vi: 'trục khuỷu máy nén khí', en: 'Air Compressor Crankshaft', zh: '空压机曲轴总成' },
+  { vi: 'trục khuỷu', en: 'Crankshaft Assembly', zh: '空压机精密锻造曲轴' },
+  { vi: 'tay biên', en: 'Connecting Rod', zh: '连杆组件' },
   { vi: 'phớt chặn dầu', en: 'Air-End Shaft Oil Seal', zh: '轴端骨架油封' },
   { vi: 'phớt chắn dầu', en: 'Air-End Shaft Oil Seal', zh: '轴端骨架油封' },
   { vi: 'phớt chặn', en: 'Oil Seal', zh: '骨架油封' },
@@ -193,6 +257,8 @@ export const fullIndustrialDict = [
   { vi: 'đồng hồ đo áp suất', en: 'Pressure Gauge', zh: '高精度防震压力表' },
   { vi: 'đồng hồ áp suất', en: 'Pressure Gauge', zh: '防震压力表' },
   { vi: 'đồng hồ áp', en: 'Pressure Gauge', zh: '压力表' },
+  { vi: 'đồng hồ máy nén khí', en: 'Air Compressor Pressure Gauge', zh: '空压机高精度防震压力表' },
+  { vi: 'đồng hồ', en: 'Pressure Gauge', zh: '防震压力表' },
   { vi: 'thước đo mức dầu', en: 'Oil Level Sight Glass Gauge', zh: '玻璃管油位计/观油镜' },
   { vi: 'thước thăm dầu', en: 'Oil Level Gauge', zh: '油位计/观油镜' },
   { vi: 'mắt thăm dầu', en: 'Oil Sight Glass', zh: '观油镜' },
@@ -207,6 +273,7 @@ export const fullIndustrialDict = [
   { vi: 'máy sấy khí', en: 'Compressed Air Dryer', zh: '冷干机' },
   { vi: 'máy nén khí', en: 'Air Compressor', zh: '空压机' },
   { vi: 'máy nén', en: 'Compressor', zh: '空压机' },
+  { vi: 'khí nén', en: 'Compressed Air', zh: '压缩空气' },
   { vi: 'biến tần', en: 'VFD Inverter', zh: '变频器' },
 
   // 10. Chất liệu, Thuộc tính, Xuất xứ
@@ -228,17 +295,33 @@ export const fullIndustrialDict = [
 export function autoTranslateTitle(title: string, locale: string): string {
   if (!title || locale === 'vi') return title;
 
-  let result = title;
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
+  const lower = title.toLowerCase().trim();
 
+  // 1. Kiểm tra Exact Map
+  if (exactTitleMap[lower]) {
+    return isEn ? exactTitleMap[lower].en : exactTitleMap[lower].zh;
+  }
+
+  // 2. Chạy qua fullIndustrialDict đã được sắp xếp độ dài giảm dần
   const sortedTerms = [...fullIndustrialDict].sort((a, b) => b.vi.length - a.vi.length);
 
+  let result = title;
   for (const term of sortedTerms) {
     const regex = new RegExp(term.vi, 'gi');
     if (regex.test(result)) {
       result = result.replace(regex, isEn ? term.en : term.zh);
     }
+  }
+
+  // 3. Dọn dẹp từ dư tiếng Việt
+  if (isZh) {
+    result = result.replace(/khí\s*nén/gi, '');
+    result = result.replace(/tách/gi, '油气分离芯');
+    result = result.replace(/chỉnh\s*áp/gi, '调压');
+    result = result.replace(/van/gi, '阀');
+    result = result.replace(/hồ/gi, '');
   }
 
   return result.replace(/\s+/g, ' ').trim();
