@@ -6,7 +6,6 @@ import Breadcrumb from '@/components/Breadcrumb';
 import ProductGrid from '@/features/products/ProductGrid';
 import ProductSidebar from '@/features/products/ProductSidebar';
 import ProductSort from '@/features/products/ProductSort';
-import Pagination from '@/components/Pagination';
 import CTABanner from '@/components/CTABanner';
 import { getDictionary } from '@/lib/i18n';
 
@@ -40,8 +39,7 @@ const breadcrumbItems = [
         </div>
 
         <ProductGrid products={products} locale={locale} client:load />
-        <Pagination total={total} limit={12} currentPage={1} baseUrl="/san-pham" />
-      </div>
+              </div>
     </div>
   </section>
 

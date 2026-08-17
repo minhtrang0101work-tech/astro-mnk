@@ -9,14 +9,18 @@ interface ProductGridProps {
   locale?: string;
 }
 
+const PAGE_SIZE = 12;
+
 export default function ProductGrid({ products: initialProducts, searchQuery: initialSearch, locale = 'vi' }: ProductGridProps) {
-  const [displayProducts, setDisplayProducts] = useState<Product[]>(initialProducts);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(initialProducts);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
 
   const isEn = locale === 'en';
   const isZh = locale === 'zh';
   const prefix = isEn ? '/en' : isZh ? '/zh' : '';
 
+  // Handle URL filters and query params
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -24,6 +28,13 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
     const searchParam = params.get('search') || params.get('q') || '';
     const catParam = params.get('category') || '';
     const sortParam = params.get('sort') || 'newest';
+    const pageParam = parseInt(params.get('page') || '1', 10);
+
+    if (!isNaN(pageParam) && pageParam > 0) {
+      setCurrentPage(pageParam);
+    } else {
+      setCurrentPage(1);
+    }
 
     setSearchQuery(searchParam);
 
@@ -52,15 +63,43 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
 
     // 3. Sorting
     if (sortParam === 'name-asc') {
-      filtered.sort((a, b) => a.title.localeCompare(b.title, 'vi'));
+      filtered.sort((a, b) => a.title.localeCompare(b.title, locale));
     } else if (sortParam === 'name-desc') {
-      filtered.sort((a, b) => b.title.localeCompare(a.title, 'vi'));
+      filtered.sort((a, b) => b.title.localeCompare(a.title, locale));
     }
 
-    setDisplayProducts(filtered);
-  }, [initialProducts]);
+    setFilteredProducts(filtered);
+  }, [initialProducts, locale]);
 
-  if (displayProducts.length === 0) {
+  // Calculate pagination
+  const totalItems = filteredProducts.length;
+  const totalPages = Math.ceil(totalItems / PAGE_SIZE);
+  const validCurrentPage = Math.min(Math.max(currentPage, 1), Math.max(totalPages, 1));
+  
+  const startIndex = (validCurrentPage - 1) * PAGE_SIZE;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + PAGE_SIZE);
+
+  const handlePageChange = (page: number, e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (page < 1 || page > totalPages || page === validCurrentPage) return;
+
+    setCurrentPage(page);
+
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('page', page.toString());
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.pushState({ path: newUrl }, '', newUrl);
+
+      // Smooth scroll to top of product grid
+      const gridElem = document.querySelector('.product-listing-header') || document.querySelector('.products-main');
+      if (gridElem) {
+        gridElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
+  if (totalItems === 0) {
     const notFoundTitle = isEn ? 'No products found' : isZh ? '未找到相关产品' : 'Không tìm thấy sản phẩm';
     const notFoundMsg = isEn 
       ? `No products matching ${searchQuery ? `"${searchQuery}"` : 'your criteria'}.`
@@ -103,11 +142,68 @@ export default function ProductGrid({ products: initialProducts, searchQuery: in
     );
   }
 
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
-    <div className="products-grid">
-      {displayProducts.map(product => (
-        <ProductCard key={product.id} product={product} locale={locale} />
-      ))}
-    </div>
+    <>
+      <div className="products-grid">
+        {currentProducts.map(product => (
+          <ProductCard key={product.id} product={product} locale={locale} />
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="pagination" style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '8px' }}>
+          {validCurrentPage > 1 && (
+            <button
+              onClick={(e) => handlePageChange(validCurrentPage - 1, e)}
+              className="pagination-item"
+              style={{ cursor: 'pointer', border: '1px solid #ddd', background: '#fff', borderRadius: '4px', minWidth: '40px', height: '40px' }}
+              aria-label="Previous Page"
+            >
+              &laquo;
+            </button>
+          )}
+
+          {pages.map(page => {
+            const isActive = page === validCurrentPage;
+            return (
+              <button
+                key={page}
+                onClick={(e) => handlePageChange(page, e)}
+                className={`pagination-item ${isActive ? 'active' : ''}`}
+                style={{ 
+                  cursor: 'pointer', 
+                  border: isActive ? 'none' : '1px solid #ddd', 
+                  backgroundColor: isActive ? 'var(--primary-color)' : '#fff', 
+                  color: isActive ? '#fff' : 'var(--text-dark)',
+                  fontWeight: isActive ? '700' : '500',
+                  borderRadius: '4px', 
+                  minWidth: '40px', 
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '15px'
+                }}
+              >
+                {page}
+              </button>
+            );
+          })}
+
+          {validCurrentPage < totalPages && (
+            <button
+              onClick={(e) => handlePageChange(validCurrentPage + 1, e)}
+              className="pagination-item"
+              style={{ cursor: 'pointer', border: '1px solid #ddd', background: '#fff', borderRadius: '4px', minWidth: '40px', height: '40px' }}
+              aria-label="Next Page"
+            >
+              &raquo;
+            </button>
+          )}
+        </div>
+      )}
+    </>
   );
 }
