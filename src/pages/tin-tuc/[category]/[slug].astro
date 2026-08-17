@@ -1,0 +1,267 @@
+---
+import { NewsService } from '@/services/news.service';
+import Breadcrumb from '@/components/Breadcrumb';
+import { categoryMap } from '@/features/news/NewsCard';
+import CTABanner from '@/components/CTABanner';
+import NewsletterForm from '@/components/NewsletterForm';
+import { getLocale } from '@/lib/i18n';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const newsList = await NewsService.getAllNews();
+  return newsList.map(news => ({
+    params: { category: news.category, slug: news.slug },
+    props: { news }
+  }));
+}
+
+const { zone, category, slug } = Astro.params;
+const props = Astro.props;
+const locale = 'vi';
+
+
+  const locale = "vi";
+  const resolvedParams = params ? await params : { category: '', slug: '' };
+  const { category, slug } = resolvedParams;
+
+  const article = slug ? await NewsService.getNewsBySlug(slug) : undefined;
+
+  if (!article) {
+    notFound();
+  }
+
+  const isZh = locale === 'zh';
+  const isEn = locale === 'en';
+
+  const title = isZh ? (article.titleZh || article.title) : isEn ? (article.titleEn || article.title) : article.title;
+  const description = isZh ? (article.descriptionZh || article.description) : isEn ? (article.descriptionEn || article.description) : article.description;
+  const content = isZh ? (article.contentZh || article.content) : isEn ? (article.contentEn || article.content) : article.content;
+
+  const relatedArticles = await NewsService.getRelatedNews(article.id, article.category, 3);
+  const catObj = categoryMap[article.category] || { vi: article.category, zh: article.category, en: article.category };
+  const categoryName = isZh ? catObj.zh : isEn ? catObj.en : catObj.vi;
+
+  // Fetch all news to compute category counts dynamically
+  const { news: allNews } = await NewsService.getNews();
+  const totalCount = allNews.length;
+  const tinTucCount = allNews.filter(n => n.category === 'tin-tuc' || n.category === 'cong-nghe').length;
+  const tuVanCount = allNews.filter(n => n.category === 'tu-van' || n.category === 'ky-thuat' || n.category === 'kien-thuc').length;
+  const baoTriCount = allNews.filter(n => n.category === 'bao-tri').length;
+  const duAnCount = allNews.filter(n => n.category === 'du-an').length;
+
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://maynenkhikhainguyen.com';
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/tin-tuc/${category}/${article.slug}`
+    },
+    "headline": title,
+    "image": [
+      article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`
+    ],
+    "datePublished": article.rawDate || article.date,
+    "dateModified": article.rawDate || article.date,
+    "author": [{
+        "@type": "Person",
+        "name": isZh ? "凯源压缩空气系统专业工程师" : isEn ? "Khai Nguyen Compressed Air Systems Engineer" : "Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên",
+        "jobTitle": isZh ? "空压机资深工程师" : isEn ? "Senior Air Compressor Engineer" : "Kỹ sư kỹ thuật máy nén khí",
+        "description": isZh ? "拥有10年以上工业空压机系统设计、安装与维修保养实战经验的技术专家。" : isEn ? "Specialist with over 10 years of hands-on experience in industrial compressed air engineering." : "Chuyên gia với hơn 10 năm kinh nghiệm thực chiến trong lĩnh vực tư vấn giải pháp thiết kế, lắp đặt và sửa chữa bảo dưỡng máy nén khí công nghiệp.",
+        "url": `${baseUrl}/gioi-thieu`,
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Máy nén khí Khải Nguyên",
+          "url": baseUrl
+        }
+      }],
+    "publisher": {
+      "@type": "Organization",
+      "name": "Máy nén khí Khải Nguyên",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${baseUrl}/assets/images/logo.png`
+      }
+    }
+  };
+
+  const breadcrumbItems = [
+    { label: isZh ? '行业资讯' : isEn ? 'News' : 'Tin tức', href: '/tin-tuc' },
+    { label: categoryName, href: `/tin-tuc/${article.category}` },
+    { label: title }
+  ];
+
+  return (
+    <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <Breadcrumb title={isZh ? '新闻与技术手册' : isEn ? 'News & Technical' : 'Tin Tức & Kỹ Thuật'} items={breadcrumbItems} />
+
+      <section className="section-padding">
+        <div className="container blog-layout">
+          {/* Main article content */}
+          <article className="blog-main-content" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div className="article-header">
+              <span className="news-category" style={{ 
+                display: 'inline-block',
+                backgroundColor: 'var(--accent-light)',
+                color: 'var(--accent-color)',
+                padding: '4px 12px',
+                borderRadius: 'var(--radius-sm)',
+                fontWeight: 700,
+                fontSize: '12.5px',
+                textTransform: 'uppercase',
+                marginBottom: '15px'
+              }}>
+                {categoryName}
+              </span>
+              <h1 style={{ fontSize: '32px', color: 'var(--text-dark)', marginBottom: '15px', lineHeight: '1.3' }}>
+                {title}
+              </h1>
+              <div className="article-meta" style={{ fontSize: '13.5px', color: 'var(--text-light)', display: 'flex', gap: '15px', borderBottom: '1px solid var(--border-color)', paddingBottom: '15px' }}>
+                <span><i className="far fa-calendar-alt" style={{ marginRight: '6px' }}></i> {article.date}</span>
+                <span><i className="far fa-user" style={{ marginRight: '6px' }}></i> {isZh ? '凯源工程师团队' : isEn ? 'Khai Nguyen Engineers' : 'Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên'}</span>
+              </div>
+            </div>
+
+            <div className="article-image">
+              <img 
+                src={article.image} 
+                alt={title} 
+                style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: 'var(--radius-sm)' }} 
+              />
+            </div>
+
+            <div className="article-body" style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+              {description && (
+                <p style={{ fontWeight: 600, fontSize: '17px', color: 'var(--text-dark)', marginBottom: '20px' }}>
+                  {description}
+                </p>
+              )}
+              
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            </div>
+
+            {/* Author Biography Box for E-E-A-T */}
+            <div className="author-bio-box" style={{
+              marginTop: '40px',
+              padding: '24px',
+              border: '1px solid var(--border-color)',
+              borderRadius: 'var(--radius-sm)',
+              backgroundColor: 'rgba(255, 107, 0, 0.02)',
+              borderLeft: '4px solid var(--accent-color)',
+              display: 'flex',
+              gap: '20px',
+              alignItems: 'center',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
+            }}>
+              <div style={{ flexShrink: 0 }}>
+                <img 
+                  src="/assets/images/logo.png" 
+                  alt="Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên" 
+                  style={{
+                    width: '70px',
+                    height: '70px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    border: '2px solid var(--border-color)'
+                  }} 
+                />
+              </div>
+              <div>
+                <h4 style={{ margin: '0 0 6px 0', fontSize: '15.5px', fontWeight: '700', color: 'var(--text-dark)' }}>
+                  Người kiểm duyệt nội dung: Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên
+                </h4>
+                <p style={{ margin: 0, fontSize: '13.5px', color: 'var(--text-light)', lineHeight: '1.5' }}>
+                  Chuyên gia tư vấn giải pháp thiết kế hệ thống khí nén trục vít, có hơn 10 năm kinh nghiệm thực chiến trong kiểm tra, chẩn đoán sự cố kỹ thuật và bảo dưỡng thiết bị máy nén khí cho các nhà xưởng công nghiệp tại Biên Hòa, Đồng Nai, Bình Dương, Long An, TP.HCM.
+                </p>
+              </div>
+            </div>
+            
+            {/* Related Articles */}
+            {relatedArticles.length > 0 && (
+              <div style={{ marginTop: '50px', borderTop: '1px solid var(--border-color)', paddingTop: '30px' }}>
+                <h3 style={{ fontSize: '20px', marginBottom: '25px', color: 'var(--text-dark)' }}>
+                  {isZh ? '相关推荐文章' : isEn ? 'Related Articles' : 'Bài viết liên quan'}
+                </h3>
+                <div className="related-news-grid">
+                  {relatedArticles.map(related => {
+                    const relCatObj = categoryMap[related.category] || { vi: related.category, zh: related.category, en: related.category };
+                    const relCatName = isZh ? relCatObj.zh : isEn ? relCatObj.en : relCatObj.vi;
+                    const relTitle = isZh ? (related.titleZh || related.title) : isEn ? (related.titleEn || related.title) : related.title;
+
+                    
+---
+
+<Layout locale={locale}>
+  <div key={related.id} className="related-article-card" style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', overflow: 'hidden' }}>
+                        <a href={`/tin-tuc/${related.category}/${related.slug}`} data-astro-prefetch="hover">
+                          <img src={related.image} alt={relTitle} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'contain', backgroundColor: 'var(--bg-white)' }} loading="lazy" decoding="async" />
+                        </a>
+                        <div style={{ padding: '15px' }}>
+                          <span style={{ fontSize: '11px', color: 'var(--accent-color)', fontWeight: 700, textTransform: 'uppercase' }}>
+                            {relCatName}
+                          </span>
+                          <h4 style={{ fontSize: '14.5px', fontWeight: 600, margin: '5px 0 10px 0', lineHeight: '1.4' }}>
+                            <a href={`/tin-tuc/${related.category}/${related.slug}`} style={{ color: 'var(--text-dark)', textDecoration: 'none' }} data-astro-prefetch="hover">
+                              {relTitle}
+                            </a>
+                          </h4>
+                          <span style={{ fontSize: '11.5px', color: 'var(--text-light)' }}>{related.date}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </article>
+
+          {/* Sidebar */}
+          <aside className="blog-sidebar">
+            {/* Widget 1: Newsletter */}
+            <div className="sidebar-widget">
+              <h3>Đăng ký bản tin</h3>
+              <div className="widget-newsletter" style={{ marginTop: '15px' }}>
+                <p style={{ color: 'var(--text-light)', fontSize: '13.5px', marginBottom: '15px', lineHeight: '1.5' }}>
+                  Nhận các tài liệu kỹ thuật và báo cáo ngành mới nhất trực tiếp qua email của bạn.
+                </p>
+                <NewsletterForm />
+              </div>
+            </div>
+
+            {/* Widget 2: Categories */}
+            <div className="sidebar-widget">
+              <h3>{isZh ? '资讯分类' : isEn ? 'CATEGORIES' : 'DANH MỤC TIN TỨC'}</h3>
+              <ul className="widget-categories-list">
+                <li>
+                  <a href="/tin-tuc" data-astro-prefetch="hover">{isZh ? '所有资讯' : isEn ? 'All News' : 'Tất cả tin tức'}</a>
+                  <span className="count">{totalCount}</span>
+                </li>
+                <li>
+                  <a href="/tin-tuc/tin-tuc" data-astro-prefetch="hover">{isZh ? '行业新闻' : isEn ? 'Industry News' : 'Tin tức ngành'}</a>
+                  <span className="count">{tinTucCount}</span>
+                </li>
+                <li>
+                  <a href="/tin-tuc/tu-van" data-astro-prefetch="hover">{isZh ? '技术咨询' : isEn ? 'Technical Advice' : 'Tư vấn kỹ thuật'}</a>
+                  <span className="count">{tuVanCount}</span>
+                </li>
+                <li>
+                  <a href="/tin-tuc/bao-tri" data-astro-prefetch="hover">{isZh ? '设备保养' : isEn ? 'Maintenance' : 'Bảo trì bảo dưỡng'}</a>
+                  <span className="count">{baoTriCount}</span>
+                </li>
+                <li>
+                  <a href="/tin-tuc/du-an" data-astro-prefetch="hover">{isZh ? '安装项目' : isEn ? 'Installation Projects' : 'Dự án lắp đặt'}</a>
+                  <span className="count">{duAnCount}</span>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <CTABanner locale={locale} />
+    </div>
+</Layout>

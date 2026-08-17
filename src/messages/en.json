@@ -1,0 +1,151 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About Us",
+    "products": "Products",
+    "news": "News",
+    "contact": "Contact",
+    "hotline": "Hotline",
+    "address": "Address",
+    "email": "Email",
+    "sendRequest": "Request a Quote",
+    "viewMore": "View Details",
+    "allProducts": "All Products"
+  },
+  "header": {
+    "search": "Search products...",
+    "requestQuote": "Request Quote"
+  },
+  "footer": {
+    "aboutText": "Leading supplier of genuine screw air compressor parts, components, and reliable industrial compressed air solutions in Southern Vietnam.",
+    "services": "Services",
+    "repairLink": "Air Compressor Repair",
+    "consultingLink": "Air Compressor Consulting",
+    "partsLink": "Component Supplies",
+    "allRightsReserved": "Copyright © Khai Nguyen Air Compressor. All rights reserved."
+  },
+  "home": {
+    "heroTitle": "Comprehensive & Energy-Saving Industrial Air Solutions",
+    "heroSubtitle": "Specializing in providing genuine screw air compressor parts (Atlas Copco, Hitachi, Kobelco...) and 24/7 maintenance & repair services in Dong Nai, Binh Duong, and HCMC.",
+    "features": {
+      "supportTitle": "24/7 Technical Support",
+      "supportDesc": "On-site troubleshooting within 2 hours in Dong Nai, Binh Duong, HCMC.",
+      "partsTitle": "Spare Parts Ready",
+      "partsDesc": "Fully stocked with high-quality oil filters, air filters, and coolers.",
+      "savingTitle": "Energy Saving Solutions",
+      "savingDesc": "Inverter installation consulting to optimize energy up to 30%."
+    },
+    "introTitle": "About Us - Khai Nguyen Air Compressor",
+    "introText1": "With over 15 years of experience in industrial compressed air, Khai Nguyen is proud to be the trusted partner of hundreds of factories in Southern Vietnam.",
+    "introText2": "We do not only supply high-quality OEM replacement parts at optimized costs but also provide emergency repairs, routine maintenance, and in-depth technical consulting.",
+    "stats": {
+      "experience": "Years of Experience",
+      "clients": "Corporate Clients",
+      "projects": "Completed Projects",
+      "support": "Technical Support"
+    },
+    "categoriesTitle": "Featured Spare Parts",
+    "categoriesSubtitle": "We supply a full range of high-quality components for regular maintenance.",
+    "featuredProductsTitle": "FEATURED PRODUCTS",
+    "featuredProductsDesc": "High-quality screw air compressor parts, fully stocked in large quantities for quick installation and emergency replacement.",
+    "featuredProjectsTitle": "REPRESENTATIVE PROJECTS",
+    "featuredProjectsDesc": "Khai Nguyen is proud of installing and commissioning high-quality industrial air systems in major industrial zones.",
+    "project1Title": "Kobelco Screw Air Compressor System",
+    "project1Desc": "Amata Industrial Zone, Bien Hoa, Dong Nai",
+    "project2Title": "Compressed Air Piping for Textile Factory",
+    "project2Desc": "VSIP Industrial Zone, Binh Duong",
+    "featuredCats": {
+      "cat1Title": "Air Receivers & Air Ends",
+      "cat1Desc": "High-quality compressed air receiver tanks and durable genuine screw compressor air ends.",
+      "cat2Title": "Filters & Separators",
+      "cat2Desc": "Screw compressor air filters, oil filters, separators, and inline filters removing 99% of impurities.",
+      "cat3Title": "Sensors & Controllers",
+      "cat3Desc": "Pressure sensors, temperature sensors, PLC controllers, and high-precision measuring devices.",
+      "cat4Title": "Oils & Lubricants",
+      "cat4Desc": "Premium screw air compressor lubricating oils (mineral/synthetic) and system grease components.",
+      "cat5Title": "Valves & Regulator Systems",
+      "cat5Desc": "Intake valves, check valves, oil stop valves, solenoid valves, and safety relief valves.",
+      "cat6Title": "Water & Moisture Treatment",
+      "cat6Desc": "Refrigerated/adsorption air dryers, water separators, and highly efficient automatic drains."
+    }
+  },
+  "about": {
+    "title": "About Khai Nguyen Air Compressor",
+    "vision": "Vision & Mission",
+    "visionText": "To become the leading provider in Southern Vietnam for comprehensive, high-quality, and energy-saving air compressor solutions, helping clients optimize their production capacity.",
+    "values": "Core Values",
+    "valuesText": "Dedication - Quality - Speed. We always prioritize our clients' interests and strive to deliver the best repair services and parts on the market.",
+    "history": "Development History",
+    "historyText": "Established to meet the urgent demand for screw air compressor repair in Dong Nai and Binh Duong industrial zones. Through 15+ years of growth, Khai Nguyen has built an experienced team of engineers and a rich inventory of spare parts, ready to serve 24/7."
+  },
+  "repair": {
+    "title": "Professional Air Compressor Repair Services",
+    "intro": "The screw air compressor system acts as the 'heart' supplying energy to the factory's production line. Khai Nguyen provides 24/7 professional emergency repair services to resolve issues in the shortest time.",
+    "emergency": "Emergency Troubleshooting",
+    "emergencyDesc": "Technical team responds on-site within 2 - 4 hours of receiving calls in Dong Nai, Binh Duong, HCMC, and Long An.",
+    "genuine": "Genuine Replacement Parts",
+    "genuineDesc": "Committed to using genuine or high-quality equivalent oil filters, air filters, lubricants, and spare parts with long-term warranty."
+  },
+  "consulting": {
+    "title": "Standard Compressed Air System Design Consulting",
+    "intro": "Power consumption of air compressors accounts for 70% - 80% of their total lifecycle cost. Proper engine room and pipeline network design optimizes energy costs and extends system lifetime.",
+    "audit": "On-site Flow & Leak Audits",
+    "auditDesc": "Using specialized flow meters and ultrasonic leak detectors to evaluate the actual wastage of compressed air in your factory.",
+    "saving": "Save Up To 30% Energy",
+    "savingDesc": "Providing smart alternating control options and inverter upgrades to maximize energy control and eliminate wastage."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "info": "Contact Information",
+    "formTitle": "Send Us a Message",
+    "formSubtitle": "Please leave your contact info, and we will get back to you within 15 minutes.",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "content": "Requirements / Notes",
+    "submit": "Submit Quote Request",
+    "submitting": "Sending...",
+    "success": "Request submitted successfully! We will contact you shortly."
+  },
+  "products": {
+    "title": "Products & Spare Parts Catalog",
+    "components": "Air compressor parts",
+    "count": "products",
+    "noProducts": "No products found"
+  },
+  "productDetail": {
+    "priceBoxTitle": "Product Price",
+    "supportText": "On-site survey and detailed quotation tailored for each customer's specific case.",
+    "priceOnSurvey": "We will conduct an on-site survey and provide a detailed quotation directly to you.",
+    "quoteBtn": "REQUEST A QUOTE",
+    "bullet1": "Genuine imported products by Khai Nguyen.",
+    "bullet2": "Comprehensive 24-month on-site warranty.",
+    "bullet3": "Lifetime support for genuine replacement parts.",
+    "whyTitle": "Why Choose Khai Nguyen?",
+    "relatedTitle": "Related Products"
+  },
+  "news": {
+    "title": "News & Technical Knowledge",
+    "allArticles": "ALL ARTICLES",
+    "noArticles": "No articles found",
+    "noArticlesDesc": "Please select another category or check back later.",
+    "newsletterTitle": "Subscribe to Newsletter",
+    "newsletterDesc": "Receive the latest technical documents and industry reports directly in your inbox."
+  },
+  "categories": {
+    "airTankBlock": "Air Receivers & Compressor Blocks",
+    "filterSeparator": "Compressed Air Filters & Separators",
+    "sensorControl": "Sensors, Measuring & Control Devices",
+    "lubricationOil": "Lubricating Oil & Lubricants Parts",
+    "valvesSystem": "Pneumatic & Air Compressor Valves",
+    "coolingSystem": "Coolers & Cooling Systems",
+    "mechanicalEngine": "Mechanical Components & Engines",
+    "hosesConnectors": "Pipes, Hoses & Connectors",
+    "waterTreatment": "Water & Moisture Treatment Equipment",
+    "transmissionOther": "Transmission & Other Parts"
+  },
+  "policies": {
+    "privacy": "Privacy Policy",
+    "warranty": "Warranty & Repair",
+    "wholesale": "Wholesale Policy"
+  }
+}

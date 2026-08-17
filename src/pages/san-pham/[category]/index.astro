@@ -1,0 +1,108 @@
+---
+import { CategoryService } from '@/services/category.service';
+import { ProductService } from '@/services/product.service';
+import { ProductRepository } from '@/repositories/product.repository';
+import Breadcrumb from '@/components/Breadcrumb';
+import ProductSidebar from '@/features/products/ProductSidebar';
+import ProductSort from '@/features/products/ProductSort';
+import ProductGrid from '@/features/products/ProductGrid';
+import Pagination from '@/components/Pagination';
+import CTABanner from '@/components/CTABanner';
+import { getLocale, getDictionary } from '@/lib/i18n';
+import Layout from '@/layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const categories = await ProductService.getCategories();
+  return categories.map(cat => ({
+    params: { category: cat.slug },
+    props: { category: cat }
+  }));
+}
+
+const { zone, category, slug } = Astro.params;
+const props = Astro.props;
+const locale = 'vi';
+
+
+  const locale = "vi";
+  const dict = await getDictionary(locale);
+
+  const resolvedParams = params ? await params : { category: '' };
+  const categorySlug = resolvedParams.category;
+
+  const categoriesList = await CategoryService.getCategories();
+  const currentCategory = categoriesList.find(c => c.slug === categorySlug);
+
+  if (!currentCategory) {
+    notFound();
+  }
+
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const searchQuery = resolvedSearchParams?.search;
+  const sortQuery = resolvedSearchParams?.sort || 'newest';
+  const pageQuery = parseInt(resolvedSearchParams?.page || '1', 10);
+  
+  const limit = 18;
+
+  const [allProducts, { products, total }] = await Promise.all([
+    ProductRepository.getAllProducts(),
+    ProductService.getProducts({
+      search: searchQuery,
+      categories: [categorySlug],
+      sort: sortQuery,
+      page: pageQuery,
+      limit: limit
+    })
+  ]);
+
+  const categories = categoriesList.map(cat => {
+    const count = allProducts.filter(p => p.category === cat.slug).length;
+    return {
+      ...cat,
+      count
+    };
+  });
+
+  const breadcrumbItems = [
+    { label: dict.common.products, href: '/san-pham' },
+    { label: currentCategory.name }
+  ];
+
+  let bannerTitle = `${locale === 'vi' ? 'Danh mục' : locale === 'zh' ? '分类' : 'Category'}: ${currentCategory.name}`;
+  if (searchQuery) {
+    bannerTitle = `${locale === 'vi' ? 'Kết quả tìm kiếm trong' : locale === 'zh' ? '在分类中搜索结果' : 'Search results in'} ${currentCategory.name}: "${searchQuery}"`;
+  }
+
+  
+---
+
+<Layout locale={locale}>
+  <div>
+      <Breadcrumb title={bannerTitle} items={breadcrumbItems} />
+
+      <section className="section-padding">
+        <div className="container product-page-layout">
+          {/* Products Sidebar Filters */}
+          <ProductSidebar categories={categories} locale={locale} />
+
+          {/* Products Listing Grid */}
+          <div className="products-main">
+            <div className="product-listing-header">
+              <h2>{currentCategory.name} <span>({total} {dict.products.count})</span></h2>
+              
+              {/* Product Sort Selector */}
+              <ProductSort locale={locale} />
+            </div>
+
+            {/* Products Card Grid */}
+            <ProductGrid products={products} searchQuery={searchQuery} />
+
+            {/* URL Parameter-based Pagination */}
+            <Pagination total={total} limit={limit} currentPage={pageQuery} />
+          </div>
+        </div>
+      </section>
+
+      <CTABanner locale={locale} />
+    </div>
+</Layout>

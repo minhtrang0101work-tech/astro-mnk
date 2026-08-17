@@ -1,0 +1,106 @@
+---
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import Layout from '@/layouts/Layout.astro';
+const { zone, category, slug } = Astro.params;
+const props = Astro.props;
+const locale = 'vi';
+
+
+  const title = 'Dịch Vụ Bảo Trì Máy Công Nghiệp & Máy Nén Khí Trọn Gói';
+  const breadcrumbItems = [{ label: title }];
+
+  
+---
+
+<Layout locale={locale}>
+  <div>
+      <Breadcrumb title={title} items={breadcrumbItems} />
+
+      <section className="section-padding">
+        <div className="container" style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <article className="service-detail-content" style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+            
+            {/* Intro */}
+            <div style={{ 
+              fontWeight: 600, 
+              fontSize: '17.5px', 
+              color: 'var(--text-dark)', 
+              marginBottom: '30px', 
+              padding: '20px 26px', 
+              backgroundColor: '#f0fdf4', 
+              borderLeft: '5px solid #16a34a',
+              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+              lineHeight: '1.65'
+            }}>
+              <strong>Bảo trì máy công nghiệp định kỳ</strong> là chìa khóa giúp doanh nghiệp ngăn ngừa 95% sự cố dừng máy đột ngột, 
+              tối ưu hiệu suất nén khí và <strong>tiết kiệm đến 20% điện năng tiêu thụ hàng tháng</strong>. 
+              Khải Nguyên cung cấp hợp đồng bảo trì trọn gói theo giờ chạy máy (3.000h, 6.000h, 12.000h) với cam kết SLA cao nhất.
+            </div>
+
+            {/* Các gói bảo trì */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '16px', fontWeight: 700 }}>
+              Các Gói Dịch Vụ Bảo Trì Máy Nén Khí Công Nghiệp Định Kỳ
+            </h2>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', margin: '25px 0' }}>
+              <div style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+                <h3 style={{ margin: '0 0 10px', color: '#16a34a', fontSize: '18px' }}>Gói Bảo Dưỡng Tiểu Tu (3.000 Giờ)</h3>
+                <ul style={{ paddingLeft: '18px', fontSize: '14.5px', lineHeight: '1.8' }}>
+                  <li>Thay dầu máy nén khí Fusheng / Kobelco.</li>
+                  <li>Thay lõi lọc dầu, lọc gió mới 100%.</li>
+                  <li>Vệ sinh lọc hút, thổi bụi két giải nhiệt.</li>
+                  <li>Kiểm tra điện áp, dòng tải động cơ.</li>
+                </ul>
+              </div>
+
+              <div style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+                <h3 style={{ margin: '0 0 10px', color: 'var(--primary-color)', fontSize: '18px' }}>Gói Bảo Dưỡng Trung Tu (6.000 Giờ)</h3>
+                <ul style={{ paddingLeft: '18px', fontSize: '14.5px', lineHeight: '1.8' }}>
+                  <li>Toàn bộ hạng mục gói 3.000 giờ.</li>
+                  <li>Thay lọc tách dầu chính hãng.</li>
+                  <li>Bảo dưỡng bộ van cổ hút & van hằng nhiệt.</li>
+                  <li>Bơm mỡ bôi trơn vòng bi động cơ điện.</li>
+                </ul>
+              </div>
+
+              <div style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}>
+                <h3 style={{ margin: '0 0 10px', color: '#c2410c', fontSize: '18px' }}>Gói Đại Tu Toàn Bộ (12.000 Giờ)</h3>
+                <ul style={{ paddingLeft: '18px', fontSize: '14.5px', lineHeight: '1.8' }}>
+                  <li>Tháo rã & vệ sinh toàn bộ máy.</li>
+                  <li>Thay bộ vòng bi SKF/FAG đầu nén trục vít.</li>
+                  <li>Căn chỉnh khe hở trục vít micrometer.</li>
+                  <li>Bảo dưỡng tổng thể hệ thống giải nhiệt & điện.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Lợi ích bảo trì hợp đồng */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+              Lợi Ích Khi Ký Hợp Đồng Bảo Trì Máy Công Nghiệp Cùng Khải Nguyên
+            </h2>
+            <ul>
+              <li><strong>Ưu tiên xử lý sự cố trong 2h:</strong> Kỹ thuật viên ứng cứu ngay lập tức khi phát sinh báo lỗi khẩn cấp.</li>
+              <li><strong>Chiết khấu giá phụ tùng đến 15%:</strong> Tiết kiệm ngân sách bảo dưỡng định kỳ cho nhà máy.</li>
+              <li><strong>Cho mượn máy nén khí dự phòng miễn phí:</strong> Đảm bảo dây chuyền sản xuất không bị ngắt quãng khi đại tu.</li>
+              <li><strong>Lưu trữ nhật ký vận hành số hóa:</strong> Theo dõi chính xác lịch thay dầu, thay lọc của từng máy.</li>
+            </ul>
+
+            {/* CTA */}
+            <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '20px', borderRadius: '8px', margin: '30px 0' }}>
+              <h3 style={{ margin: '0 0 8px', color: '#166534', fontSize: '18px' }}>Yêu Cầu Khảo Sát & Báo Giá Hợp Đồng Bảo Trì Tận Nơi</h3>
+              <p style={{ margin: '0 0 12px' }}>
+                Liên hệ ngay phòng dịch vụ khách hàng Khải Nguyên để cử kỹ sư xuống khảo sát miễn phí:
+              </p>
+              <a href="tel:0909513637" style={{ display: 'inline-block', backgroundColor: '#16a34a', color: '#fff', padding: '12px 24px', borderRadius: '6px', fontWeight: 700, textDecoration: 'none' }}>
+                HOTLINE: 0909 513 637
+              </a>
+            </div>
+
+          </article>
+        </div>
+      </section>
+
+      <CTABanner />
+    </div>
+</Layout>

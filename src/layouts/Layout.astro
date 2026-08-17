@@ -1,0 +1,184 @@
+---
+import '@/styles/globals.css';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import SearchOverlay from '@/components/SearchOverlay';
+import StickyContactBar from '@/components/StickyContactBar';
+import { getDictionary, type Locale } from '@/lib/i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  locale?: Locale;
+  schema?: Record<string, any> | Record<string, any>[];
+  image?: string;
+}
+
+const {
+  title = 'Máy nén khí Khải Nguyên - Chuyên cung cấp và sửa chữa máy nén khí',
+  description = 'Chuyên cung cấp phụ tùng máy nén khí trục vít, piston, dầu máy, lọc dầu, lọc gió, két giải nhiệt chính hãng tại Biên Hòa, Đồng Nai, Bình Dương, Long An, HCMC.',
+  canonical = Astro.url.href,
+  locale = 'vi',
+  schema,
+  image = 'https://maynenkhikhainguyen.com/assets/images/logo.png',
+} = Astro.props;
+
+const dict = await getDictionary(locale);
+const baseUrl = 'https://maynenkhikhainguyen.com';
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Máy nén khí Khải Nguyên',
+  image: `${baseUrl}/assets/images/logo.png`,
+  logo: `${baseUrl}/assets/images/logo.png`,
+  '@id': `${baseUrl}/#localbusiness`,
+  url: baseUrl,
+  telephone: '0909513637',
+  email: 'khainguyen209@gmail.com',
+  priceRange: '$$',
+  paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+  areaServed: ['Biên Hòa', 'Đồng Nai', 'Bình Dương', 'Long An', 'Hồ Chí Minh'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '762a tổ 25, khu phố 5, Phường Long Bình',
+    addressLocality: 'Biên Hòa',
+    addressRegion: 'Đồng Nai',
+    addressCountry: 'VN',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 10.95743,
+    longitude: 106.89269,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+    ],
+    opens: '07:30',
+    closes: '17:00',
+  },
+  sameAs: [
+    'https://zalo.me/0909513637',
+    'https://www.facebook.com/maynenkhikhainguyen',
+  ],
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title.includes('Khải Nguyên') ? title : `${title} | Máy nén khí Khải Nguyên`}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Geo Meta Tags -->
+    <meta name="geo.region" content="VN" />
+    <meta name="geo.placename" content="Biên Hòa" />
+    <meta name="geo.position" content="10.95743;106.89269" />
+    <meta name="ICBM" content="10.95743, 106.89269" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+
+    <!-- Google Fonts Preconnect & Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-5NW8QJX7');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global Structured Data (JSON-LD) -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(localBusinessSchema)}
+    />
+    {
+      schema && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(schema)}
+        />
+      )
+    }
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5NW8QJX7"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Google Analytics 4 (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-5GGLHPWXGX"
+      is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-5GGLHPWXGX');
+    </script>
+
+    <!-- Header Island: client:load for immediate interactive mobile menu & search -->
+    <Header client:load dict={dict} />
+
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer: Static Server-Rendered Component -->
+    <Footer dict={dict} />
+
+    <!-- Interactive Overlays: client:idle to defer hydration after main content loads -->
+    <SearchOverlay client:idle />
+    <StickyContactBar client:idle />
+  </body>
+</html>

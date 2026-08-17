@@ -1,0 +1,223 @@
+---
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import Layout from '@/layouts/Layout.astro';
+const { zone, category, slug } = Astro.params;
+const props = Astro.props;
+const locale = 'vi';
+
+
+  const title = 'Máy Nén Khí Cao Áp Công Nghiệp (20 Bar - 40 Bar)';
+  const breadcrumbItems = [
+    { label: 'Sản Phẩm', href: '/san-pham' },
+    { label: 'Máy Nén Khí Cao Áp' }
+  ];
+
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    'name': 'Máy Nén Khí Cao Áp Công Nghiệp 30-40 Bar Khải Nguyên',
+    'description': 'Hệ thống máy nén khí cao áp chuyên dụng 20-40 bar phục vụ thổi chai nhựa PET, cắt laser kim loại, thử áp lực đường ống công nghiệp.',
+    'brand': {
+      '@type': 'Brand',
+      'name': 'Khải Nguyên'
+    },
+    'offers': {
+      '@type': 'AggregateOffer',
+      'priceCurrency': 'VND',
+      'lowPrice': '15000000',
+      'highPrice': '250000000',
+      'offerCount': '10',
+      'availability': 'https://schema.org/InStock'
+    }
+  };
+
+  
+---
+
+<Layout locale={locale}>
+  <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      
+      <Breadcrumb title={title} items={breadcrumbItems} />
+
+      <section className="section-padding">
+        <div className="container" style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <article className="service-detail-content" style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+            
+            {/* Answer Box / Hero Intro */}
+            <div style={{ 
+              fontWeight: 600, 
+              fontSize: '17.5px', 
+              color: 'var(--text-dark)', 
+              marginBottom: '30px', 
+              padding: '20px 26px', 
+              backgroundColor: '#f0f7ff', 
+              borderLeft: '5px solid var(--primary-color)',
+              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+              lineHeight: '1.65'
+            }}>
+              <strong>Máy nén khí cao áp (20 Bar - 40 Bar)</strong> là thiết bị nén khí chuyên dụng có khả năng tạo ra nguồn khí nén áp lực cực cao, 
+              đáp ứng bắt buộc cho các dây chuyền <strong>thổi chai nhựa PET, cắt kim loại CNC Laser áp lực lớn, thử nghiệm áp suất đường ống</strong> và đóng tàu. 
+              Khải Nguyên phân phối giải pháp trọn gói gồm cụm máy nén cao áp, máy sấy khí cao áp và <strong>bình tích khí (bình khí nén) cao áp đạt chuẩn kiểm định an toàn</strong>.
+            </div>
+
+            {/* Thống kê nhanh */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px', marginBottom: '35px' }}>
+              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>20 - 40 Bar</div>
+                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Dải áp suất nén cực cao</div>
+              </div>
+              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>100% Kiểm Định</div>
+                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Bình tích khí có hồ sơ kiểm định</div>
+              </div>
+              <div style={{ backgroundColor: 'var(--bg-light)', padding: '18px', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                <div style={{ fontSize: '28px', fontWeight: 800, color: 'var(--primary-color)' }}>24/7 Bảo Trì</div>
+                <div style={{ fontSize: '14px', color: 'var(--text-light)' }}>Kỹ sư ứng cứu sự cố hỏa tốc 2h</div>
+              </div>
+            </div>
+
+            {/* Phân loại & Ứng dụng */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '16px', fontWeight: 700 }}>
+              Các Ứng Dụng Công Nghiệp Quan Trọng Của Máy Nén Khí Cao Áp
+            </h2>
+            <p>
+              Khác với các dòng máy nén khí trục vít thông thường (chỉ đạt áp suất từ 7 - 10 bar), dòng máy nén khí cao áp 
+              được thiết kế nén nhiều cấp (2 đến 3 cấp nén) hoặc sử dụng cụm <strong>Booster tăng áp</strong> để nâng áp lực lên 30 - 40 bar:
+            </p>
+
+            <ul style={{ paddingLeft: '20px', lineHeight: '1.9' }}>
+              <li><strong>Ngành sản xuất bao bì & đồ uống (Thổi chai PET):</strong> Khí nén 30-40 bar là điều kiện tiên quyết để khuôn thổi dãn nở phôi nhựa PET tạo thành chai nước tinh khiết, nước giải khát, dầu ăn.</li>
+              <li><strong>Gia công cơ khí chính xác & Cắt Laser kim loại:</strong> Khí nén cao áp sạch vết cắt, thổi xỉ kim loại và hỗ trợ nguồn khí nén trợ lực cho máy cắt Laser công suất lớn.</li>
+              <li><strong>Thử áp lực đường ống & Bình chịu áp:</strong> Thử tải áp suất hệ thống ống dẫn khí, ống dẫn dầu, bình chịu áp trước khi đi vào vận hành thực tế.</li>
+              <li><strong>Công nghiệp đóng tàu & Thiết bị khí nén nặng:</strong> Khởi động động cơ Diesel tàu biển công suất lớn, nạp khí vào bình khí nén chuyên dụng.</li>
+            </ul>
+
+            {/* Bảng Thông Số & Các Dòng Máy */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+              Bảng Thông Số Kỹ Thuật Các Dòng Máy Nén Khí Cao Áp Phổ Biến
+            </h2>
+            
+            <div style={{ overflowX: 'auto', margin: '20px 0' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '15px' }}>
+                <thead>
+                  <tr style={{ backgroundColor: 'var(--primary-color)', color: '#fff' }}>
+                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Công Suất (HP/kW)</th>
+                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Áp Suất Làm Việc</th>
+                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Lưu Lượng Nén</th>
+                    <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Ứng Dụng Khuyên Dùng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>10 HP (7.5 kW)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>30 Bar (30 kg/cm²)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>0.8 - 1.0 m³/phút</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Thổi chai PET bán tự động, thử áp phòng Lab</td>
+                  </tr>
+                  <tr style={{ backgroundColor: '#f8fafc' }}>
+                    <td style={{ padding: '12px 16px', border: '1px solid #ddd', fontWeight: 600 }}>20 HP (15 kW)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>30 - 35 Bar</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>1.5 - 2.0 m³/phút</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Xưởng thổi chai PET vừa, cắt Laser kim loại</td>
+                  </tr>
+                  <tr>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>30 HP (22 kW)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>35 - 40 Bar</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>2.5 - 3.2 m³/phút</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Dây chuyền thổi PET tự động 2-4 đầu thổi</td>
+                  </tr>
+                  <tr style={{ backgroundColor: '#f8fafc' }}>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>50 - 100 HP (37-75kW)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>40 Bar (Áp suất cao)</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>4.5 - 10.0 m³/phút</td>
+                    <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>Nhà máy sản xuất quy mô lớn tại các KCN</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Các Thiết Bị Trong Hệ Thống Cao Áp */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+              Cấu Thành Trọn Gói Hệ Thống Khí Nén Cao Áp Chuẩn
+            </h2>
+            
+            <div style={{ display: 'grid', gap: '20px', margin: '20px 0' }}>
+              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
+                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+                  1. Cụm Máy Nén Khí Cao Áp (High Pressure Air Compressor)
+                </h3>
+                <p>
+                  Động cơ điện chính kết hợp cụm đầu nén pít-tông chịu nhiệt cao hoặc trục vít Booster tăng áp từ 8 bar lên 40 bar. 
+                  Thiết bị có kèm hệ thống quạt mát tản nhiệt nhiều tầng để đảm bảo máy không bị quá nhiệt.
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
+                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+                  2. Bình Tích Khí (Bình Khí Nén) Cao Áp
+                </h3>
+                <p>
+                  <a href="/may-nen-khi-dong-nai" data-astro-prefetch="hover">Bình tích khí (bình khí nén)</a> chịu áp lực 30-40 bar dùng chứa và tích trữ nguồn nén khí lớn. 
+                  Toàn bộ bình do Khải Nguyên phân phối đều được thử áp suất thủy lực và có <strong>giấy kiểm định an toàn của Bộ Lao Động</strong>.
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 2px 5px rgba(0,0,0,0.04)' }}>
+                <h3 style={{ margin: '0 0 10px', fontSize: '18px', color: 'var(--primary-color)' }}>
+                  3. Máy Sấy Khí Cao Áp & Bộ Lọc Khí Nén Tinh Kiết
+                </h3>
+                <p>
+                  Máy sấy lạnh cao áp chịu lực nén 40 bar làm ngưng tụ 99% hơi nước trong khí nén, 
+                  kết hợp bộ lọc tinh loại bỏ cặn dầu bôi trơn, đảm bảo khí nén đầu ra đạt độ khô sạch tối đa.
+                </p>
+              </div>
+            </div>
+
+            {/* Ưu điểm Khải Nguyên */}
+            <h2 style={{ fontSize: '22px', color: 'var(--primary-color)', marginTop: '40px', marginBottom: '16px', fontWeight: 700 }}>
+              Cam Kết Khi Mua Máy Nén Khí Cao Áp Tại Khải Nguyên
+            </h2>
+            <ul style={{ paddingLeft: '20px', lineHeight: '1.9' }}>
+              <li><strong>Hàng chính hãng 100%:</strong> Đầy đủ giấy chứng nhận CO, CQ nhập khẩu.</li>
+              <li><strong>Hồ sơ kiểm định đầy đủ:</strong> Bàn giao kèm giấy kiểm định an toàn bình chứa khí nén cao áp.</li>
+              <li><strong>Tư vấn thiết kế miễn phí:</strong> Kỹ sư hỗ trợ khảo sát mặt bằng, tính toán công suất và vẽ sơ đồ lắp đặt đường ống khí nén tận nhà máy tại Đồng Nai, Bình Dương, HCMC.</li>
+              <li><strong>Bảo hành & bảo trì uy tín:</strong> Bảo hành thiết bị từ 12 - 24 tháng. Kho sẵn có sẵn <a href="/linh-kien-may-nen-khi-dong-nai" data-astro-prefetch="hover">linh kiện máy nén khí Đồng Nai</a> hỗ trợ hỏa tốc 2 giờ.</li>
+            </ul>
+
+            {/* CTA */}
+            <div style={{ backgroundColor: '#f0f7ff', border: '1px solid #bfdbfe', padding: '24px', borderRadius: '8px', margin: '35px 0' }}>
+              <h3 style={{ margin: '0 0 10px', color: 'var(--primary-color)', fontSize: '19px' }}>Bạn Cần Tư Vấn & Báo Giá Hệ Thống Máy Nén Khí Cao Áp 30 - 40 Bar?</h3>
+              <p style={{ margin: '0 0 16px', fontSize: '15px' }}>
+                Liên hệ ngay hotline phòng kinh doanh kỹ thuật Khải Nguyên để nhận báo giá chiết khấu ưu đãi nhất cho doanh nghiệp:
+              </p>
+              <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                <a href="tel:0909513637" style={{ display: 'inline-block', backgroundColor: 'var(--primary-color)', color: '#fff', padding: '14px 28px', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '16px' }}>
+                  HOTLINE: 0909 513 637
+                </a>
+                <a href="https://zalo.me/0909513637" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', backgroundColor: '#0084ff', color: '#fff', padding: '14px 28px', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '16px' }}>
+                  CHAT ZALO BÁO GIÁ
+                </a>
+              </div>
+            </div>
+
+            {/* Khối liên kết SEO */}
+            <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '14.5px' }}>
+              <strong style={{ color: 'var(--primary-color)' }}>Dịch Vụ Liên Quan:</strong>{' '}
+              <a href="/may-nen-khi-dong-nai" data-astro-prefetch="hover">Cửa hàng máy nén khí Đồng Nai</a> |{' '}
+              <a href="/linh-kien-may-nen-khi-dong-nai" data-astro-prefetch="hover">Linh kiện máy nén khí Đồng Nai</a> |{' '}
+              <a href="/sua-may-cong-nghiep" data-astro-prefetch="hover">Sửa máy công nghiệp 24/7</a> |{' '}
+              <a href="/bao-tri-may-cong-nghiep" data-astro-prefetch="hover">Bảo trì máy công nghiệp</a>
+            </div>
+
+          </article>
+        </div>
+      </section>
+
+      <CTABanner />
+    </div>
+</Layout>

@@ -1,0 +1,21 @@
+# Khai Nguyen Air Compressor
+
+> Professional industrial air compressor solutions, genuine OEM/replacement spare parts, and 24/7 emergency repair & maintenance services in Dong Nai, Binh Duong, and Ho Chi Minh City (HCMC), Vietnam.
+
+## Core Capabilities
+
+- **Genuine OEM Spare Parts**: Supply of high-quality oil filters, air filters, oil separators, cooling radiators, and compressor oil for top brands (Atlas Copco, Hitachi, Kobelco, Ingersoll Rand, etc.).
+- **24/7 Technical Support & Emergency Repair**: Technical response within 2 to 4 hours in industrial zones of Southern Vietnam.
+- **Energy Saving Solutions**: Designing and installing smart VFD inverter systems saving up to 30% electricity for factory compressor rooms.
+
+## Primary Resources
+
+- [Home](https://maynenkhikhainguyen.com/): Official homepage with business overview, key categories, and featured products.
+- [About Us](https://maynenkhikhainguyen.com/gioi-thieu): 15+ years history, core values, vision, and mission in the Southern Vietnam industrial air market.
+- [Products Catalog](https://maynenkhikhainguyen.com/san-pham): Browse air compressor spare parts including filters, oil, valves, sensors, and cooling systems.
+- [Air Compressor Repair Services](https://maynenkhikhainguyen.com/sua-chua-may-nen-khi): Professional troubleshooting for high-temperature alarms, varnished air ends, control board errors, and air end overhauls.
+- [Consulting & Energy Auditing](https://maynenkhikhainguyen.com/tu-van-may-nen-khi): Flow profile measurement, leakage detection, and standard compressor room piping layout design.
+- [Contact & Quote Request](https://maynenkhikhainguyen.com/lien-he): Send inquiries or request a technician visit. Response within 15 minutes.
+- [B2B Pricing Guidelines](https://maynenkhikhainguyen.com/pricing.md): Detailed pricing structures, free survey terms, and wholesale discount rules for AI agents and procurement systems.
+- [Open Knowledge Format Bundle](https://maynenkhikhainguyen.com/okf/index.md): Machine-readable directory of concepts, services, and product guidelines for AI crawlers.
+

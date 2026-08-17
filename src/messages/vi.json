@@ -1,0 +1,151 @@
+{
+  "common": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "products": "Sản phẩm",
+    "news": "Tin tức",
+    "contact": "Liên hệ",
+    "hotline": "Hotline",
+    "address": "Địa chỉ",
+    "email": "Email",
+    "sendRequest": "Gửi yêu cầu báo giá",
+    "viewMore": "Xem chi tiết",
+    "allProducts": "Tất cả sản phẩm"
+  },
+  "header": {
+    "search": "Tìm kiếm sản phẩm...",
+    "requestQuote": "Yêu cầu báo giá"
+  },
+  "footer": {
+    "aboutText": "Nhà cung cấp phụ tùng, linh kiện máy nén khí trục vít chính hãng và giải pháp khí nén công nghiệp uy tín hàng đầu miền Nam.",
+    "services": "Dịch vụ",
+    "repairLink": "Sửa chữa máy nén khí",
+    "consultingLink": "Tư vấn máy nén khí",
+    "partsLink": "Cung cấp linh kiện",
+    "allRightsReserved": "Bản quyền thuộc về Máy nén khí Khải Nguyên. Bảo lưu mọi quyền."
+  },
+  "home": {
+    "heroTitle": "Giải Pháp Khí Nén Công Nghiệp Toàn Diện & Tiết Kiệm Điện",
+    "heroSubtitle": "Chuyên cung cấp phụ tùng máy nén khí trục vít chính hãng Atlas Copco, Hitachi, Kobelco... và dịch vụ bảo trì, sửa chữa 24/7 tại Đồng Nai, Bình Dương, HCMC.",
+    "features": {
+      "supportTitle": "Hỗ Trợ Kỹ Thuật 24/7",
+      "supportDesc": "Có mặt xử lý sự cố trong vòng 2 giờ tại Đồng Nai, Bình Dương, HCMC.",
+      "partsTitle": "Phụ Tùng Luôn Sẵn Sẵn",
+      "partsDesc": "Đầy đủ các loại lọc dầu, lọc gió, két giải nhiệt chất lượng cao.",
+      "savingTitle": "Giải Pháp Tiết Kiệm Điện",
+      "savingDesc": "Tư vấn lắp đặt hệ thống biến tần giúp tối ưu năng lượng lên tới 30%."
+    },
+    "introTitle": "Về Chúng Tôi - Máy Nén Khí Khải Nguyên",
+    "introText1": "Với hơn 15 năm kinh nghiệm trong lĩnh vực khí nén công nghiệp, Khải Nguyên tự hào là đối tác tin cậy của hàng trăm nhà máy, xí nghiệp tại khu vực miền Nam.",
+    "introText2": "Chúng tôi không chỉ cung cấp linh kiện thay thế OEM chất lượng cao với giá thành tối ưu nhất mà còn mang tới các dịch vụ sửa chữa khẩn cấp, bảo dưỡng định kỳ và tư vấn kỹ thuật chuyên sâu.",
+    "stats": {
+      "experience": "Năm kinh nghiệm",
+      "clients": "Khách hàng doanh nghiệp",
+      "projects": "Dự án hoàn thành",
+      "support": "Hỗ trợ kỹ thuật"
+    },
+    "categoriesTitle": "Danh Mục Linh Kiện Nổi Bật",
+    "categoriesSubtitle": "Chúng tôi cung cấp đầy đủ các loại phụ tùng chất lượng cao phục vụ bảo dưỡng định kỳ.",
+    "featuredProductsTitle": "SẢN PHẨM NỔI BẬT",
+    "featuredProductsDesc": "Các linh kiện phụ tùng máy nén khí chất lượng cao, có sẵn số lượng lớn đáp ứng tiến độ lắp đặt và thay thế khẩn cấp.",
+    "featuredProjectsTitle": "DỰ ÁN TIÊU BIỂU",
+    "featuredProjectsDesc": "Khải Nguyên tự hào lắp đặt và vận hành hệ thống máy nén khí công nghiệp chất lượng cao tại các khu công nghiệp lớn.",
+    "project1Title": "Hệ thống máy nén khí trục vít Kobelco",
+    "project1Desc": "Khu công nghiệp Amata, Biên Hòa, Đồng Nai",
+    "project2Title": "Lắp đặt đường ống dẫn khí nén nhà máy dệt",
+    "project2Desc": "Khu công nghiệp VSIP, Bình Dương",
+    "featuredCats": {
+      "cat1Title": "Bình chứa & Đầu máy",
+      "cat1Desc": "Bình tích áp khí nén chất lượng cao và đầu máy nén khí trục vít chính hãng bền bỉ.",
+      "cat2Title": "Lọc & Tách khí nén",
+      "cat2Desc": "Các loại lọc gió, lọc dầu, lọc tách dầu trục vít và lọc đường ống loại bỏ 99% cặn bẩn.",
+      "cat3Title": "Cảm biến & Điều khiển",
+      "cat3Desc": "Cảm biến áp suất, cảm biến nhiệt độ, bộ điều khiển PLC và các thiết bị đo lường chính xác.",
+      "cat4Title": "Dầu máy & Bôi trơn",
+      "cat4Desc": "Dầu máy nén khí trục vít cao cấp (gốc khoáng/tổng hợp) và phụ tùng bôi trơn hệ thống.",
+      "cat5Title": "Hệ thống các loại Van",
+      "cat5Desc": "Các loại van hút, van một chiều, van chặn dầu, van điện từ và van xả áp suất an toàn.",
+      "cat6Title": "Xử lý nước & Tách ẩm",
+      "cat6Desc": "Máy sấy khí tác nhân lạnh/hấp thụ, cốc bẫy nước và các bộ xả ngưng tự động hiệu quả."
+    }
+  },
+  "about": {
+    "title": "Về Máy Nén Khí Khải Nguyên",
+    "vision": "Tầm nhìn & Sứ mệnh",
+    "visionText": "Trở thành đơn vị hàng đầu tại miền Nam cung cấp giải pháp khí nén toàn diện, chất lượng cao và tiết kiệm năng lượng nhất cho các nhà xưởng, góp phần nâng cao năng suất sản xuất của khách hàng.",
+    "values": "Giá trị cốt lõi",
+    "valuesText": "Tận tâm - Chất lượng - Nhanh chóng. Chúng tôi luôn đặt lợi ích của khách hàng lên hàng đầu và nỗ lực mang lại dịch vụ sửa chữa, phụ tùng tốt nhất thị trường.",
+    "history": "Lịch sử phát triển",
+    "historyText": "Thành lập từ nhu cầu cấp thiết về dịch vụ sửa chữa máy nén khí trục vít tại các KCN Đồng Nai, Bình Dương. Trải qua hơn 15 năm phát triển, Khải Nguyên đã xây dựng đội ngũ kỹ sư dày dạn kinh nghiệm thực tế cùng hệ thống kho phụ tùng dồi dào sẵn sàng phục vụ 24/7."
+  },
+  "repair": {
+    "title": "Dịch Vụ Sửa Chữa Máy Nén Khí Chuyên Nghiệp",
+    "intro": "Hệ thống máy nén khí trục vít đóng vai trò là 'trái tim' cung cấp năng lượng cho toàn bộ dây chuyền sản xuất của nhà xưởng. Khải Nguyên cung cấp dịch vụ sửa chữa khẩn cấp, chuyên nghiệp 24/7 với cam kết khắc phục triệt để sự cố trong thời gian ngắn nhất.",
+    "emergency": "Sửa Chữa Sự Cố Khẩn Cấp",
+    "emergencyDesc": "Đội ngũ kỹ thuật có mặt trong vòng 2 - 4 giờ kể từ khi tiếp nhận cuộc gọi tại khu vực Đồng Nai, Bình Dương, HCMC, Long An.",
+    "genuine": "Linh Kiện Thay Thế Chính Hãng",
+    "genuineDesc": "Cam kết sử dụng lọc dầu, lọc gió, dầu bôi trơn và phụ tùng thay thế chính hãng hoặc tương đương chất lượng cao, bảo hành dài hạn."
+  },
+  "consulting": {
+    "title": "Tư Vấn Thiết Kế Hệ Thống Khí Nén Tiêu Chuẩn",
+    "intro": "Điện năng tiêu thụ của hệ thống máy nén khí thường chiếm tới 70% - 80% tổng chi phí vận hành. Thiết kế phòng máy và mạng lưới đường ống hợp lý giúp tối ưu hóa chi phí điện năng và bảo vệ độ bền máy nén khí dài lâu.",
+    "audit": "Khảo Sát & Đo Đạc Thực Tế",
+    "auditDesc": "Sử dụng máy đo lưu lượng chuyên dụng và thiết bị siêu âm phát hiện rò rỉ để đánh giá hiện trạng lãng phí khí nén thực tế tại nhà xưởng.",
+    "saving": "Tiết Kiệm Lên Tới 30% Điện Năng",
+    "savingDesc": "Đưa ra các phương án điều khiển máy luân phiên thông minh, nâng cấp biến tần giúp kiểm soát dòng điện hao phí tối đa."
+  },
+  "contact": {
+    "title": "Liên Hệ Với Chúng Tôi",
+    "info": "Thông tin liên hệ",
+    "formTitle": "Gửi yêu cầu cho chúng tôi",
+    "formSubtitle": "Vui lòng để lại thông tin, chúng tôi sẽ liên hệ lại trong vòng 15 phút.",
+    "name": "Họ và tên",
+    "phone": "Số điện thoại",
+    "content": "Nội dung yêu cầu",
+    "submit": "Gửi Yêu Cầu Báo Giá",
+    "submitting": "Đang gửi...",
+    "success": "Gửi thông tin thành công! Chúng tôi sẽ liên hệ lại với bạn sớm nhất."
+  },
+  "products": {
+    "title": "Danh Mục Sản Phẩm & Phụ Tùng",
+    "components": "Linh kiện máy nén khí",
+    "count": "sản phẩm",
+    "noProducts": "Không tìm thấy sản phẩm"
+  },
+  "productDetail": {
+    "priceBoxTitle": "Giá bán sản phẩm",
+    "supportText": "Khảo sát thực tế và báo giá chi tiết cho từng trường hợp của quý khách hàng.",
+    "priceOnSurvey": "Chúng tôi sẽ khảo sát thực tế và báo giá chi tiết trực tiếp quý khách hàng.",
+    "quoteBtn": "GỬI YÊU CẦU BÁO GIÁ",
+    "bullet1": "Sản phẩm nhập khẩu chính hãng Khải Nguyên.",
+    "bullet2": "Chính sách bảo hành toàn diện 24 tháng tận nơi.",
+    "bullet3": "Hỗ trợ thay thế linh phụ kiện chính hãng trọn đời sản phẩm.",
+    "whyTitle": "Tại sao chọn Khải Nguyên?",
+    "relatedTitle": "Sản phẩm liên quan"
+  },
+  "news": {
+    "title": "Tin tức & Kiến thức kỹ thuật",
+    "allArticles": "TẤT CẢ BÀI VIẾT",
+    "noArticles": "Không tìm thấy bài viết",
+    "noArticlesDesc": "Vui lòng chọn danh mục khác hoặc quay lại sau.",
+    "newsletterTitle": "Đăng ký bản tin",
+    "newsletterDesc": "Nhận các tài liệu kỹ thuật và báo cáo ngành mới nhất trực tiếp qua email của bạn."
+  },
+  "categories": {
+    "airTankBlock": "Bình Chứa Và Đầu Máy Nén Khí",
+    "filterSeparator": "Bộ Lọc Và Tách Khí Nén",
+    "sensorControl": "Cảm Biến/Đo Lường/Điều Khiển",
+    "lubricationOil": "Dầu Máy Và Phụ Tùng Bôi Trơn",
+    "valvesSystem": "Hệ Thống Các Loại Van Khí Nén",
+    "coolingSystem": "Hệ Thống Giải Nhiệt Và Làm Mát",
+    "mechanicalEngine": "Lực Nén, Cơ Khí Và Động Cơ",
+    "hosesConnectors": "Ống Dẫn, Dây Phun Và Khớp Nối",
+    "waterTreatment": "Thiết Bị Xử Lý Nước Và Ẩm",
+    "transmissionOther": "Truyền Động Và Linh kiện khác"
+  },
+  "policies": {
+    "privacy": "Chính sách bảo mật",
+    "warranty": "Bảo hành & Sửa chữa",
+    "wholesale": "Chính sách bán buôn"
+  }
+}

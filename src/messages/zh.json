@@ -1,0 +1,151 @@
+{
+  "common": {
+    "home": "首页",
+    "about": "关于我们",
+    "products": "产品中心",
+    "news": "新闻资讯",
+    "contact": "联系我们",
+    "hotline": "热线电话",
+    "address": "地址",
+    "email": "电子邮箱",
+    "sendRequest": "获取报价",
+    "viewMore": "查看详情",
+    "allProducts": "所有产品"
+  },
+  "header": {
+    "search": "搜索产品...",
+    "requestQuote": "获取报价"
+  },
+  "footer": {
+    "aboutText": "越南南部领先的原装螺杆式空压机配件及工业压缩空气系统解决方案供应商。",
+    "services": "技术服务",
+    "repairLink": "空压机维修",
+    "consultingLink": "空压机咨询",
+    "partsLink": "配件供应",
+    "allRightsReserved": "版权所有 © 凯源空压机。保留所有权利。"
+  },
+  "home": {
+    "heroTitle": "高效节能的工业压缩空气系统解决方案",
+    "heroSubtitle": "专业提供阿特拉斯·科普柯、日立、神钢等原装螺杆空压机配件，及同奈、平阳、胡志明市24/7全天候维护与紧急维修服务。",
+    "features": {
+      "supportTitle": "24/7 技术支持",
+      "supportDesc": "同奈、平阳、胡志明市地区2小时内赶赴现场处理故障。",
+      "partsTitle": "配件库存充足",
+      "partsDesc": "备有齐全的高品质油滤、空滤、油分罐及冷却器。",
+      "savingTitle": "系统节能方案",
+      "savingDesc": "提供变频控制柜技术咨询，可实现系统节能高达30%。"
+    },
+    "introTitle": "关于我们 - 凯源空压机",
+    "introText1": "凯源拥有超过15年的工业压缩空气系统服务经验，很荣幸成为越南南部数百家外资与本土工厂的信赖合作伙伴。",
+    "introText2": "我们不仅能以最合理的价格提供优质 of OEM替代零配件，还提供全天候紧急维修、定期保养 and 深度系统设计优化服务。",
+    "stats": {
+      "experience": "行业服务经验",
+      "clients": "合作企业客户",
+      "projects": "成功完工项目",
+      "support": "专业技术支持"
+    },
+    "categoriesTitle": "精选热门配件",
+    "categoriesSubtitle": "我们提供齐全的高品质易损件 & 保养配件，满足设备日常维护需求。",
+    "featuredProductsTitle": "精选热门推荐",
+    "featuredProductsDesc": "高品质螺杆空压机零配件，大量现货备库，满足快速安装和紧急更换需求。",
+    "featuredProjectsTitle": "典型工程项目",
+    "featuredProjectsDesc": "凯源自豪地在各大工业园区为广大客户工厂设计、安装和调试高品质空压机系统。",
+    "project1Title": "神钢 (Kobelco) 螺杆式空压机系统",
+    "project1Desc": "同奈省边和市 Amata 工业区",
+    "project2Title": "纺织厂压缩空气管道设计与施工",
+    "project2Desc": "平阳省 VSIP 工业区",
+    "featuredCats": {
+      "cat1Title": "储气罐及主机头",
+      "cat1Desc": "高品质压缩空气储气罐和坚固耐用的正品螺杆式压缩主机头。",
+      "cat2Title": "过滤器及分离器",
+      "cat2Desc": "螺杆式空压机空气滤清器、机油滤清器、油分罐及管道过滤器，有效清除99%杂质。",
+      "cat3Title": "传感器及控制器",
+      "cat3Desc": "压力传感器、温度传感器、PLC控制器以及高精度的仪器测量系统。",
+      "cat4Title": "润滑机油及配件",
+      "cat4Desc": "高端螺杆空压机专用润滑机油（矿物/合成）以及配套系统润滑脂油脂部件。",
+      "cat5Title": "各类控制阀门系统",
+      "cat5Desc": "进气控制阀、单向止回阀、断油阀、电磁阀及安全泄放压力阀。",
+      "cat6Title": "水与湿气净化设备",
+      "cat6Desc": "冷冻式/吸附式空气干燥机、水分离过滤器以及极其高效的自动排水阀。"
+    }
+  },
+  "about": {
+    "title": "关于凯源空压机",
+    "vision": "企业愿景 & 使命",
+    "visionText": "成为越南南部领先的工业压缩空气系统综合服务商，为客户工厂提供最高效、高品质、超节能的系统设计，助力客户提升产能。",
+    "values": "核心价值观",
+    "valuesText": "专注 - 质量 - 高效。我们始终将客户利益放在首位，全力意图提供市场上最优质的空压机配件 and 维修服务。",
+    "history": "企业发展历程",
+    "historyText": "针对同奈省、平阳省各工业区内螺杆式空压机紧急维修需求而创立。经过15年以上的稳健发展，凯源已建立起一支经验丰富的专业工程师团队，拥有丰富的配件仓储，24小时随时待命。"
+  },
+  "repair": {
+    "title": "专业螺杆空压机维修服务",
+    "intro": "螺杆式空压机系统是工厂生产线能量供应的“心脏”。凯源提供24/7全天候紧急维修技术服务，承诺以最快速度排除故障，减少停产损失。",
+    "emergency": "24/7 紧急故障抢修",
+    "emergencyDesc": "同奈、平阳、胡志明市及隆安地区接报后2-4小时内赶赴工厂现场。",
+    "genuine": "高品质原装配件",
+    "genuineDesc": "承诺采用原厂或同等 high-quality 的油分、油滤、空滤及润滑油，并提供超长质保。"
+  },
+  "consulting": {
+    "title": "标准压缩空气系统设计咨询",
+    "intro": "空压机运行电费占其生命周期总成本 of 70% - 80%。科学合理的空压机房布置及管网设计，能有效避免压降、消除泄漏，助您实现长期运营成本最优化。",
+    "audit": "现场流量及泄漏检测",
+    "auditDesc": "采用专业流量计及超声波泄漏检测仪，精准评估工厂压缩空气管网内的气量漏损现状。",
+    "saving": "综合系统节能高达30%",
+    "savingDesc": "提供多台并联智能群控及变频改造方案，完美匹配车间用气负荷，消除无功电耗。"
+  },
+  "contact": {
+    "title": "联系我们",
+    "info": "联络方式",
+    "formTitle": "在线留言与需求提交",
+    "formSubtitle": "请留下您的联系方式与需求，我们的工程师将在15分钟内与您联系。",
+    "name": "姓名 / 联系人",
+    "phone": "电话号码",
+    "content": "需求内容 / 备注",
+    "submit": "提交获取报价",
+    "submitting": "正在提交...",
+    "success": "信息提交成功！我们的客服经理将尽快联系您。"
+  },
+  "products": {
+    "title": "产品及配件产品目录",
+    "components": "空压机配件",
+    "count": "个产品",
+    "noProducts": "未找到产品"
+  },
+  "productDetail": {
+    "priceBoxTitle": "销售价格",
+    "supportText": "根据每位客户的具体情况提供现场勘测与详细报价。",
+    "priceOnSurvey": "我们将进行现场勘查，并直接为您提供详细的报价。",
+    "quoteBtn": "发送报价请求",
+    "bullet1": "凯源正品进口产品。",
+    "bullet2": "提供24个月全国现场联保。",
+    "bullet3": "终身支持提供原装零配件更换。",
+    "whyTitle": "为什么选择凯源？",
+    "relatedTitle": "相关产品"
+  },
+  "news": {
+    "title": "新闻资讯与技术知识",
+    "allArticles": "所有文章",
+    "noArticles": "未找到文章",
+    "noArticlesDesc": "请选择其他分类或稍后再试。",
+    "newsletterTitle": "订阅新闻邮件",
+    "newsletterDesc": "在您的收件箱中直接接收最新的技术文档和行业报告。"
+  },
+  "categories": {
+    "airTankBlock": "储气罐及压缩机头",
+    "filterSeparator": "压缩空气过滤器及分离器",
+    "sensorControl": "传感器、测量与控制设备",
+    "lubricationOil": "润滑油及润滑配件",
+    "valvesSystem": "气动与空气压缩机阀门系统",
+    "coolingSystem": "散热器与冷却系统",
+    "mechanicalEngine": "机械部件与发动机",
+    "hosesConnectors": "管道、软管与接头",
+    "waterTreatment": "水与湿气处理设备",
+    "transmissionOther": "传动及其他零配件"
+  },
+  "policies": {
+    "privacy": "隐私政策",
+    "warranty": "保修与售后",
+    "wholesale": "批发政策"
+  }
+}

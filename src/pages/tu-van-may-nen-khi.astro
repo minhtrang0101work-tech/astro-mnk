@@ -1,0 +1,140 @@
+---
+import Breadcrumb from '@/components/Breadcrumb';
+import CTABanner from '@/components/CTABanner';
+import { getLocale, getDictionary } from '@/lib/i18n';
+import Layout from '@/layouts/Layout.astro';
+const { zone, category, slug } = Astro.params;
+const props = Astro.props;
+const locale = 'vi';
+
+
+  const locale = "vi";
+  const dict = await getDictionary(locale);
+
+  const breadcrumbItems = [
+    { label: dict.footer.consultingLink }
+  ];
+
+  
+---
+
+<Layout locale={locale}>
+  <div>
+      <Breadcrumb title={dict.consulting.title} items={breadcrumbItems} />
+
+      <section className="section-padding">
+        <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <article className="service-detail-content" style={{ fontSize: '15.5px', lineHeight: '1.8', color: 'var(--text-color)' }}>
+            
+            {/* AEO Freshness Signal */}
+            <div style={{ fontSize: '13.5px', color: 'var(--text-light)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="far fa-calendar-alt"></i>
+              <span>{locale === 'vi' ? 'Cập nhật lần cuối: 2026-08-01' : locale === 'zh' ? '最后更新: 2026-08-01' : 'Last updated: 2026-08-01'}</span>
+              <span style={{ margin: '0 8px', color: '#ccc' }}>|</span>
+              <i className="far fa-user"></i>
+              <span>{locale === 'vi' ? 'Tác giả: Kỹ sư thuộc đơn vị Máy nén khí Khải Nguyên' : locale === 'zh' ? '作者: 凯源空压机单位工程师' : 'Author: Engineer from Khai Nguyen Air Compressor'}</span>
+            </div>
+
+            {/* AEO Answer Block */}
+            <div style={{ 
+              fontWeight: 600, 
+              fontSize: '17px', 
+              color: 'var(--text-dark)', 
+              marginBottom: '25px', 
+              padding: '18px 24px', 
+              backgroundColor: 'var(--bg-light)', 
+              borderLeft: '4px solid var(--primary-color)',
+              borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+              lineHeight: '1.6'
+            }}>
+              {dict.consulting.intro}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', margin: '35px 0' }}>
+              <div style={{ backgroundColor: 'var(--bg-light)', padding: '20px', borderRadius: 'var(--radius-sm)', borderLeft: '4px solid var(--primary-color)' }}>
+                <h3 style={{ margin: '0 0 10px', fontSize: '17px', color: 'var(--primary-color)', fontWeight: 700 }}>📊 {dict.consulting.audit}</h3>
+                <p style={{ margin: 0, fontSize: '14.5px' }}>{dict.consulting.auditDesc}</p>
+              </div>
+              <div style={{ backgroundColor: 'var(--bg-light)', padding: '20px', borderRadius: 'var(--radius-sm)', borderLeft: '4px solid var(--accent-color)' }}>
+                <h3 style={{ margin: '0 0 10px', fontSize: '17px', color: 'var(--accent-color)', fontWeight: 700 }}>⚡ {dict.consulting.saving}</h3>
+                <p style={{ margin: 0, fontSize: '14.5px' }}>{dict.consulting.savingDesc}</p>
+              </div>
+            </div>
+
+            <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '15px', fontWeight: 700 }}>
+              {locale === 'vi' ? '1. Khảo sát lưu lượng và kiểm toán năng lượng khí nén' : locale === 'zh' ? '1. 压缩空气流量检测与能效审计' : '1. Air Flow Survey & Energy Auditing'}
+            </h2>
+            <ul style={{ paddingLeft: '20px', marginBottom: '25px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>
+                <strong>{locale === 'vi' ? 'Đo biểu đồ tiêu thụ khí nén (Flow Profile):' : locale === 'zh' ? '测量压缩空气用气波峰波谷曲线：' : 'Measuring Compressed Air Consumption Profile:'}</strong> {locale === 'vi' ? 'Xác định lượng khí tiêu thụ tối đa và tối thiểu theo từng khung giờ sản xuất để chọn cấu hình máy nén khí phù hợp.' : locale === 'zh' ? '确定各时段最大和最小用气量负荷，以合理匹配空压机运行台数与变频机组配置。' : 'Determining peak and base load flow rates to correctly size air compressors and inverter settings.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Dò tìm rò rỉ đường ống dẫn khí:' : locale === 'zh' ? '管网管道漏气点排查：' : 'Pipeline Air Leak Detection:'}</strong> {locale === 'vi' ? 'Rò rỉ khí qua các mối nối, van xả cũ kỹ là nguyên nhân hàng đầu làm máy nén khí chạy không tải liên tục. Chúng tôi giúp định vị vị trí rò rỉ.' : locale === 'zh' ? '接头、排污阀漏气是造成空压机频繁无功卸载的主因，我们帮助精准定位漏气点以实施修复。' : 'Air leaks from joints and old drain valves cause compressors to run unload frequently. We help locate and seal them.'}
+              </li>
+            </ul>
+
+            {/* AEO Comparison Table */}
+            <div style={{ marginTop: '40px', marginBottom: '30px' }}>
+              <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginBottom: '15px', fontWeight: 700 }}>
+                {locale === 'vi' ? 'Bảng so sánh hiệu quả năng lượng' : locale === 'zh' ? '能效对比表' : 'Energy Efficiency Comparison'}
+              </h2>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14.5px', textAlign: 'left', marginBottom: '20px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: 'var(--primary-color)', color: 'white' }}>
+                      <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? 'Tiêu chí' : locale === 'zh' ? '对比项目' : 'Criteria'}</th>
+                      <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? 'Chạy tải/không tải truyền thống' : locale === 'zh' ? '传统加卸载运行' : 'Traditional Load/Unload'}</th>
+                      <th style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? 'Lắp biến tần (VFD) thông minh' : locale === 'zh' ? '配备智能变频器 (VFD)' : 'Smart VFD Inverter'}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>{locale === 'vi' ? 'Dòng điện khởi động' : locale === 'zh' ? '启动电流' : 'Starting Current'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? 'Tăng vọt gấp 5-7 lần định mức (Hao điện, hại motor)' : locale === 'zh' ? '飙升至额定的5-7倍 (耗电、损电机)' : 'Spikes 5-7x rated current (Power loss, wear motor)'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>{locale === 'vi' ? 'Khởi động mềm êm ái (Bảo vệ motor)' : locale === 'zh' ? '平稳软启动 (保护电机)' : 'Soft start (Protects motor)'}</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>{locale === 'vi' ? 'Kiểm soát áp suất' : locale === 'zh' ? '气压控制' : 'Pressure Control'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? 'Dao động lớn (0.5 - 1.5 bar) gây hao phí áp' : locale === 'zh' ? '波动大 (0.5 - 1.5 bar) 造成气压浪费' : 'Large fluctuation (0.5 - 1.5 bar) causing wastage'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>{locale === 'vi' ? 'Luôn ổn định chính xác ±0.1 bar' : locale === 'zh' ? '始终稳定在 ±0.1 bar' : 'Highly stable within ±0.1 bar'}</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', fontWeight: 600 }}>{locale === 'vi' ? 'Điện năng tiêu thụ' : locale === 'zh' ? '能耗表现' : 'Power Performance'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd' }}>{locale === 'vi' ? '100% công suất tải (Hao phí lớn khi không tải)' : locale === 'zh' ? '100%功率运转 (空载时浪费巨大)' : '100% capacity (High wastage when running unload)'}</td>
+                      <td style={{ padding: '12px 15px', border: '1px solid #ddd', color: 'green', fontWeight: 600 }}>{locale === 'vi' ? 'Tiết kiệm lên tới 30% tổng điện năng' : locale === 'zh' ? '综合节能高达 30%' : 'Save up to 30% of total electricity'}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '15px', fontWeight: 700 }}>
+              {locale === 'vi' ? '2. Thiết kế và thi công đường ống dẫn khí nén nhà xưởng' : locale === 'zh' ? '2. 车间压缩空气管道设计与施工' : '2. Factory Compressed Air Piping Design & Installation'}
+            </h2>
+            <ul style={{ paddingLeft: '20px', marginBottom: '25px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <li>
+                <strong>{locale === 'vi' ? 'Thiết kế mạng đường ống vòng (Loop System):' : locale === 'zh' ? '环形管网设计 (Loop System)：' : 'Ring Pipeline Design (Loop System):'}</strong> {locale === 'vi' ? 'Khí nén đi theo vòng tròn khép kín giúp cân bằng áp suất tại mọi điểm trong phân xưởng, tránh hiện tượng máy ở xa bị yếu áp.' : locale === 'zh' ? '闭环式环状管路设计保证车间内各个用气点气压均衡，防止末端压降。' : 'Closed-loop pipeline layout ensures balanced pressure at all output points, preventing terminal pressure drop.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Nguyên tắc bẫy nước (Drip Leg):' : locale === 'zh' ? '管路排水收集器 (Drip Leg)：' : 'Water Drain Trap Design (Drip Leg):'}</strong> {locale === 'vi' ? 'Thiết kế độ nghiêng đường ống chính và các nhánh rẽ lấy khí hình cổ ngỗng từ phía trên xuống để ngăn nước ngưng tụ chảy trực tiếp vào máy móc.' : locale === 'zh' ? '主管路设计排水坡度，支线管路采用上方鹅颈弯接出气，防止管内冷凝水流入生产设备。' : 'Main line designed with inclination, branch lines connect from top (Gooseneck) to prevent condensed water flowing into machinery.'}
+              </li>
+            </ul>
+
+            <h2 style={{ fontSize: '20px', color: 'var(--primary-color)', marginTop: '35px', marginBottom: '15px', fontWeight: 700 }}>
+              {locale === 'vi' ? '3. Tư vấn thiết kế phòng máy nén khí tiêu chuẩn' : locale === 'zh' ? '3. 标准空压机房技术规范咨询' : '3. Standard Compressor Room Design Technical Consulting'}
+            </h2>
+            <ol style={{ paddingLeft: '20px', marginBottom: '25px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <li>
+                <strong>{locale === 'vi' ? 'Hệ thống thông gió giải nhiệt phòng máy:' : locale === 'zh' ? '机房通风与余热排风道系统：' : 'Room Ventilation & Hot Air Ducting:'}</strong> {locale === 'vi' ? 'Thiết kế quạt hút gió nóng đầu nén qua hệ thống đường ống thoát khí nóng ra ngoài, ngăn nhiệt độ phòng tăng cao.' : locale === 'zh' ? '设计空压机散热导风罩与排风风管将热量引至室外，防止温升引发高温跳机。' : 'Designing heat exhaust hoods and ventilation ducts to extract hot air out of the room, preventing over-temp trip.'}
+              </li>
+              <li>
+                <strong>{locale === 'vi' ? 'Sắp xếp thứ tự thiết bị khí nén hợp lý:' : locale === 'zh' ? '科学合理的设备布置顺序：' : 'Optimal Equipment Layout Order:'}</strong> {locale === 'vi' ? 'Máy nén khí ➡️ Bình tích áp ➡️ Máy sấy khí ➡️ Các bộ lọc đường ống cấp 1, cấp 2.' : locale === 'zh' ? '空压机 ➡️ 储气罐 (初步沉降水分、稳定气压) ➡️ 冷干机 (深度脱水干燥) ➡️ 前后过滤器。' : 'Air Compressor ➡️ Air Receiver Tank ➡️ Air Dryer ➡️ Inline Air Filters.'}
+              </li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <CTABanner locale={locale} />
+    </div>
+</Layout>

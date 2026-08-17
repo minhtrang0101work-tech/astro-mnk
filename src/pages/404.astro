@@ -1,0 +1,43 @@
+---
+import Layout from '@/layouts/Layout.astro';
+
+const locale = 'vi';
+const heading = 'KHÔNG TÌM THẤY TRANG';
+const desc = 'Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển sang địa chỉ khác.';
+const backBtn = 'Quay lại Trang chủ';
+---
+
+<Layout
+  title="404 - Không tìm thấy trang | Máy nén khí Khải Nguyên"
+  description="Trang bạn yêu cầu không tồn tại."
+  locale={locale}
+>
+  <div
+    class="global-notfound"
+    style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 60vh; padding: 40px 20px; text-align: center;"
+  >
+    <h2
+      style="font-size: 72px; color: var(--accent-color); margin-bottom: 10px; font-weight: 800;"
+    >
+      404
+    </h2>
+    <h3
+      style="font-size: 24px; color: var(--primary-color); margin-bottom: 15px; font-weight: 700;"
+    >
+      {heading}
+    </h3>
+    <p
+      style="color: var(--text-light); margin-bottom: 25px; max-width: 500px; font-size: 15px;"
+    >
+      {desc}
+    </p>
+    <a
+      href="/"
+      class="btn btn-primary"
+      data-astro-prefetch="hover"
+      style="padding: 12px 30px; font-size: 15px;"
+    >
+      {backBtn}
+    </a>
+  </div>
+</Layout>
