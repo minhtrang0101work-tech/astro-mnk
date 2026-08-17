@@ -61,7 +61,9 @@ export default function Header({ dict, locale = 'vi' }: HeaderProps) {
       <div className="top-bar">
         <div className="container top-bar-container">
           <div className="top-info">
-            <span><i className="fas fa-map-marker-alt"></i> 762a tổ 25, khu phố 5, Phường Long Bình, Biên Hòa, Đồng Nai</span>
+            <span>
+              <i className="fas fa-map-marker-alt"></i> {locale === 'zh' ? '越南同奈省边和市龙平坊25区762a' : locale === 'en' ? '762a Hamlet 25, Long Binh Ward, Bien Hoa, Dong Nai' : '762a tổ 25, khu phố 5, Phường Long Bình, Biên Hòa, Đồng Nai'}
+            </span>
           </div>
           <div className="top-bar-right" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div className="top-bar-hotline">
