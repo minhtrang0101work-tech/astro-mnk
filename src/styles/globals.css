@@ -1785,6 +1785,10 @@ footer {
 
 .detail-specs-section {
   margin-top: 60px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
 }
 
 .specs-title {
