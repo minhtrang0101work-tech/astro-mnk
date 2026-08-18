@@ -1,0 +1,4 @@
+# Cloudflare Pages 301 Redirects for Old Sitemaps
+/sitemap.xml /sitemap-index.xml 301
+/sitemap_index.xml /sitemap-index.xml 301
+/wp-sitemap.xml /sitemap-index.xml 301
