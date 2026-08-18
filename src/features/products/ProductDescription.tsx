@@ -82,8 +82,8 @@ export default function ProductDescription({ description, specs, locale = 'vi' }
             dangerouslySetInnerHTML={{ __html: description }} 
           />
 
-          {/* Technical Specs Table if present */}
-          {hasSpecs && (
+          {/* Technical Specs Table - Temporarily hidden as requested */}
+          {/* hasSpecs && (
             <div style={{ marginTop: '25px', marginBottom: '20px' }}>
               <h4 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--primary-color)', marginBottom: '12px' }}>
                 {specsHeader}
@@ -105,7 +105,7 @@ export default function ProductDescription({ description, specs, locale = 'vi' }
                 </table>
               </div>
             </div>
-          )}
+          ) */}
 
           {/* Gradient Fade Overlay when collapsed */}
           {showButton && isCollapsed && (
