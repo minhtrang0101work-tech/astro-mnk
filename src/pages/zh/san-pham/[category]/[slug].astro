@@ -130,6 +130,40 @@ const breadcrumbItems = [
           </div>
         </div>
 
+        <!-- Product FAQ Section -->
+        <div class="product-faq-section" style="margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px;">
+          <h3 class="specs-title" style="margin-bottom: 25px;">产品常见问题解答 (FAQ)</h3>
+          
+          <div class="product-faq-list" style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="product-faq-item" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 22px 24px;">
+              <h4 style="font-size: 15.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">
+                问：{product.title} 是否适配我的空压机型号？
+              </h4>
+              <p style="font-size: 14.5px; line-height: 1.6; color: var(--text-color); margin: 0;">
+                答：凯源机械提供的原装/OEM配件（包括 {product.title}）精准适配阿特拉斯·科普柯 (Atlas Copco)、神钢 (Kobelco)、日立 (Hitachi)、英格索兰 (Ingersoll Rand) 等各大品牌螺杆机。欢迎致电 0909 513 637 发送机型铭牌进行100%匹配确认。
+              </p>
+            </div>
+
+            <div class="product-faq-item" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 22px 24px;">
+              <h4 style="font-size: 15.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">
+                问：空压机零配件的保修期是多长？
+              </h4>
+              <p style="font-size: 14.5px; line-height: 1.6; color: var(--text-color); margin: 0;">
+                答：机油滤芯、空气滤芯保修3个月（约2,000运行小时）；油气分离芯保修6个月（约4,000运行小时）；散热冷却器及重载机械部件保修12至24个月。
+              </p>
+            </div>
+
+            <div class="product-faq-item" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 22px 24px;">
+              <h4 style="font-size: 15.5px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px;">
+                问：凯源是否提供上门安装与配件更换服务？
+              </h4>
+              <p style="font-size: 14.5px; line-height: 1.6; color: var(--text-color); margin: 0;">
+                答：是的，我们在同奈、平阳、隆安及胡志明市各工业区均有专业工程师团队，提供送货上门并现场安装更换、保养与技术调试服务。
+              </p>
+            </div>
+          </div>
+        </div>
+
         {relatedProducts.length > 0 && (
           <div style="margin-top: 60px; border-top: 1px solid var(--border-color); padding-top: 40px;">
             <h3 class="specs-title">{dict.productDetail.relatedTitle}</h3>
