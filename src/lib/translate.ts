@@ -387,6 +387,57 @@ export function translateSpecs(specs?: { [key: string]: string }, locale: string
   return translated;
 }
 
+export const productDescriptionMap: { [slug: string]: { en: string; zh: string } } = {
+  "banh-rang-chu-dong-may-nen-khi-atlas-copco": {
+    "zh": "\n      <h2>阿特拉斯·科普柯 (Atlas Copco) 空压机主动齿轮</h2>\n      <p><strong>阿特拉斯·科普柯空压机专用传动齿轮</strong>采用高强度优质合金钢精锻制造，经真空高温淬火与高频表面渗碳热处理，在 24/7 恶劣连续重载运行工况下具备卓越的抗疲劳承载力与耐磨耐蚀性能。</p>\n      <h3>一、核心技术优势</h3>\n      <ul>\n        <li><strong>精准齿形啮合</strong>：符合 ISO 1328 标准 6 级精密齿形制造，确保高速运转时传动平稳、震动极低。</li>\n        <li><strong>超长使用寿命</strong>：齿面硬度达 58-62 HRC，显著降低传动摩擦损耗，有效保护主机转子轴承。</li>\n        <li><strong>完美机型适配</strong>：专为 Atlas Copco GA 系列螺杆式空压机设计，即装即用。</li>\n      </ul>\n      <h3>二、安装与维护建议</h3>\n      <p>在更换传动齿轮时，建议同步检查齿轮箱润滑油品质与轴承游隙，确保润滑油位正常，并使用专用拉马工具规范安装。</p>\n    ",
+    "en": "\n      <h2>Atlas Copco Air Compressor Driving Gear</h2>\n      <p><strong>Dedicated Drive Gear for Atlas Copco Screw Air Compressors</strong> is precision forged from high-grade hardened alloy steel with vacuum heat treatment, delivering outstanding load capacity and wear resistance in continuous 24/7 heavy-duty operations.</p>\n      <h3>1. Key Technical Advantages</h3>\n      <ul>\n        <li><strong>Precision Tooth Profile</strong>: Manufactured to ISO 1328 Grade 6 accuracy for ultra-smooth power transmission and minimal vibration.</li>\n        <li><strong>Extended Service Life</strong>: Hardness rating of 58-62 HRC ensures minimal wear, protecting rotor bearings under high torque.</li>\n        <li><strong>Direct OEM Fit</strong>: Perfectly compatible with Atlas Copco GA series screw air compressors.</li>\n      </ul>\n      <h3>2. Installation & Maintenance Guidelines</h3>\n      <p>Always inspect gearbox lubricant quality and bearing clearances when replacing gears. Use proper puller tools to avoid damage to the shaft seat.</p>\n    "
+  },
+  "day-dai-truyen-dong-may-nen-khi-toyo-rang-cua": {
+    "zh": "\n      <h2>日本东洋 (Toyo) 齿形切边空压机传动皮带</h2>\n      <p><strong>东洋 (Toyo) 工业级齿形传动皮带</strong>采用先进的模压切边齿形结构与高耐热三元乙丙 (EPDM) 橡胶制造，内置高拉力芳纶线绳抗拉层，彻底消除皮带打滑现象，大幅提升电机与主机间的动力传输效率。</p>\n      <h3>一、主要性能特点</h3>\n      <ul>\n        <li><strong>极高动力传递效率</strong>：齿形切边设计大幅增加带轮接触抓地力，减少能量摩擦损耗高达 3-5%。</li>\n        <li><strong>优异耐温耐油特性</strong>：可在 -40°C 至 120°C 恶劣环境下持续稳定运行，抗油雾老化能力强。</li>\n        <li><strong>零拉伸自张紧稳定性</strong>：芳纶增强骨架使皮带在全生命周期内极少伸长，无需频繁重新张紧。</li>\n      </ul>\n    ",
+    "en": "\n      <h2>Toyo Cogged Drive Belt for Air Compressors</h2>\n      <p><strong>Premium Toyo Cogged Transmission Belt</strong> features an advanced raw-edge cogged profile manufactured from heat-resistant EPDM rubber reinforced with high-tensile aramid cords, completely preventing belt slippage and maximizing mechanical transmission efficiency.</p>\n      <h3>1. Key Performance Highlights</h3>\n      <ul>\n        <li><strong>High Power Efficiency</strong>: Cogged design provides superior grip on pulleys, saving 3-5% electrical energy.</li>\n        <li><strong>Extreme Temperature Tolerance</strong>: Reliably operates between -40°C and 120°C with exceptional oil resistance.</li>\n        <li><strong>Zero-Stretch Construction</strong>: High-modulus aramid cords eliminate elongation, reducing retensioning downtime.</li>\n      </ul>\n    "
+  },
+  "ket-giai-nhiet-dau-may-nen-khi-kobelco": {
+    "zh": "\n      <h2>神钢 (Kobelco) 螺杆空压机油气一体板翅式铝制散热器</h2>\n      <p><strong>神钢 (Kobelco) 专用铝合金冷却器</strong>采用高效蜂窝板翅式热交换结构，具备极高导热系数与大通量散热面积。能在越南南部高温炎热环境下精准控制压缩机油温与排气温度，有效防止机器因高温跳闸停机。</p>\n      <h3>一、核心优势</h3>\n      <ul>\n        <li><strong>高效热交换</strong>：优质高导热铝合金材质，散热效能较传统管壳式冷却器提升 35% 以上。</li>\n        <li><strong>高承压安全设计</strong>：设计爆破压力达 3.0 MPa，工作压力 1.6 MPa，彻底防止高压油路渗漏。</li>\n        <li><strong>适用机型广泛</strong>：适配神钢 Kobelco SG / HM / VS 系列 15kW - 75kW 各型号螺杆空压机。</li>\n      </ul>\n    ",
+    "en": "\n      <h2>Kobelco Screw Air Compressor Oil & Aftercooler Heat Exchanger</h2>\n      <p><strong>Kobelco OEM Aluminum Plate-Fin Cooler</strong> features a high-efficiency honeycomb heat exchanger core with exceptional thermal conductivity. It maintains optimal oil and discharge temperatures even under hot and humid tropical climates in Southern Vietnam, preventing high-temperature trip shutdowns.</p>\n      <h3>1. Key Features</h3>\n      <ul>\n        <li><strong>High Heat Transfer Rate</strong>: Premium aluminum alloy core increases cooling efficiency by over 35%.</li>\n        <li><strong>High Burst Pressure Rating</strong>: Tested withstand pressure of 3.0 MPa for safe 16 Bar continuous operation.</li>\n        <li><strong>Broad Compatibility</strong>: Designed for Kobelco SG / HM / VS series compressors (15kW - 75kW).</li>\n      </ul>\n    "
+  },
+  "phot-chan-dau-truc-khuynh-dau-nen-truc-vit": {
+    "zh": "\n      <h2>螺杆空压机主机转子轴端耐高温双唇骨架油封 (PTFE)</h2>\n      <p><strong>螺杆机机头主轴专用骨架油封</strong>采用优质聚四氟乙烯 (PTFE/Teflon) 复合材料与不锈钢骨架制成。具备耐高温、耐高转速线速度与优异自润滑密封特性，彻底杜绝润滑油从轴端向外渗漏。</p>\n      <h3>一、产品特性</h3>\n      <ul>\n        <li><strong>极端耐温范围</strong>：-60°C 至 220°C，完全适应机头排气端高温工况。</li>\n        <li><strong>最高线速度达 30 m/s</strong>：耐磨耐摩擦，有效避免轴颈拉伤与密封失效。</li>\n        <li><strong>双唇密封结构</strong>：主唇阻挡润滑油泄漏，副唇阻隔外界灰尘杂质侵入。</li>\n      </ul>\n    ",
+    "en": "\n      <h2>Air-End Shaft PTFE Double-Lip Oil Seal for Screw Compressors</h2>\n      <p><strong>Air-End Rotor Shaft Oil Seal</strong> is manufactured from high-performance PTFE (Teflon) composite reinforced with a stainless steel casing. It delivers extreme heat tolerance, high rotational speed capability, and positive sealing to eliminate oil leaks from the compressor air-end shaft.</p>\n      <h3>1. Technical Features</h3>\n      <ul>\n        <li><strong>Broad Temperature Range</strong>: -60°C to 220°C, perfectly handling air-end discharge heat.</li>\n        <li><strong>Linear Speeds up to 30 m/s</strong>: Low friction coefficient prevents shaft scoring and premature seal wear.</li>\n        <li><strong>Double-Lip Sealing</strong>: Primary lip retains lubricant while secondary lip blocks ambient dust and contaminants.</li>\n      </ul>\n    "
+  },
+  "thuoc-do-muc-dau-may-nen-khi-dang-thanh-thuy-tinh": {
+    "zh": "\n      <h2>螺杆空压机油气分离桶铝合金耐压防爆玻璃管油位计</h2>\n      <p><strong>油气桶专用条形耐高温油位计</strong>安装于油气分离桶外壁，采用高硼硅防爆透明玻璃管与高强度防腐铝合金外壳。便于巡检工程师直观清晰观察桶内润滑油实际液位与油品颜色，防止因缺油造成机头咬死事故。</p>\n    ",
+    "en": "\n      <h2>Borosilicate Sight Glass Oil Level Gauge for Separator Tanks</h2>\n      <p><strong>Industrial Oil Level Sight Gauge</strong> is mounted on the oil-air separator tank exterior, constructed from heavy-duty borosilicate sight glass within a corrosion-resistant aluminum frame. Allows operators to easily inspect real-time oil levels and fluid condition, preventing costly compressor air-end seizure due to oil starvation.</p>\n    "
+  },
+  "van-an-toan-xa-ap-khi-nen-ren-dong-10-bar": {
+    "zh": "\n      <h2>黄铜螺纹自动泄压防爆安全阀 10 Bar (1.0 MPa)</h2>\n      <p><strong>全铜空压机安全阀 (Safety Relief Valve)</strong> 安装于油气桶或储气罐顶部。当系统内部气压因电气故障或阀门失灵超过 10 Bar 安全设定上限时，安全阀瞬间弹起起跳排气，杜绝压力容器超压开裂与爆炸事故。</p>\n    ",
+    "en": "\n      <h2>Brass Safety Relief Valve 10 Bar (1.0 MPa)</h2>\n      <p><strong>Heavy-Duty Brass Air Compressor Safety Valve</strong> is installed on air receivers and separator tanks. Automatically releases compressed air when vessel pressure exceeds the calibrated 10 Bar threshold, preventing overpressure hazards and pressure vessel rupture.</p>\n    "
+  },
+  "dau-may-nen-khi-truc-vit-kobelco-chinh-hang": {
+    "zh": "\n      <h2>原装神钢 (Kobelco) 螺杆式空压机全合成专用润滑油</h2>\n      <p><strong>神钢 (Kobelco Screw Super Oil / Super Extra Oil)</strong> 是专为神钢螺杆机研发的高品质全合成机油。使用寿命长达 3,000 - 4,000 运行小时，具有优异的抗高温氧化性、出色的润滑冷却效能以及极低的积碳油泥沉淀率。</p>\n    ",
+    "en": "\n      <h2>Genuine Kobelco Synthetic Screw Air Compressor Oil</h2>\n      <p><strong>Kobelco Screw Super Extra Lubricant</strong> is formulated specifically for Kobelco rotary screw air compressors. Features an extended lifespan of 3,000 - 4,000 hours, outstanding thermal oxidation resistance, superior air-end cooling, and minimal varnish or sludge formation.</p>\n    "
+  },
+  "loc-dau-may-nen-khi-hitachi-cao-cap": {
+    "zh": "\n      <h2>日立 (Hitachi) 螺杆空压机高品质旋装式机油滤清器</h2>\n      <p><strong>日立 (Hitachi) 空压机旋装机油滤芯</strong>能 100% 滤除润滑油在高温循环中产生的金属磨屑、微细杂质与胶质沉淀，确保进入机头转子轴承的机油纯净清澈，大幅降低机头机械磨损。</p>\n    ",
+    "en": "\n      <h2>Hitachi Premium Spin-On Oil Filter for Screw Compressors</h2>\n      <p><strong>Hitachi High-Efficiency Oil Filter</strong> completely removes metallic particulates, carbon deposits, and contaminants from circulating lubricant before entering the screw air-end, effectively minimizing rotor and bearing wear.</p>\n    "
+  },
+  "loc-gio-may-nen-khi-kobelco-chinh-hang": {
+    "zh": "\n      <h2>原装神钢 (Kobelco) 螺杆空压机进气空气滤芯</h2>\n      <p><strong>神钢 (Kobelco) 进气空气滤清器</strong>采用进口高密度木浆微纤维滤纸，过滤效率高达 99.9%，有效拦截车间粉尘、颗粒与砂尘进入主机压缩腔，保护螺杆转子精密度。</p>\n    ",
+    "en": "\n      <h2>Genuine Kobelco Air Intake Filter for Screw Compressors</h2>\n      <p><strong>Kobelco Heavy-Duty Air Filter</strong> utilizes high-density microfiber filtration media with a 99.9% dust capture efficiency, protecting the screw rotors and internal chambers from industrial airborne dust.</p>\n    "
+  },
+  "loc-tach-dau-kobelco-chinh-hang": {
+    "zh": "\n      <h2>原装神钢 (Kobelco) 空压机油气分离芯 (Air/Oil Separator)</h2>\n      <p><strong>神钢 (Kobelco) 高效油气分离芯</strong>采用多层超细玻纤滤材，将压缩空气中的微细油雾颗粒彻底分离凝结，使排气含油量降至 2 ppm 以下，压降低、寿命长达 3,000 - 4,000 小时。</p>\n    ",
+    "en": "\n      <h2>Genuine Kobelco Air-Oil Separator Element</h2>\n      <p><strong>Kobelco High-Efficiency Air-Oil Separator</strong> uses multi-layer borosilicate microfiber to thoroughly coalesce oil aerosols, keeping residual air oil content below 2 ppm while maintaining low differential pressure for 3,000 - 4,000 operating hours.</p>\n    "
+  },
+  "van-dien-tu-may-nen-khi-chinh-hang-smc": {
+    "zh": "\n      <h2>日本 SMC 原装工业级空压机电磁阀 (Solenoid Valve)</h2>\n      <p><strong>SMC 气动先导电磁阀</strong>响应极其灵敏迅速，机械动作寿命达 1000 万次以上。广泛应用于空压机进气阀加载/卸载控制、自动排污阀及放空减压回路控制。</p>\n    ",
+    "en": "\n      <h2>Genuine SMC Solenoid Valve for Air Compressors</h2>\n      <p><strong>SMC High-Reliability Pneumatic Solenoid Valve</strong> offers ultra-fast response and an exceptional mechanical lifespan exceeding 10 million cycles. Ideal for intake valve loading/unloading and condensate drain actuation.</p>\n    "
+  },
+  "loc-dau-may-nen-khi-kobelco-cao-cap": {
+    "zh": "\n      <h2>神钢 (Kobelco) 螺杆空压机高品质机油滤芯</h2>\n      <p><strong>神钢专用机油滤清器</strong>能精准拦截润滑油回路中的各类杂质与油泥颗粒，保障进入螺杆阴阳转子及重载轴承的润滑油始终纯净，确保空压机稳定运行。</p>\n    ",
+    "en": "\n      <h2>Kobelco Premium Oil Filter for Rotary Screw Compressors</h2>\n      <p><strong>Kobelco OEM Oil Filter</strong> captures debris and organic sludge from high-temperature lubricant circulation, ensuring pure oil delivery to rotors and bearings for prolonged compressor life.</p>\n    "
+  }
+};
+
 export function translateProduct(product: Product, locale: string = 'vi'): Product {
   if (locale === 'vi') return product;
 
@@ -400,14 +451,68 @@ export function translateProduct(product: Product, locale: string = 'vi'): Produ
     : (product.price.includes('Liên hệ') ? '请联系获取报价' : product.price);
 
   const autoTitle = autoTranslateTitle(product.title, locale);
-  const autoDesc = isEn 
-    ? `Genuine ${autoTitle} OEM replacement parts distributed by Khai Nguyen across industrial parks in Dong Nai, Binh Duong, and Southern Vietnam.`
-    : `凯源机械正品直销 ${autoTitle} 原厂配件，为同奈及南部各工业区提供 2 小时现货送达与专业技术支持。`;
+
+  // 1. Kiểm tra bản dịch trực tiếp theo Slug sản phẩm
+  let finalDescription = '';
+  if (productDescriptionMap[product.slug]) {
+    finalDescription = isZh ? productDescriptionMap[product.slug].zh : productDescriptionMap[product.slug].en;
+  } else if (product.description) {
+    // 2. Chuyển ngữ trực tiếp nội dung tiếng Việt sang tiếng Trung / tiếng Anh
+    let desc = product.description;
+    
+    if (isZh) {
+      // Dịch các tiêu đề và nội dung HTML phổ biến
+      desc = desc
+        .replace(/VAN ĐIỀU ÁP KHÍ NÉN: THÔNG SỐ, PHÂN LOẠI & HỎI ĐÁP KỸ THUẬT/gi, '气动调压减压阀：技术参数、分类选型与技术问答')
+        .replace(/I\. 3 CÔNG NĂNG VẬN HÀNH CỦA VAN ĐIỀU ÁP KHÍ NÉN/gi, '一、 气动调压阀的三大核心运行功能')
+        .replace(/1\. Giảm áp suất khí nén đầu vào/gi, '1. 降低输入端气源压力')
+        .replace(/2\. Ổn định áp suất làm việc đầu ra/gi, '2. 稳定输出端工作压力')
+        .replace(/3\. Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. 保护下游用气机械设备')
+        .replace(/II\. PHÂN LOẠI VAN ĐIỀU ÁP KHÍ NÉN PHỔ BIẾN/gi, '二、 常用气动调压阀分类')
+        .replace(/Van điều áp khí nén/gi, '气动调压阀')
+        .replace(/máy nén khí trục vít/gi, '螺杆式空压机')
+        .replace(/máy nén khí/gi, '空压机')
+        .replace(/khí nén/gi, '压缩空气')
+        .replace(/bình chứa/gi, '储气罐')
+        .replace(/lọc tách dầu/gi, '油气分离芯')
+        .replace(/lọc dầu/gi, '机油滤芯')
+        .replace(/lọc gió/gi, '空气滤芯')
+        .replace(/dầu bôi trơn/gi, '润滑油')
+        .replace(/chính hãng/gi, '正品原装')
+        .replace(/cao cấp/gi, '高品质')
+        .replace(/Đồng Nai/gi, '同奈')
+        .replace(/Bình Dương/gi, '平阳')
+        .replace(/TP\.HCM|HCMC/gi, '胡志明市')
+        .replace(/Long An/gi, '隆安');
+    } else {
+      desc = desc
+        .replace(/VAN ĐIỀU ÁP KHÍ NÉN: THÔNG SỐ, PHÂN LOẠI & HỎI ĐÁP KỸ THUẬT/gi, 'PNEUMATIC PRESSURE REGULATORS: SPECIFICATIONS, CLASSIFICATION & TECHNICAL FAQ')
+        .replace(/I\. 3 CÔNG NĂNG VẬN HÀNH CỦA VAN ĐIỀU ÁP KHÍ NÉN/gi, 'I. 3 KEY OPERATIONAL FUNCTIONS OF PNEUMATIC REGULATORS')
+        .replace(/1\. Giảm áp suất khí nén đầu vào/gi, '1. Reducing Inlet Supply Pressure')
+        .replace(/2\. Ổn định áp suất làm việc đầu ra/gi, '2. Stabilizing Output Working Pressure')
+        .replace(/3\. Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. Protecting Downstream Equipment')
+        .replace(/II\. PHÂN LOẠI VAN ĐIỀU ÁP KHÍ NÉN PHỔ BIẾN/gi, 'II. COMMON TYPES OF PNEUMATIC REGULATORS')
+        .replace(/Van điều áp khí nén/gi, 'Pneumatic pressure regulating valve')
+        .replace(/máy nén khí trục vít/gi, 'screw air compressor')
+        .replace(/máy nén khí/gi, 'air compressor')
+        .replace(/khí nén/gi, 'compressed air')
+        .replace(/chính hãng/gi, 'genuine OEM')
+        .replace(/cao cấp/gi, 'premium grade');
+    }
+
+    finalDescription = desc;
+  }
+
+  if (!finalDescription) {
+    finalDescription = isEn 
+      ? `Genuine ${autoTitle} OEM replacement parts distributed by Khai Nguyen across industrial parks in Dong Nai, Binh Duong, and Southern Vietnam.`
+      : `凯源机械正品直销 ${autoTitle} 原厂配件，为同奈及南部各工业区提供 2 小时现货送达与专业技术支持。`;
+  }
 
   return {
     ...product,
     title: autoTitle,
-    description: autoDesc,
+    description: finalDescription,
     categoryName: translatedCategory,
     price: translatedPrice,
     specs: translateSpecs(product.specs, locale),
