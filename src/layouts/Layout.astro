@@ -113,6 +113,13 @@ const localBusinessSchema = {
     <meta property="og:image" content={image} />
     <meta property="og:locale" content={locale === 'vi' ? 'vi_VN' : locale === 'zh' ? 'zh_CN' : 'en_US'} />
 
+    <!-- Twitter Cards (AEO / Social Rich Media) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
     <!-- Geo Meta Tags -->
     <meta name="geo.region" content="VN" />
     <meta name="geo.placename" content="Biên Hòa" />

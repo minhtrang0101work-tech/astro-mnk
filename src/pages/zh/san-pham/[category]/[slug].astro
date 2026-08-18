@@ -57,6 +57,68 @@ const productSchema = {
   }
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `${product.title} 是否有现货？`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有现货。凯源在同奈及平阳大型仓库存放充足备品，针对各工业区提供 2 小时极速送达与技术支持。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "产品质保与售后政策如何？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "所有原厂配件均提供 6 至 24 个月正品品质保障，若有质量问题提供免费 1 对 1 更换服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "是否支持工程师上门安装与技术巡检？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "凯源拥有 15 年以上经验的技术团队，提供免费上门测定、系统选型与专业安装调试服务。"
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": dict.common.home || "首页",
+      "item": `${baseUrl}/zh`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": dict.common.products || "产品中心",
+      "item": `${baseUrl}/zh/san-pham`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": product.categoryName,
+      "item": `${baseUrl}/zh/san-pham/${product.category}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": product.title,
+      "item": `${baseUrl}/zh/san-pham/${category}/${product.slug}`
+    }
+  ]
+};
+
 const breadcrumbItems = [
   { label: dict.common.products, href: '/zh/san-pham' },
   { label: product.categoryName, href: `/zh/san-pham/${product.category}` },
@@ -69,7 +131,7 @@ const breadcrumbItems = [
   description={finalDescription.slice(0, 160)}
   canonical={`${baseUrl}/zh/san-pham/${category}/${product.slug}`}
   image={absoluteImageUrl}
-  schema={productSchema}
+  schema={[productSchema, faqSchema, breadcrumbSchema]}
   locale={locale}
 >
   <div class="product-detail-page-container">

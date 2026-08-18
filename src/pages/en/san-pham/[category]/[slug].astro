@@ -57,6 +57,68 @@ const productSchema = {
   }
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": `Is ${product.title} in stock at Khai Nguyen warehouse?`,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Khai Nguyen maintains large inventory in Dong Nai and Binh Duong warehouses, providing 2-hour express delivery across industrial parks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the warranty policy for replacement parts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All OEM genuine parts come with a 6 to 24-month manufacturer warranty, with 1-to-1 replacement for any technical defect."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Khai Nguyen provide on-site technical inspection & installation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Our team of veteran engineers provides complimentary on-site surveys, system sizing, and full turnkey installation services."
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": dict.common.home || "Home",
+      "item": `${baseUrl}/en`
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": dict.common.products || "Products",
+      "item": `${baseUrl}/en/san-pham`
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": product.categoryName,
+      "item": `${baseUrl}/en/san-pham/${product.category}`
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": product.title,
+      "item": `${baseUrl}/en/san-pham/${category}/${product.slug}`
+    }
+  ]
+};
+
 const breadcrumbItems = [
   { label: dict.common.products, href: '/en/san-pham' },
   { label: product.categoryName, href: `/en/san-pham/${product.category}` },
@@ -69,7 +131,7 @@ const breadcrumbItems = [
   description={finalDescription.slice(0, 160)}
   canonical={`${baseUrl}/en/san-pham/${category}/${product.slug}`}
   image={absoluteImageUrl}
-  schema={productSchema}
+  schema={[productSchema, faqSchema, breadcrumbSchema]}
   locale={locale}
 >
   <div class="product-detail-page-container">
