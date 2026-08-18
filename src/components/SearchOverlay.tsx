@@ -9,10 +9,15 @@ export default function SearchOverlay() {
   useEffect(() => {
     const handleOpen = () => {
       setIsOpen(true);
-      // Đọc cookie ngôn ngữ mỗi khi mở khung tìm kiếm
-      const match = document.cookie.match(/(^| )locale=([^;]+)/);
-      if (match && ['vi', 'en', 'zh'].includes(match[2])) {
-        setLang(match[2]);
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname;
+        if (path.startsWith('/en')) {
+          setLang('en');
+        } else if (path.startsWith('/zh')) {
+          setLang('zh');
+        } else {
+          setLang('vi');
+        }
       }
       setTimeout(() => {
         if (inputRef.current) {
@@ -43,18 +48,28 @@ export default function SearchOverlay() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  const getSearchUrl = (q: string) => {
+    let prefix = '';
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path.startsWith('/en')) prefix = '/en';
+      else if (path.startsWith('/zh')) prefix = '/zh';
+    }
+    return `${prefix}/san-pham?search=${encodeURIComponent(q)}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = query.trim();
     if (!trimmed) return;
     
     closeSearch();
-    window.location.href = `/san-pham?search=${encodeURIComponent(trimmed)}`;
+    window.location.href = getSearchUrl(trimmed);
   };
 
   const handleSuggestionClick = (suggestion: string) => {
     closeSearch();
-    window.location.href = `/san-pham?search=${encodeURIComponent(suggestion)}`;
+    window.location.href = getSearchUrl(suggestion);
   };
 
   if (!isOpen) return null;
@@ -66,6 +81,26 @@ export default function SearchOverlay() {
   const placeholder = isEn ? 'Enter keywords (oil filter, compressor oil, valve...)...' : isZh ? '输入关键词 (油滤、空压机油、电磁阀...)...' : 'Nhập từ khóa tìm kiếm (lọc dầu, dầu máy, van...)...';
   const submitText = isEn ? 'Search' : isZh ? '搜索' : 'Tìm kiếm';
   const suggestText = isEn ? 'Suggestions:' : isZh ? '热门推荐:' : 'Gợi ý:';
+
+  const suggestions = isZh ? [
+    { label: '机油滤清器', query: '油滤' },
+    { label: '空气滤芯', query: '空滤' },
+    { label: '油气分离芯', query: '油分' },
+    { label: '空压机专用油', query: '油' },
+    { label: '先导电磁阀', query: '电磁阀' }
+  ] : isEn ? [
+    { label: 'Oil Filter', query: 'oil filter' },
+    { label: 'Air Filter', query: 'air filter' },
+    { label: 'Oil Separator', query: 'separator' },
+    { label: 'Compressor Oil', query: 'oil' },
+    { label: 'Solenoid Valve', query: 'valve' }
+  ] : [
+    { label: 'Lọc dầu', query: 'Lọc dầu' },
+    { label: 'Lọc gió', query: 'Lọc gió' },
+    { label: 'Lọc tách dầu', query: 'Lọc tách dầu' },
+    { label: 'Dầu máy', query: 'Dầu máy nén khí' },
+    { label: 'Van điện từ', query: 'Van điện từ' }
+  ];
 
   return (
     <div 
@@ -93,11 +128,15 @@ export default function SearchOverlay() {
         </form>
         <div className="search-suggestions">
           <span>{suggestText}</span>
-          <button className="suggest-tag-btn" onClick={() => handleSuggestionClick('Lọc dầu')}>Lọc dầu</button>
-          <button className="suggest-tag-btn" onClick={() => handleSuggestionClick('Lọc gió')}>Lọc gió</button>
-          <button className="suggest-tag-btn" onClick={() => handleSuggestionClick('Lọc tách dầu')}>Lọc tách dầu</button>
-          <button className="suggest-tag-btn" onClick={() => handleSuggestionClick('Dầu máy nén khí')}>Dầu máy</button>
-          <button className="suggest-tag-btn" onClick={() => handleSuggestionClick('Van điện từ')}>Van điện từ</button>
+          {suggestions.map((s, idx) => (
+            <button 
+              key={idx} 
+              className="suggest-tag-btn" 
+              onClick={() => handleSuggestionClick(s.query)}
+            >
+              {s.label}
+            </button>
+          ))}
         </div>
       </div>
     </div>

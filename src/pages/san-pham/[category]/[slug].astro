@@ -78,7 +78,7 @@ const breadcrumbItems = [
     <section class="section-padding">
       <div class="container">
         <div class="detail-grid">
-          <ProductGallery initialImage={product.image} client:load />
+          <ProductGallery initialImage={product.image} alt={product.title} client:load />
 
           <div class="detail-info">
             <span class="product-cat">
