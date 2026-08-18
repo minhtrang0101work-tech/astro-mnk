@@ -1848,8 +1848,25 @@ footer {
   overflow: hidden;
   transition: max-height 0.4s ease;
   line-height: 1.8;
-  font-size: 14.5px;
-  color: var(--text-light);
+  font-size: 15px;
+  color: #111827;
+}
+
+.product-description-content p,
+.product-description-content span,
+.product-description-content li,
+.product-description-content div {
+  color: #111827;
+}
+
+.product-description-content h1,
+.product-description-content h2,
+.product-description-content h3,
+.product-description-content h4,
+.product-description-content strong,
+.product-description-content b {
+  color: #000000;
+  font-weight: 700;
 }
 
 .product-description-content.collapsed {

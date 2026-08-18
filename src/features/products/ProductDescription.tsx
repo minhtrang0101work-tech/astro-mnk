@@ -78,7 +78,7 @@ export default function ProductDescription({ description, specs, locale = 'vi' }
         >
           {/* Main Description HTML */}
           <div 
-            style={{ lineHeight: '1.8', fontSize: '15px', color: 'var(--text-color)', marginBottom: '20px' }} 
+            style={{ lineHeight: '1.8', fontSize: '15px', color: '#111827', marginBottom: '20px' }} 
             dangerouslySetInnerHTML={{ __html: description }} 
           />
 
