@@ -438,6 +438,125 @@ export const productDescriptionMap: { [slug: string]: { en: string; zh: string }
   }
 };
 
+
+export function translateHtmlDescription(html: string, locale: string): string {
+  if (!html || locale === 'vi') return html;
+
+  const isZh = locale === 'zh';
+  const isEn = locale === 'en';
+
+  let result = html;
+
+  if (isZh) {
+    // 1. Headings & Main Titles
+    result = result
+      .replace(/VAN CỔ HÚT[^:<]*:[^<]*/gi, '螺杆式空压机进气控制阀（进气蝶阀）：技术参数、结构选型与技术解析')
+      .replace(/VAN ĐIỀU ÁP[^:<]*:[^<]*/gi, '气动精密调压减压阀：技术规格、工作原理与选型指南')
+      .replace(/VAN AN TOÀN[^:<]*:[^<]*/gi, '空压机安全阀：工作原理、跳动压力设定与特种设备检验标准')
+      .replace(/LỌC TÁCH DẦU[^:<]*:[^<]*/gi, '螺杆机油气分离滤芯：工作机理、更换判断依据与维护保养指南')
+      .replace(/LỌC GIÓ[^:<]*:[^<]*/gi, '空压机进气空气滤清器：粉尘过滤效率与主机转子防磨损保护')
+      .replace(/LỌC DẦU[^:<]*:[^<]*/gi, '旋装式机油滤清器：金属磨屑滤除与润滑油路深度净化')
+      .replace(/DẦU MÁY NÉN KHÍ[^:<]*:[^<]*/gi, '螺杆式空压机专用合成润滑油：运动粘度、抗氧化寿命与冷却特性')
+      .replace(/I\.\s*3 CÔNG NĂNG VẬN HÀNH[^<]*/gi, '一、 进气控制阀的三大核心运行功能')
+      .replace(/II\.\s*PHÂN LOẠI[^<]*/gi, '二、 常用空压机进气控制阀结构分类选型')
+      .replace(/1\.\s*Điều tiết hai chế độ chạy có tải \(Load\) và không tải \(Unload\)/gi, '1. 精准调节机组加载 (Load) 与卸载 (Unload) 双运行模式')
+      .replace(/2\.\s*Chặn đứng dầu đầu nén trào ngược khi dừng máy/gi, '2. 停机时彻底阻止机头高温润滑油倒灌喷出')
+      .replace(/3\.\s*Hỗ trợ khởi động nhẹ tải bảo vệ động cơ chính/gi, '3. 轻载辅助启动，有效降低冲击并保护主电机')
+      .replace(/1\.\s*Giảm áp suất khí nén đầu vào/gi, '1. 降低高压输入端气源压力')
+      .replace(/2\.\s*Ổn định áp suất làm việc đầu ra/gi, '2. 恒定输出端工作气压，消除气压波动')
+      .replace(/3\.\s*Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. 保护下游精密气动机械与管路系统');
+
+    // 2. Full Paragraphs - Intake Valve & Common Descriptions
+    result = result
+      .replace(/\(còn gọi là van hút[^)]*\)[^<]*cho động cơ\./gi, '（又称进气阀、加卸载控制阀或进气减荷阀 – Intake Valve / Unloader Valve）是直接装配于螺杆空压机主机头顶部进气法兰口的大型核心气动控制总成。该阀根据主控电脑板发出的加载 (Load) 或卸载 (Unload) 信号，全自动调节吸入主机腔的空气流量，从而实现工况智能切换，最大限度提升运行能效并节约工厂用电成本。')
+      .replace(/Khi máy chạy có tải \(Load\)[^<]*của nhà máy\./gi, '当空压机处于加载 (Load) 状态时，阀芯在气控信号驱动下完全打开，外界空气顺畅进入螺杆腔被高速压缩；当储气罐气压达到预设上限时，进气阀迅速严密闭合，彻底切断外部进气。此时机头进入空载运转 (Unload) 状态，不产生压缩空气，电机电流大幅下降，显著降低车间待机电耗。')
+      .replace(/Khi dừng máy[^<]*khoang máy\./gi, '当空压机紧急停机或断电时，油气分离桶内的巨大残余压力会驱使高温润滑油从机头进气口迅速倒灌。进气控制阀内置的高灵敏单向止回阀瓣在逆流瞬间极速拍死关闭，彻底阻断润滑油逆流，避免空气滤芯浸油报废并保护设备内腔清洁。')
+      .replace(/Khi máy nén khí[^<]*nhà xưởng\./gi, '在机组星三角或变频启动阶段，进气阀始终保持全封闭状态。机头无需承受压缩负载，极大地减小了电机的启动阻力矩，防止启动电流 (Ampe) 骤升造成工厂电网电压闪变或空开跳闸。')
+      .replace(/\(còn gọi là van giảm áp[^)]*\)[^<]*đầu vào\./gi, '（又称气动减压阀或压力调节器 – Regulator）是安装于工厂支线气路及各类气动自动化设备进气端的关键控制元件。其核心作用是将主管路送来的高压、波动的压缩空气降压至设备所需的精准工作压力，并在气源压力或用气流量波动时持续维持输出气压恒定。')
+      .replace(/Khí nén tạo ra từ máy nén khí[^<]*chính xác\./gi, '螺杆空压机产生的压缩空气在主管路中通常保持在 8 Bar – 10 Bar 的较高压力以提高远距离输送效率。然而，车间末端气缸、电磁阀及气动工具的最佳额定工作气压通常仅为 4 Bar – 6 Bar。调压阀能精确平稳降压，杜绝过压损耗。')
+      .replace(/Khi các máy sấy khí[^<]*cài đặt\./gi, '当车间其他工段突发大量用气或冷干机自动排水时，主管路气压会出现频繁剧烈波动。调压阀内部的高精度膜片与弹簧动态平衡机构能瞬时补偿流量变化，确保终端用气设备气压稳定无波动。')
+      .replace(/Quá áp suất làm việc[^<]*nhà máy\./gi, '超出额定压力是造成气动软管爆裂、气缸活塞密封圈拉伤以及电磁阀线圈过载烧毁的首要原因。调压阀作为关键安全屏障，为企业昂贵的自动化生产线提供可靠防护。');
+
+    // 3. Bullet points and specific models
+    result = result
+      .replace(/Van cổ hút kiểu piston[^:]*:/gi, '活塞气缸驱动式进气阀 (Piston Actuated Valve)：')
+      .replace(/Dòng van sử dụng một piston[^<]*GA series\./gi, '该类型在阀体侧边集成气动控制活塞，通过微型电磁阀控制气路通断来推动主阀盘启闭。动作迅速可靠，广泛应用于神钢 (Kobelco)、阿特拉斯 (Atlas Copco GA 系列) 等知名机型。')
+      .replace(/Van cổ hút kiểu màng cao su[^:]*:/gi, '橡胶膜片式进气阀 (Diaphragm-type Intake Valve)：')
+      .replace(/Cơ cấu đóng mở bằng màng cao su[^<]*Rotorcomp\./gi, '采用耐压耐油橡胶膜片作为动作执行元件，结构简洁、灵敏度高，依靠真空吸力与控制气压协调动作。广泛应用于复盛 (Fusheng)、罗德康普 (Rotorcomp) 等螺杆机头。')
+      .replace(/Van cổ hút kiểu cánh bướm xoay[^:]*:/gi, '旋转蝶阀式进气阀 (Butterfly Intake Valve)：')
+      .replace(/Sử dụng một cánh van dạng bướm[^<]*nạp khí nhiều\./gi, '采用可在 0° - 90° 范围内旋转的蝶形阀板，连动气动弹簧执行机构。通径大、进气阻力极小，主要装配于 75kW (100HP) 以上大功率重载螺杆空压机。');
+
+    // 4. Cleanup remaining Vietnamese keywords
+    result = result
+      .replace(/Van cổ hút/gi, '进气控制阀')
+      .replace(/van hút/gi, '进气阀')
+      .replace(/van cửa nạp/gi, '进气阀')
+      .replace(/van không tải/gi, '卸载阀')
+      .replace(/máy nén khí trục vít/gi, '螺杆式空压机')
+      .replace(/máy nén khí/gi, '空压机')
+      .replace(/khí nén/gi, '压缩空气')
+      .replace(/đầu nén/gi, '主机机头')
+      .replace(/bình tách dầu/gi, '油气分离桶')
+      .replace(/bầu lọc gió/gi, '空气滤清器')
+      .replace(/áp suất/gi, '气压')
+      .replace(/van điện từ/gi, '电磁阀')
+      .replace(/xi lanh/gi, '气缸')
+      .replace(/động cơ/gi, '电机')
+      .replace(/nhà xưởng/gi, '车间厂房')
+      .replace(/nhà máy/gi, '工厂');
+  } else if (isEn) {
+    // 1. Headings & Main Titles
+    result = result
+      .replace(/VAN CỔ HÚT[^:<]*:[^<]*/gi, 'Rotary Screw Air Compressor Intake Valve: Specifications, Sizing & Technical Guide')
+      .replace(/VAN ĐIỀU ÁP[^:<]*:[^<]*/gi, 'Pneumatic Pressure Regulating Valves: Specifications, Working Principles & Selection Guide')
+      .replace(/VAN AN TOÀN[^:<]*:[^<]*/gi, 'Air Compressor Safety Relief Valves: Working Principles, Set Pressure & Calibration Standards')
+      .replace(/LỌC TÁCH DẦU[^:<]*:[^<]*/gi, 'Air-Oil Separator Elements: Working Mechanism, Replacement Indicators & Maintenance')
+      .replace(/LỌC GIÓ[^:<]*:[^<]*/gi, 'Air Compressor Intake Filters: Dust Filtration Efficiency & Rotor Protection')
+      .replace(/LỌC DẦU[^:<]*:[^<]*/gi, 'Spin-On Oil Filters: Metallic Debris Removal & Lubricant Purification')
+      .replace(/DẦU MÁY NÉN KHÍ[^:<]*:[^<]*/gi, 'Synthetic Rotary Screw Compressor Lubricants: Viscosity, Thermal Life & Cooling Properties')
+      .replace(/I\.\s*3 CÔNG NĂNG VẬN HÀNH[^<]*/gi, 'I. 3 Core Operational Functions of Air Intake Valves')
+      .replace(/II\.\s*PHÂN LOẠI[^<]*/gi, 'II. Classification & Types of Compressor Intake Valves')
+      .replace(/1\.\s*Điều tiết hai chế độ chạy có tải \(Load\) và không tải \(Unload\)/gi, '1. Regulating Load and Unload Operating Modes')
+      .replace(/2\.\s*Chặn đứng dầu đầu nén trào ngược khi dừng máy/gi, '2. Preventing Oil Backflow When Stopping Compressor')
+      .replace(/3\.\s*Hỗ trợ khởi động nhẹ tải bảo vệ động cơ chính/gi, '3. Supporting Light-Load Start to Protect Main Motor')
+      .replace(/1\.\s*Giảm áp suất khí nén đầu vào/gi, '1. Reducing Inlet Supply Pressure')
+      .replace(/2\.\s*Ổn định áp suất làm việc đầu ra/gi, '2. Stabilizing Output Working Pressure')
+      .replace(/3\.\s*Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. Protecting Downstream Mechanical Equipment');
+
+    // 2. Full Paragraphs
+    result = result
+      .replace(/\(còn gọi là van hút[^)]*\)[^<]*cho động cơ\./gi, '(also referred to as unloader valve, intake regulator, or suction valve) is a critical mechanical assembly mounted directly onto the top air inlet flange of the rotary screw air-end. It automatically regulates the volume of ambient air drawn into the compression chamber according to Load / Unload electrical signals from the main PLC controller, optimizing energy efficiency and reducing factory electrical bills.')
+      .replace(/Khi máy chạy có tải \(Load\)[^<]*của nhà máy\./gi, 'When operating in Load mode, the valve opens completely to let ambient air flow into the screw rotors for compression. When system pressure reaches the preset maximum limit, the intake valve seals tightly shut upon receiving pilot air signals, blocking intake air flow. The air-end then enters Unload idle mode without generating pressure, drastically reducing motor amperage and power consumption.')
+      .replace(/Khi dừng máy[^<]*khoang máy\./gi, 'When the air compressor shuts down unexpectedly or loses power, massive differential pressure in the separator tank tends to force hot oil mist backward toward the inlet. The intake valve features an integrated spring-loaded check valve that instantly snaps shut, blocking reverse oil flow and protecting the air intake filter from oil contamination.')
+      .replace(/Khi máy nén khí[^<]*nhà xưởng\./gi, 'During initial star-delta or VFD motor startup, the intake valve remains completely closed. Because the rotors do not compress air immediately, motor starting resistance torque is minimized, preventing dangerous startup current surges from tripping main circuit breakers.')
+      .replace(/\(còn gọi là van giảm áp[^)]*\)[^<]*đầu vào\./gi, '(also known as an air pressure regulator or pressure reducing valve) is a vital control device installed at the inlet of pneumatic machinery and branch distribution lines. It reduces high, fluctuating main supply pressure down to a safe, constant operating level suitable for sensitive downstream equipment.')
+      .replace(/Khí nén tạo ra từ máy nén khí[^<]*chính xác\./gi, 'Compressed air from screw compressors is typically maintained at 8 - 10 Bar for efficient long-distance piping distribution. However, downstream actuators, solenoid valves, and pneumatic tools operate best at 4 - 6 Bar. Regulators accurately reduce and stabilize this pressure.')
+      .replace(/Khi các máy sấy khí[^<]*cài đặt\./gi, 'When demand surges or automatic drains open, mainline air pressure fluctuates violently. The regulator’s spring-diaphragm mechanism instantly compensates for pressure drops, keeping downstream pressure stable.')
+      .replace(/Quá áp suất làm việc[^<]*nhà máy\./gi, 'Excessive operating pressure is the leading cause of burst air hoses, torn cylinder seals, and burnt solenoid coils. Pressure regulators provide essential overpressure protection for expensive factory automation equipment.');
+
+    // 3. Bullet points
+    result = result
+      .replace(/Van cổ hút kiểu piston[^:]*:/gi, 'Piston-Actuated Intake Valve:')
+      .replace(/Dòng van sử dụng một piston[^<]*GA series\./gi, 'Utilizes an integrated pneumatic piston actuator on the valve body to open the main disc via solenoid pilot air. Offers high speed and reliability, widely found on Kobelco and Atlas Copco GA series.')
+      .replace(/Van cổ hút kiểu màng cao su[^:]*:/gi, 'Diaphragm-Type Intake Valve:')
+      .replace(/Cơ cấu đóng mở bằng màng cao su[^<]*Rotorcomp\./gi, 'Features an oil-resistant elastic rubber diaphragm for opening and closing based on vacuum and pilot control pressure. Simple, responsive, and commonly used on Fusheng and Rotorcomp air-ends.')
+      .replace(/Van cổ hút kiểu cánh bướm xoay[^:]*:/gi, 'Butterfly Rotary Intake Valve:')
+      .replace(/Sử dụng một cánh van dạng bướm[^<]*nạp khí nhiều\./gi, 'Employs a 90-degree rotating butterfly disc linked to a spring-return pneumatic actuator. Features large flow area and minimal intake resistance, ideal for heavy-duty compressors over 75kW (100HP).');
+
+    // 4. Cleanup remaining Vietnamese keywords
+    result = result
+      .replace(/Van cổ hút/gi, 'Air intake valve')
+      .replace(/máy nén khí trục vít/gi, 'screw air compressor')
+      .replace(/máy nén khí/gi, 'air compressor')
+      .replace(/khí nén/gi, 'compressed air')
+      .replace(/đầu nén/gi, 'air-end')
+      .replace(/bình tách dầu/gi, 'separator tank');
+  }
+
+  return result;
+}
+
+
 export function translateProduct(product: Product, locale: string = 'vi'): Product {
   if (locale === 'vi') return product;
 
@@ -452,55 +571,11 @@ export function translateProduct(product: Product, locale: string = 'vi'): Produ
 
   const autoTitle = autoTranslateTitle(product.title, locale);
 
-  // 1. Kiểm tra bản dịch trực tiếp theo Slug sản phẩm
   let finalDescription = '';
   if (productDescriptionMap[product.slug]) {
     finalDescription = isZh ? productDescriptionMap[product.slug].zh : productDescriptionMap[product.slug].en;
   } else if (product.description) {
-    // 2. Chuyển ngữ trực tiếp nội dung tiếng Việt sang tiếng Trung / tiếng Anh
-    let desc = product.description;
-    
-    if (isZh) {
-      // Dịch các tiêu đề và nội dung HTML phổ biến
-      desc = desc
-        .replace(/VAN ĐIỀU ÁP KHÍ NÉN: THÔNG SỐ, PHÂN LOẠI & HỎI ĐÁP KỸ THUẬT/gi, '气动调压减压阀：技术参数、分类选型与技术问答')
-        .replace(/I\. 3 CÔNG NĂNG VẬN HÀNH CỦA VAN ĐIỀU ÁP KHÍ NÉN/gi, '一、 气动调压阀的三大核心运行功能')
-        .replace(/1\. Giảm áp suất khí nén đầu vào/gi, '1. 降低输入端气源压力')
-        .replace(/2\. Ổn định áp suất làm việc đầu ra/gi, '2. 稳定输出端工作压力')
-        .replace(/3\. Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. 保护下游用气机械设备')
-        .replace(/II\. PHÂN LOẠI VAN ĐIỀU ÁP KHÍ NÉN PHỔ BIẾN/gi, '二、 常用气动调压阀分类')
-        .replace(/Van điều áp khí nén/gi, '气动调压阀')
-        .replace(/máy nén khí trục vít/gi, '螺杆式空压机')
-        .replace(/máy nén khí/gi, '空压机')
-        .replace(/khí nén/gi, '压缩空气')
-        .replace(/bình chứa/gi, '储气罐')
-        .replace(/lọc tách dầu/gi, '油气分离芯')
-        .replace(/lọc dầu/gi, '机油滤芯')
-        .replace(/lọc gió/gi, '空气滤芯')
-        .replace(/dầu bôi trơn/gi, '润滑油')
-        .replace(/chính hãng/gi, '正品原装')
-        .replace(/cao cấp/gi, '高品质')
-        .replace(/Đồng Nai/gi, '同奈')
-        .replace(/Bình Dương/gi, '平阳')
-        .replace(/TP\.HCM|HCMC/gi, '胡志明市')
-        .replace(/Long An/gi, '隆安');
-    } else {
-      desc = desc
-        .replace(/VAN ĐIỀU ÁP KHÍ NÉN: THÔNG SỐ, PHÂN LOẠI & HỎI ĐÁP KỸ THUẬT/gi, 'PNEUMATIC PRESSURE REGULATORS: SPECIFICATIONS, CLASSIFICATION & TECHNICAL FAQ')
-        .replace(/I\. 3 CÔNG NĂNG VẬN HÀNH CỦA VAN ĐIỀU ÁP KHÍ NÉN/gi, 'I. 3 KEY OPERATIONAL FUNCTIONS OF PNEUMATIC REGULATORS')
-        .replace(/1\. Giảm áp suất khí nén đầu vào/gi, '1. Reducing Inlet Supply Pressure')
-        .replace(/2\. Ổn định áp suất làm việc đầu ra/gi, '2. Stabilizing Output Working Pressure')
-        .replace(/3\. Bảo vệ thiết bị cơ học hạ nguồn/gi, '3. Protecting Downstream Equipment')
-        .replace(/II\. PHÂN LOẠI VAN ĐIỀU ÁP KHÍ NÉN PHỔ BIẾN/gi, 'II. COMMON TYPES OF PNEUMATIC REGULATORS')
-        .replace(/Van điều áp khí nén/gi, 'Pneumatic pressure regulating valve')
-        .replace(/máy nén khí trục vít/gi, 'screw air compressor')
-        .replace(/máy nén khí/gi, 'air compressor')
-        .replace(/khí nén/gi, 'compressed air')
-        .replace(/chính hãng/gi, 'genuine OEM')
-        .replace(/cao cấp/gi, 'premium grade');
-    }
-
-    finalDescription = desc;
+    finalDescription = translateHtmlDescription(product.description, locale);
   }
 
   if (!finalDescription) {
